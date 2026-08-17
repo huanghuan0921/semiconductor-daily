@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球半导体每日早报</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --yellow: #d29922;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+header {
+  text-align: center;
+  padding: 48px 20px 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+header .subtitle {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+header .meta {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+header .meta-item {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+header .meta-item strong { color: var(--accent); }
+.report-list { display: flex; flex-direction: column; gap: 12px; }
+.report-card {
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.1s;
+}
+.report-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+.report-card .date {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.report-card .weekday {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-left: 8px;
+  font-weight: 400;
+}
+.report-card .badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.badge-new {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(63, 185, 80, 0.3);
+}
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state p { font-size: 14px; }
+footer {
+  text-align: center;
+  padding: 40px 20px 20px;
+  color: var(--text-muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+footer a { color: var(--accent); text-decoration: none; }
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>全球半导体每日早报</h1>
+    <p class="subtitle">覆盖全球半导体产业重磅资讯 + 宏观金融传导分析 + A股半导体选股逻辑</p>
+    <div class="meta">
+      <span class="meta-item">每日 <strong>08:00</strong> 自动更新</span>
+      <span class="meta-item">覆盖区域 <strong>美/韩/日/台/陆</strong></span>
+      <span class="meta-item">报告总数 <strong id="report-count">-</strong></span>
+    </div>
+  </header>
+  <div id="report-list" class="report-list">
+    <div class="loading">正在加载报告列表...</div>
+  </div>
+  <footer>
+    <p>本站内容仅为公开信息整理，不构成投资建议，股市风险自担</p>
+    <p style="margin-top:8px;">由 TRAE 自动生成与部署</p>
+  </footer>
+</div>
+<script>
+(async function() {
+  const listEl = document.getElementById('report-list');
+  const countEl = document.getElementById('report-count');
+  const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+  const today = new Date().toISOString().slice(0, 10);
+
+  try {
+    const res = await fetch('manifest.json?t=' + Date.now());
+    if (!res.ok) throw new Error('manifest not found');
+    const data = await res.json();
+
+    if (!data.reports || data.reports.length === 0) {
+      listEl.innerHTML = '<div class="empty-state"><div class="icon">📡</div><p>暂无报告，请等待每日 08:00 自动生成</p></div>';
+      countEl.textContent = '0';
+      return;
+    }
+
+    countEl.textContent = data.reports.length;
+    listEl.innerHTML = data.reports.map(function(r) {
+      var isToday = r.date === today;
+      var d = new Date(r.date + 'T00:00:00');
+      var wkd = weekdays[d.getDay()];
+      var badge = isToday ? '<span class="badge badge-new">今日</span>' : '';
+      return '<a class="report-card" href="' + r.file + '">' +
+        '<div><span class="date">' + r.date + '</span>' +
+        '<span class="weekday">' + wkd + '</span>' + badge + '</div>' +
+        '<div style="color:var(--text-muted);font-size:13px;margin-top:6px;">点击查看完整早报</div>' +
+        '</a>';
+    }).join('');
+  } catch (e) {
+    listEl.innerHTML = '<div class="empty-state"><div class="icon">📡</div><p>暂无报告，请等待每日 08:00 自动生成</p></div>';
+    countEl.textContent = '0';
+  }
+})();
+</script>
+</body>
+</html>

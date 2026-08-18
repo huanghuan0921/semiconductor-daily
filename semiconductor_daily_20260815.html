@@ -14,8 +14,8 @@
   --text-dim: #8b90a0;
   --text-source: #5a5f6e;
   --accent: #4fc3f7;
-  --green: #00e676;
-  --red: #ff5252;
+  --green: #ff5252;
+  --red: #00e676;
   --orange: #ffb74d;
   --yellow: #ffd54f;
   --tag-bg: #1e3a5f;
@@ -131,8 +131,8 @@ body {
   flex-shrink: 0;
   margin-top: 2px;
 }
-.tag-good { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
-.tag-bad { background: rgba(255,82,82,0.12); color: var(--red); border: 1px solid rgba(255,82,82,0.25); }
+.tag-good { background: rgba(255,82,82,0.12); color: var(--green); border: 1px solid rgba(255,82,82,0.25); }
+.tag-bad { background: rgba(0,230,118,0.12); color: var(--red); border: 1px solid rgba(0,230,118,0.25); }
 .tag-neutral { background: rgba(255,213,79,0.12); color: var(--yellow); border: 1px solid rgba(255,213,79,0.25); }
 .news-item .analysis {
   font-size: 13px;
@@ -265,8 +265,54 @@ body {
   .header h1 { font-size: 18px; }
 }
 </style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fa; --card: #ffffff; --card-hover: #f3f4f6;
+    --border: #d0d7de; --text: #1f2328; --text-dim: #656d76;
+    --text-source: #6e7681; --accent: #0969da;
+    --green: #cf222e; --red: #1a7f37; --orange: #9a6700;
+    --yellow: #9a6700; --tag-bg: #dbe9f6;
+  }
+}
+
+</style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">半导体每日早报</span>
+</nav>
 <div class="container">
 
 <div class="header">

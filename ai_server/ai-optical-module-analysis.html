@@ -44,8 +44,8 @@
   --muted: #64748b;
   --rule: #e2e8f0;
   --accent: #2563eb;
-  --accent2: #dc2626;
-  --accent3: #059669;
+  --accent2: #059669;
+  --accent3: #dc2626;
   --accent4: #d97706;
 }
 
@@ -346,8 +346,52 @@ footer .sources .src-url {
   .chart-container, .diagram { page-break-inside: avoid; }
 }
 </style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --bg2: #161b22; --ink: #e6edf3;
+    --muted: #8b949e; --rule: #30363d; --accent: #58a6ff;
+    --accent2: #1a7f37; --accent3: #f85149; --accent4: #d97706;
+  }
+}
+</style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">AI服务器分析报告</span>
+</nav>
 
 <!-- Hero -->
 <header class="hero">
@@ -623,9 +667,9 @@ flowchart LR
     C --> D["CPO 共封装<br/>3.2T+<br/>超大规模AI fabric"]
     
     style A fill:#dbeafe,stroke:#2563eb,color:#1e293b
-    style B fill:#dcfce7,stroke:#059669,color:#1e293b
+    style B fill:#fce7f3,stroke:#dc2626,color:#1e293b
     style C fill:#fef3c7,stroke:#d97706,color:#1e293b
-    style D fill:#fce7f3,stroke:#dc2626,color:#1e293b
+    style D fill:#dcfce7,stroke:#059669,color:#1e293b
       </pre>
       <figcaption>图4：光模块技术路线演进路径</figcaption>
     </figure>

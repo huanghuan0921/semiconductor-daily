@@ -116,6 +116,10 @@ STOCK_CAT='{"id":"stock_picks","name":"次日必涨股票分析","icon":"📈","
 echo '{"categories":['"$DAILY_CAT"','"$AI_CAT"','"$STOCK_CAT"']}' > manifest.json
 echo "  manifest.json 已更新"
 
+# --- Post-process: inject nav bar + light mode ---
+echo "[4.5/5] 后处理：注入导航栏与浅色模式..."
+python3 "$WORK_DIR/post_process.py"
+
 # --- Git commit & push ---
 echo "[5/5] Git 提交与推送..."
 git add -A

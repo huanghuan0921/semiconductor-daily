@@ -15,8 +15,8 @@
     --text-muted: #5a6577;
     --accent-blue: #4a9eff;
     --accent-cyan: #00d4ff;
-    --bull: #00c853;
-    --bear: #ff3d57;
+    --bull: #ff3d57;
+    --bear: #00c853;
     --neutral: #ffa726;
     --gold: #ffd54f;
     --tag-bg: #1a2332;
@@ -131,8 +131,8 @@
     border-radius: 4px;
     flex-shrink: 0;
   }
-  .tag-bull { background: rgba(0,200,83,0.15); color: var(--bull); border: 1px solid rgba(0,200,83,0.3); }
-  .tag-bear { background: rgba(255,61,87,0.15); color: var(--bear); border: 1px solid rgba(255,61,87,0.3); }
+  .tag-bull { background: rgba(255,61,87,0.15); color: var(--bull); border: 1px solid rgba(255,61,87,0.3); }
+  .tag-bear { background: rgba(0,200,83,0.15); color: var(--bear); border: 1px solid rgba(0,200,83,0.3); }
   .tag-neutral { background: rgba(255,167,38,0.15); color: var(--neutral); border: 1px solid rgba(255,167,38,0.3); }
   .news-body {
     font-size: 13px;
@@ -183,8 +183,8 @@
     margin-bottom: 10px;
     font-size: 13px;
   }
-  .alert-catalyst { background: rgba(0,200,83,0.08); border: 1px solid rgba(0,200,83,0.2); }
-  .alert-risk { background: rgba(255,61,87,0.08); border: 1px solid rgba(255,61,87,0.2); }
+  .alert-catalyst { background: rgba(255,61,87,0.08); border: 1px solid rgba(255,61,87,0.2); }
+  .alert-risk { background: rgba(0,200,83,0.08); border: 1px solid rgba(0,200,83,0.2); }
   .alert-logic { background: rgba(74,158,255,0.08); border: 1px solid rgba(74,158,255,0.2); }
   .alert-box .label { font-weight: 700; margin-bottom: 4px; }
   .alert-catalyst .label { color: var(--bull); }
@@ -250,8 +250,54 @@
     body { padding: 12px; }
   }
 </style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fa; --card-bg: #ffffff; --card-border: #d0d7de;
+    --text-primary: #1f2328; --text-secondary: #656d76; --text-muted: #6e7681;
+    --accent-blue: #0969da; --accent-cyan: #0597c2;
+    --bull: #cf222e; --bear: #1a7f37; --neutral: #9a6700;
+    --gold: #9a6700; --tag-bg: #eef1f5;
+  }
+}
+
+</style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">半导体每日早报</span>
+</nav>
 
 <div class="header">
   <h1>全球半导体每日早报</h1>

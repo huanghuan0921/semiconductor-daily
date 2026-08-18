@@ -14,16 +14,16 @@
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
   --text-muted: #6e7681;
-  --accent-green: #3fb950;
+  --accent-green: #f85149;
   --accent-yellow: #d29922;
-  --accent-red: #f85149;
+  --accent-red: #3fb950;
   --accent-blue: #58a6ff;
   --accent-purple: #bc8cff;
   --accent-orange: #e8873e;
   --gradient-card: linear-gradient(135deg, #1c2128 0%, #22272e 100%);
-  --score-high: #3fb950;
+  --score-high: #f85149;
   --score-mid: #d29922;
-  --score-low: #f85149;
+  --score-low: #3fb950;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -298,9 +298,9 @@ body {
   font-weight: 600;
 }
 
-.risk-low { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); border: 1px solid rgba(63, 185, 80, 0.3); }
+.risk-low { background: rgba(248, 81, 73, 0.15); color: var(--accent-green); border: 1px solid rgba(248, 81, 73, 0.3); }
 .risk-mid { background: rgba(210, 153, 34, 0.15); color: var(--accent-yellow); border: 1px solid rgba(210, 153, 34, 0.3); }
-.risk-high { background: rgba(248, 81, 73, 0.15); color: var(--accent-red); border: 1px solid rgba(248, 81, 73, 0.3); }
+.risk-high { background: rgba(63, 185, 80, 0.15); color: var(--accent-red); border: 1px solid rgba(63, 185, 80, 0.3); }
 
 .sector-table {
   width: 100%;
@@ -330,13 +330,13 @@ body {
   font-weight: 600;
 }
 
-.stage-ferment { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+.stage-ferment { background: rgba(248, 81, 73, 0.15); color: var(--accent-green); }
 .stage-climax { background: rgba(210, 153, 34, 0.15); color: var(--accent-yellow); }
-.stage-ebb { background: rgba(248, 81, 73, 0.15); color: var(--accent-red); }
+.stage-ebb { background: rgba(63, 185, 80, 0.15); color: var(--accent-red); }
 
 .disclaimer {
-  background: rgba(248, 81, 73, 0.05);
-  border: 1px solid rgba(248, 81, 73, 0.2);
+  background: rgba(63, 185, 80, 0.05);
+  border: 1px solid rgba(63, 185, 80, 0.2);
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
@@ -381,8 +381,57 @@ body {
   .stock-price { text-align: left; }
 }
 </style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #f6f8fa; --bg-secondary: #ffffff;
+    --bg-card: #ffffff; --bg-card-hover: #f3f4f6;
+    --border-color: #d0d7de; --text-primary: #1f2328;
+    --text-secondary: #656d76; --text-muted: #6e7681;
+    --accent-blue: #0969da; --accent-purple: #8250df;
+    --accent-orange: #bc4c00;
+    --gradient-card: linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
+    --score-high: #cf222e; --score-mid: #9a6700; --score-low: #1a7f37;
+  }
+}
+
+</style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
 
 <div class="header">
   <h1>每日多维选股分析报告</h1>

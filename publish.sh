@@ -45,6 +45,7 @@ AI_REPORTS=()
 for f in ai_server/*.html; do
   [ -e "$f" ] || continue
   title=$(grep -o '<title>[^<]*</title>' "$f" | head -1 | sed 's/<title>\([^<]*\)<\/title>/\1/')
+  title="${title//|/ - }"
   if [ -z "$title" ]; then
     title=$(basename "$f" .html | tr '_' ' ')
   fi
@@ -75,6 +76,7 @@ STOCK_REPORTS=()
 for f in stock_picks/*.html; do
   [ -e "$f" ] || continue
   title=$(grep -o '<title>[^<]*</title>' "$f" | head -1 | sed 's/<title>\([^<]*\)<\/title>/\1/')
+  title="${title//|/ - }"
   if [ -z "$title" ]; then
     title=$(basename "$f" .html | tr '_' ' ')
   fi

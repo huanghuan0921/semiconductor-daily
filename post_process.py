@@ -40,6 +40,7 @@ NAV_CSS = """<style>
 GENERIC_LIGHT_MODE = """@media (prefers-color-scheme: light) {
   :root { color-scheme: light; }
   body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
 }"""
 
 GENERIC_DARK_MODE = """@media (prefers-color-scheme: dark) {

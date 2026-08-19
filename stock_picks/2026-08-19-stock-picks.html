@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日多维选股分析报告 | 2026-08-19</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text-dim: #8b949e;
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+  --accent-yellow: #d29922;
+  --accent-red-bg: rgba(248,81,73,0.1);
+  --accent-green-bg: rgba(63,185,80,0.1);
+  --accent-yellow-bg: rgba(210,153,34,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; padding:20px; max-width:960px; margin:0 auto; }
+h1 { font-size:1.5em; text-align:center; margin-bottom:8px; color:#f0f6fc; }
+.subtitle { text-align:center; color:var(--text-dim); font-size:0.85em; margin-bottom:24px; }
+h2 { font-size:1.2em; color:#f0f6fc; border-left:3px solid var(--accent-red); padding-left:10px; margin:24px 0 12px; }
+h3 { font-size:1.05em; color:#f0f6fc; margin:16px 0 8px; }
+.card { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:16px; }
+.card-pick { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:16px; border-left:3px solid var(--accent-red); }
+.metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:12px 0; }
+.metric { background:rgba(255,255,255,0.03); border-radius:6px; padding:10px 12px; }
+.metric-label { font-size:0.75em; color:var(--text-dim); }
+.metric-value { font-size:1.1em; font-weight:bold; margin-top:2px; }
+.red { color:var(--accent-red); }
+.green { color:var(--accent-green); }
+.yellow { color:var(--accent-yellow); }
+.red-bg { background:var(--accent-red-bg); }
+.green-bg { background:var(--accent-green-bg); }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.75em; margin:2px 4px 2px 0; }
+.tag-red { background:var(--accent-red-bg); color:var(--accent-red); border:1px solid rgba(248,81,73,0.3); }
+.tag-green { background:var(--accent-green-bg); color:var(--accent-green); border:1px solid rgba(63,185,80,0.3); }
+.tag-yellow { background:var(--accent-yellow-bg); color:var(--accent-yellow); border:1px solid rgba(210,153,34,0.3); }
+.stock-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px; }
+.stock-name { font-size:1.2em; font-weight:bold; color:#f0f6fc; }
+.stock-code { font-size:0.85em; color:var(--text-dim); margin-left:8px; }
+.dim-section { margin:8px 0; padding:8px 12px; background:rgba(255,255,255,0.02); border-radius:6px; }
+.dim-title { font-weight:bold; font-size:0.9em; margin-bottom:4px; }
+.dim-content { font-size:0.85em; color:var(--text-dim); line-height:1.5; }
+.dim-content strong { color:var(--text); }
+.price-box { display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; }
+.price-item { flex:1; min-width:120px; }
+.price-item-label { font-size:0.75em; color:var(--text-dim); }
+.price-item-value { font-size:1em; font-weight:bold; margin-top:2px; }
+.risk-box { padding:10px 12px; border-radius:6px; margin-top:8px; }
+table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.85em; }
+th { text-align:left; padding:8px; border-bottom:1px solid var(--border); color:var(--text-dim); }
+td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
+.warning-box { background:var(--accent-green-bg); border:1px solid rgba(63,185,80,0.3); border-radius:8px; padding:16px; margin:16px 0; }
+.warning-box h3 { color:var(--accent-green); }
+.disclaimer { text-align:center; font-size:0.8em; color:var(--text-dim); margin-top:24px; padding:16px; border-top:1px solid var(--border); }
+.emoji { margin-right:4px; }
+.summary-box { background:rgba(248,81,73,0.05); border:1px solid rgba(248,81,73,0.2); border-radius:8px; padding:14px; margin:12px 0; }
+@media(max-width:600px){ .metric-grid{grid-template-columns:repeat(2,1fr);} .price-box{flex-direction:column;} }
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+  body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
+
+<h1>每日多维选股分析报告</h1>
+<p class="subtitle">2026-08-19 | 截至盘中14:20 | 缠论 + 520均线 + 游资动向 + 市场情绪</p>
+
+<div class="warning-box">
+<h3><span class="emoji">⚠️</span>市场极端分化提示</h3>
+<p style="font-size:0.9em; margin-top:6px;">今日三大指数全线暴跌，创业板指跌近6%，84只个股跌停。但仍有38只涨停，能源煤炭、农业食品等防御板块走强。市场处于<strong class="green">退潮期</strong>，炸板率高达67%，追涨风险极大。建议<strong class="yellow">轻仓操作</strong>，严格执行止损纪律。</p>
+</div>
+
+<h2>一、市场概况（截至14:20）</h2>
+<div class="card">
+<div class="metric-grid">
+<div class="metric">
+<div class="metric-label">上证指数</div>
+<div class="metric-value green">3896.01 (-2.36%)</div>
+</div>
+<div class="metric">
+<div class="metric-label">深证成指</div>
+<div class="metric-value green">13924.53 (-4.77%)</div>
+</div>
+<div class="metric">
+<div class="metric-label">创业板指</div>
+<div class="metric-value green">3484.72 (-5.96%)</div>
+</div>
+<div class="metric">
+<div class="metric-label">涨停家数</div>
+<div class="metric-value red">38只</div>
+</div>
+<div class="metric">
+<div class="metric-label">跌停家数</div>
+<div class="metric-value green">84只</div>
+</div>
+<div class="metric">
+<div class="metric-label">连板高度</div>
+<div class="metric-value red">2板</div>
+</div>
+</div>
+
+<div class="summary-box">
+<p style="font-size:0.88em;"><strong>市场情绪阶段判断：</strong><span class="tag tag-green">退潮期</span> 昨日18只连板股中仅3只继续涨停，6只跌停，炸板率约67%，短线接力情绪恶化。资金从科技成长方向流出，转向能源、农业等防御性板块。</p>
+<p style="font-size:0.88em; margin-top:8px;"><strong>主线题材概览：</strong></p>
+<ul style="font-size:0.85em; margin-left:20px; margin-top:4px;">
+<li><span class="red">能源/煤炭</span>：大有能源、宝泰隆、金能科技、陕西黑猫等多股涨停，板块发酵期</li>
+<li><span class="red">农业/食品</span>：金健米业2连板，京粮控股2连板，红四方2连板</li>
+<li><span class="red">半导体</span>：斯达半导逆势涨停，主力大幅流入</li>
+<li><span class="green">科技成长</span>：通富微电、雅克科技、埃斯顿等跌停，资金大幅流出</li>
+</ul>
+</div>
+</div>
+
+<h2>二、选股结果（4只）</h2>
+
+<!-- 1. 金风科技 -->
+<div class="card-pick">
+<div class="stock-header">
+<div>
+<span class="stock-name">金风科技</span>
+<span class="stock-code">002202</span>
+<span class="tag tag-red">风电龙头</span>
+</div>
+<span class="red" style="font-size:1.1em;font-weight:bold;">+4.09% | 22.91元</span>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 选股维度（4维共振）</div>
+<div class="dim-content">
+<strong>缠论结构：</strong>从16.41低点(7/17)完成V型反转，形成上升笔。8/6突破20日线后回踩不破，8/17-8/19连续放量上攻，处于<strong>二类买点</strong>后的趋势延伸段。<br>
+<strong>520均线：</strong>5日均线(21.72) > 20日均线(19.82)，多头排列向上发散。股价站上5日和20日均线，回踩不破。<br>
+<strong>游资动向：</strong>主力净流入<strong class="red">9.00亿</strong>（全市场最大），换手率10.62%，量比3.24。内外盘比1.16，主动买入占优。<br>
+<strong>市场情绪：</strong>风电/新能源板块在大盘暴跌中逆势走强，板块处于发酵期，资金避险流入。
+</div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 入选理由</div>
+<div class="dim-content">4维共振最强标的。主力净流入全市场第一(9.00亿)，在大盘暴跌中仍涨4%+且未涨停封死，尾盘仍有买入机会。风电行业景气度回升+估值合理(PE-TTM 36.5倍)。</div>
+</div>
+
+<div class="price-box">
+<div class="price-item">
+<div class="price-item-label">尾盘买入区间</div>
+<div class="price-item-value red">22.70 - 23.10元</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">量能要求</div>
+<div class="price-item-value yellow">成交额>80亿</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止损位</div>
+<div class="price-item-value green">21.50元（破5日线）</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止盈参考</div>
+<div class="price-item-value red">24.20 / 25.00元</div>
+</div>
+</div>
+
+<div class="risk-box yellow-bg" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
+<div class="dim-content">
+<strong>关键价位：</strong>突破位24.21(前高/涨停价)，支撑位22.00(20日线附近)<br>
+<strong>风险等级：<span class="tag tag-yellow">中</span></strong> 大盘系统性风险较大(创业板-6%)，今日高开低走(24.21→22.59→22.91)显示抛压。若次日低开跌破22.50应果断止损。
+</div>
+</div>
+</div>
+
+<!-- 2. 斯达半导 -->
+<div class="card-pick">
+<div class="stock-header">
+<div>
+<span class="stock-name">斯达半导</span>
+<span class="stock-code">603290</span>
+<span class="tag tag-red">半导体/IGBT</span>
+</div>
+<span class="red" style="font-size:1.1em;font-weight:bold;">+10.00% 涨停 | 100.31元</span>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 选股维度（4维共振）</div>
+<div class="dim-content">
+<strong>缠论结构：</strong>159.69高点→76.88低点完成下跌趋势后，7/21-8/14在80-90区间形成盘整<strong>中枢</strong>(20个交易日)。8/17放量突破中枢上沿，8/19涨停确认，构成<strong>三类买点</strong>（中枢突破后首次回踩不破再创新高）。<br>
+<strong>520均线：</strong>5日均线(91.04) > 20日均线(85.95)，金叉向上发散。股价100.31突破60日均线附近，均线系统转多。<br>
+<strong>游资动向：</strong>涨停封板，封单2.27万手，主力净流入<strong class="red">4.72亿</strong>，换手率8.34%，量比3.87。<br>
+<strong>市场情绪：</strong>半导体板块逆势涨停，IGBT龙头。板块处于发酵期初期。
+</div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 入选理由</div>
+<div class="dim-content">4维共振。缠论中枢突破+三类买点形态明确，主力资金大幅流入4.72亿。半导体国产替代逻辑+IGBT行业景气。但已涨停封板，需等待开板机会。</div>
+</div>
+
+<div class="price-box">
+<div class="price-item">
+<div class="price-item-label">尾盘买入区间</div>
+<div class="price-item-value red">95.00 - 100.00元<br><span style="font-size:0.75em;color:var(--text-dim);">（仅涨停开板时介入）</span></div>
+</div>
+<div class="price-item">
+<div class="price-item-label">量能要求</div>
+<div class="price-item-value yellow">开板后量能不萎缩</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止损位</div>
+<div class="price-item-value green">88.00元（中枢上沿）</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止盈参考</div>
+<div class="price-item-value red">110 / 120元</div>
+</div>
+</div>
+
+<div class="risk-box" style="background:var(--accent-green-bg); border:1px solid rgba(63,185,80,0.3);">
+<div class="dim-title"><span class="green">●</span> 次日关注点 & 风险等级</div>
+<div class="dim-content">
+<strong>关键价位：</strong>若次日高开在100以上且不破97可持有；低开跌破95需警惕<br>
+<strong>风险等级：<span class="tag tag-green">中高</span></strong> 已涨停封死，若次日高开直接追入风险大。PE(TTM)51.5倍估值偏高。60日区间跌幅-25%，追涨需控制仓位。
+</div>
+</div>
+</div>
+
+<!-- 3. 陕西黑猫 -->
+<div class="card-pick">
+<div class="stock-header">
+<div>
+<span class="stock-name">陕西黑猫</span>
+<span class="stock-code">601015</span>
+<span class="tag tag-red">煤化工/能源</span>
+</div>
+<span class="red" style="font-size:1.1em;font-weight:bold;">+10.09% 涨停 | 3.71元</span>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 选股维度（4维共振）</div>
+<div class="dim-content">
+<strong>缠论结构：</strong>4.40高点→2.83低点完成下跌后，7月-8月初在3.00-3.30区间形成盘整<strong>中枢</strong>。8/6放量突破至3.58后缩量回踩3.34不破，8/19涨停再次突破，构成<strong>二类买点</strong>确认。<br>
+<strong>520均线：</strong>5日均线(3.358)上穿20日均线(3.34)，金叉形成中。股价站上两条均线。<br>
+<strong>游资动向：</strong>涨停封板，封单13.63万手，主力净流入<strong class="red">1.55亿</strong>，换手率7.50%，量比4.29。<br>
+<strong>市场情绪：</strong>能源煤炭板块涨停潮（大有能源、宝泰隆、金能科技等齐涨停），板块发酵期，资金集中涌入。
+</div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 入选理由</div>
+<div class="dim-content">4维共振。能源板块今日涨停股最多，板块效应明显。陕西黑猫年内涨停11次，股性活跃。缠论二类买点+均线金叉+板块涨停潮共振。但已涨停，需等开板。</div>
+</div>
+
+<div class="price-box">
+<div class="price-item">
+<div class="price-item-label">尾盘买入区间</div>
+<div class="price-item-value red">3.55 - 3.71元<br><span style="font-size:0.75em;color:var(--text-dim);">（仅涨停开板时介入）</span></div>
+</div>
+<div class="price-item">
+<div class="price-item-label">量能要求</div>
+<div class="price-item-value yellow">开板后换手>5%</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止损位</div>
+<div class="price-item-value green">3.30元（中枢上沿）</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止盈参考</div>
+<div class="price-item-value red">4.00 / 4.25元</div>
+</div>
+</div>
+
+<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
+<div class="dim-content">
+<strong>关键价位：</strong>前高4.40为中期压力位，3.60为短线支撑<br>
+<strong>风险等级：<span class="tag tag-yellow">中</span></strong> 低价股波动大，亏损股(PE为负)。已涨停封板，买入机会有限。若次日能源板块退潮，有补跌风险。
+</div>
+</div>
+</div>
+
+<!-- 4. 金田股份 -->
+<div class="card-pick">
+<div class="stock-header">
+<div>
+<span class="stock-name">金田股份</span>
+<span class="stock-code">601609</span>
+<span class="tag tag-red">有色金属/铜加工</span>
+</div>
+<span class="red" style="font-size:1.1em;font-weight:bold;">+8.45% | 12.96元</span>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 选股维度（3维共振）</div>
+<div class="dim-content">
+<strong>缠论结构：</strong>12.81→9.03下跌趋势完成后，7/21-8/13在9.5-10.5区间盘整形成<strong>中枢</strong>。8/14放量突破中枢，连续4日上涨(9.95→12.91)，构成<strong>三类买点</strong>后的趋势延伸。<br>
+<strong>520均线：</strong>5日均线(11.49) > 20日均线(10.40)，多头排列向上发散。股价站上5日和20日均线。<br>
+<strong>游资动向：</strong>主力净流入<strong class="red">4.40亿</strong>，换手率10.14%，量比3.13。连续4日上涨，涨停价13.15(距涨停仅1.45%)。<br>
+<strong>市场情绪：</strong>有色板块轮动中，铜加工方向受资金关注。板块处于发酵期。
+</div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title"><span class="red">●</span> 入选理由</div>
+<div class="dim-content">3维共振（缠论+520+游资）。连续4日放量上涨，主力持续流入。未涨停封死，尾盘仍可买入。距涨停价13.15仅1.45%空间，若尾盘冲击涨停则有次日溢价。</div>
+</div>
+
+<div class="price-box">
+<div class="price-item">
+<div class="price-item-label">尾盘买入区间</div>
+<div class="price-item-value red">12.70 - 13.00元</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">量能要求</div>
+<div class="price-item-value yellow">成交额>20亿</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止损位</div>
+<div class="price-item-value green">11.80元（5日线下方）</div>
+</div>
+<div class="price-item">
+<div class="price-item-label">止盈参考</div>
+<div class="price-item-value red">13.72 / 14.50元</div>
+</div>
+</div>
+
+<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
+<div class="dim-content">
+<strong>关键价位：</strong>突破位13.15(涨停价)，前高13.72为中期压力。支撑位11.70(5日线附近)<br>
+<strong>风险等级：<span class="tag tag-yellow">中</span></strong> 连续4日上涨(9.95→12.91，涨幅29.7%)，短线获利盘较多。PE(TTM)29.4倍。若有色板块退潮有补跌风险。
+</div>
+</div>
+</div>
+
+<h2>三、板块机会梳理</h2>
+<div class="card">
+<table>
+<tr><th>板块</th><th>代表个股</th><th>发酵阶段</th><th>次日延续性判断</th></tr>
+<tr><td class="red">能源/煤炭</td><td>陕西黑猫、大有能源、宝泰隆、金能科技</td><td><span class="tag tag-red">发酵期</span></td><td class="red">较强 - 多股涨停形成板块效应，但次日分化概率大，关注龙头能否连板</td></tr>
+<tr><td class="red">农业/食品</td><td>金健米业(2连板)、京粮控股(2连板)、红四方(2连板)</td><td><span class="tag tag-red">发酵期</span></td><td class="red">中等 - 防御性板块逆势走强，但连板高度仅2板，接力意愿待验证</td></tr>
+<tr><td class="red">半导体</td><td>斯达半导(涨停)、士兰微(主力流入)</td><td><span class="tag tag-yellow">初期</span></td><td class="yellow">待观察 - 仅斯达半导涨停，板块未形成涨停潮，需次日确认</td></tr>
+<tr><td class="red">风电/新能源</td><td>金风科技(+4.09%)、金风主力流入9亿</td><td><span class="tag tag-yellow">初期</span></td><td class="yellow">待观察 - 个股表现强但板块联动不足，关注次日能否扩散</td></tr>
+<tr><td class="green">科技成长</td><td>通富微电、雅克科技、埃斯顿等跌停</td><td><span class="tag tag-green">退潮期</span></td><td class="green">弱 - 资金大幅流出，短期回避</td></tr>
+</table>
+</div>
+
+<h2>四、风险提示</h2>
+<div class="card">
+<div class="dim-section">
+<div class="dim-title"><span class="green">●</span> 市场风险偏好变化</div>
+<div class="dim-content">今日上证跌2.36%、深证跌4.77%、创业板跌5.96%，84只个股跌停，市场风险偏好急剧下降。若次日继续下跌，所有推荐标的均有补跌风险。建议总仓位不超过3成，单只不超过1成。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title"><span class="green">●</span> 个股特殊风险</div>
+<div class="dim-content">
+<strong>陕西黑猫(601015)：</strong>亏损股(每股收益-0.15元)，基本面较弱，纯题材炒作<br>
+<strong>斯达半导(603290)：</strong>PE(TTM)51.5倍估值偏高，60日区间跌幅-25%<br>
+<strong>金田股份(601609)：</strong>连续4日涨幅29.7%，短线获利盘较多<br>
+<strong>金风科技(002202)：</strong>今日高开低走(24.21→22.59)，上方抛压明显
+</div>
+</div>
+<div class="dim-section">
+<div class="dim-title"><span class="green">●</span> 策略失效情景</div>
+<div class="dim-content">
+以下情况应<strong class="green">放弃介入</strong>：<br>
+1. 次日大盘大幅低开（上证跌幅>1%），系统性风险加剧<br>
+2. 涨停股次日集体低开（炸板率继续恶化），短线情绪崩溃<br>
+3. 推荐标的盘中跌破止损位，纪律执行不犹豫<br>
+4. 能源/半导体板块次日集体走弱，板块逻辑证伪
+</div>
+</div>
+</div>
+
+<div class="disclaimer">
+<h3 style="margin-bottom:8px;">重要声明</h3>
+<p>本报告仅为基于通达信公开行情数据的多维技术分析，数据截至2026年8月19日盘中14:20。所有分析维度（缠论结构、520均线、游资动向、市场情绪）均为技术面参考，不构成投资建议。任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎。所有内容仅供参考，据此操作风险自担。</p>
+<p style="margin-top:8px;color:var(--text-dim);">数据来源：通达信实时行情 | 生成时间：2026-08-19 14:25</p>
+</div>
+
+</body>
+</html>

@@ -11,23 +11,60 @@
   --border: #30363d;
   --text: #c9d1d9;
   --text-dim: #8b949e;
+  --text-bright: #f0f6fc;
   --accent-red: #f85149;
   --accent-green: #3fb950;
   --accent-yellow: #d29922;
   --accent-red-bg: rgba(248,81,73,0.1);
   --accent-green-bg: rgba(63,185,80,0.1);
   --accent-yellow-bg: rgba(210,153,34,0.1);
+  --accent-red-border: rgba(248,81,73,0.3);
+  --accent-green-border: rgba(63,185,80,0.3);
+  --accent-yellow-border: rgba(210,153,34,0.3);
+  --metric-bg: rgba(255,255,255,0.03);
+  --dim-section-bg: rgba(255,255,255,0.02);
+  --td-border: rgba(48,54,61,0.5);
+  --nav-bg: rgba(13,17,23,0.92);
+  --nav-link: #58a6ff;
+  --nav-sep: #30363d;
+  --nav-current: #8b949e;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fa;
+    --card-bg: #ffffff;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text-dim: #656d76;
+    --text-bright: #1f2328;
+    --accent-red: #cf222e;
+    --accent-green: #1a7f37;
+    --accent-yellow: #9a6700;
+    --accent-red-bg: rgba(207,34,46,0.1);
+    --accent-green-bg: rgba(26,127,55,0.1);
+    --accent-yellow-bg: rgba(154,103,0,0.1);
+    --accent-red-border: rgba(207,34,46,0.3);
+    --accent-green-border: rgba(26,127,55,0.3);
+    --accent-yellow-border: rgba(154,103,0,0.3);
+    --metric-bg: rgba(0,0,0,0.03);
+    --dim-section-bg: rgba(0,0,0,0.02);
+    --td-border: rgba(208,215,222,0.5);
+    --nav-bg: rgba(246,248,250,0.92);
+    --nav-link: #0969da;
+    --nav-sep: #d0d7de;
+    --nav-current: #656d76;
+  }
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; padding:20px; max-width:960px; margin:0 auto; }
-h1 { font-size:1.5em; text-align:center; margin-bottom:8px; color:#f0f6fc; }
+h1 { font-size:1.5em; text-align:center; margin-bottom:8px; color:var(--text-bright); }
 .subtitle { text-align:center; color:var(--text-dim); font-size:0.85em; margin-bottom:24px; }
-h2 { font-size:1.2em; color:#f0f6fc; border-left:3px solid var(--accent-red); padding-left:10px; margin:24px 0 12px; }
-h3 { font-size:1.05em; color:#f0f6fc; margin:16px 0 8px; }
+h2 { font-size:1.2em; color:var(--text-bright); border-left:3px solid var(--accent-red); padding-left:10px; margin:24px 0 12px; }
+h3 { font-size:1.05em; color:var(--text-bright); margin:16px 0 8px; }
 .card { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:16px; }
 .card-pick { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:16px; border-left:3px solid var(--accent-red); }
 .metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:12px 0; }
-.metric { background:rgba(255,255,255,0.03); border-radius:6px; padding:10px 12px; }
+.metric { background:var(--metric-bg); border-radius:6px; padding:10px 12px; }
 .metric-label { font-size:0.75em; color:var(--text-dim); }
 .metric-value { font-size:1.1em; font-weight:bold; margin-top:2px; }
 .red { color:var(--accent-red); }
@@ -36,13 +73,13 @@ h3 { font-size:1.05em; color:#f0f6fc; margin:16px 0 8px; }
 .red-bg { background:var(--accent-red-bg); }
 .green-bg { background:var(--accent-green-bg); }
 .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.75em; margin:2px 4px 2px 0; }
-.tag-red { background:var(--accent-red-bg); color:var(--accent-red); border:1px solid rgba(248,81,73,0.3); }
-.tag-green { background:var(--accent-green-bg); color:var(--accent-green); border:1px solid rgba(63,185,80,0.3); }
-.tag-yellow { background:var(--accent-yellow-bg); color:var(--accent-yellow); border:1px solid rgba(210,153,34,0.3); }
+.tag-red { background:var(--accent-red-bg); color:var(--accent-red); border:1px solid var(--accent-red-border); }
+.tag-green { background:var(--accent-green-bg); color:var(--accent-green); border:1px solid var(--accent-green-border); }
+.tag-yellow { background:var(--accent-yellow-bg); color:var(--accent-yellow); border:1px solid var(--accent-yellow-border); }
 .stock-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px; }
-.stock-name { font-size:1.2em; font-weight:bold; color:#f0f6fc; }
+.stock-name { font-size:1.2em; font-weight:bold; color:var(--text-bright); }
 .stock-code { font-size:0.85em; color:var(--text-dim); margin-left:8px; }
-.dim-section { margin:8px 0; padding:8px 12px; background:rgba(255,255,255,0.02); border-radius:6px; }
+.dim-section { margin:8px 0; padding:8px 12px; background:var(--dim-section-bg); border-radius:6px; }
 .dim-title { font-weight:bold; font-size:0.9em; margin-bottom:4px; }
 .dim-content { font-size:0.85em; color:var(--text-dim); line-height:1.5; }
 .dim-content strong { color:var(--text); }
@@ -53,12 +90,12 @@ h3 { font-size:1.05em; color:#f0f6fc; margin:16px 0 8px; }
 .risk-box { padding:10px 12px; border-radius:6px; margin-top:8px; }
 table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.85em; }
 th { text-align:left; padding:8px; border-bottom:1px solid var(--border); color:var(--text-dim); }
-td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
-.warning-box { background:var(--accent-green-bg); border:1px solid rgba(63,185,80,0.3); border-radius:8px; padding:16px; margin:16px 0; }
+td { padding:8px; border-bottom:1px solid var(--td-border); }
+.warning-box { background:var(--accent-green-bg); border:1px solid var(--accent-green-border); border-radius:8px; padding:16px; margin:16px 0; }
 .warning-box h3 { color:var(--accent-green); }
 .disclaimer { text-align:center; font-size:0.8em; color:var(--text-dim); margin-top:24px; padding:16px; border-top:1px solid var(--border); }
 .emoji { margin-right:4px; }
-.summary-box { background:rgba(248,81,73,0.05); border:1px solid rgba(248,81,73,0.2); border-radius:8px; padding:14px; margin:12px 0; }
+.summary-box { background:var(--accent-red-bg); border:1px solid var(--accent-red-border); border-radius:8px; padding:14px; margin:12px 0; }
 @media(max-width:600px){ .metric-grid{grid-template-columns:repeat(2,1fr);} .price-box{flex-direction:column;} }
 </style>
 
@@ -67,36 +104,21 @@ td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
   position: sticky; top: 0; z-index: 9999;
   display: flex; align-items: center; gap: 12px;
   padding: 10px 20px;
-  background: rgba(13,17,23,0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid #30363d;
+  border-bottom: 1px solid var(--border);
   font-size: 14px;
 }
 .site-nav a {
-  color: #58a6ff; text-decoration: none; font-weight: 500;
+  color: var(--nav-link); text-decoration: none; font-weight: 500;
   display: flex; align-items: center; gap: 6px;
 }
 .site-nav a:hover { text-decoration: underline; }
-.site-nav .nav-sep { color: #30363d; }
-.site-nav .nav-current { color: #8b949e; }
-@media (prefers-color-scheme: light) {
-  .site-nav {
-    background: rgba(246,248,250,0.92);
-    border-bottom-color: #d0d7de;
-  }
-  .site-nav a { color: #0969da; }
-  .site-nav .nav-sep { color: #d0d7de; }
-  .site-nav .nav-current { color: #656d76; }
-}
+.site-nav .nav-sep { color: var(--nav-sep); }
+.site-nav .nav-current { color: var(--nav-current); }
 </style>
-<style>
-@media (prefers-color-scheme: light) {
-  :root { color-scheme: light; }
-  body { background: #f6f8fa !important; color: #1f2328 !important; }
-  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
-}
-</style>
+
 </head>
 <body>
 <nav class="site-nav">
@@ -201,7 +223,7 @@ td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
 </div>
 </div>
 
-<div class="risk-box yellow-bg" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="risk-box yellow-bg" style="background:var(--accent-yellow-bg); border:1px solid var(--accent-yellow-border);">
 <div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
 <div class="dim-content">
 <strong>关键价位：</strong>突破位24.21(前高/涨停价)，支撑位22.00(20日线附近)<br>
@@ -255,7 +277,7 @@ td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
 </div>
 </div>
 
-<div class="risk-box" style="background:var(--accent-green-bg); border:1px solid rgba(63,185,80,0.3);">
+<div class="risk-box" style="background:var(--accent-green-bg); border:1px solid var(--accent-green-border);">
 <div class="dim-title"><span class="green">●</span> 次日关注点 & 风险等级</div>
 <div class="dim-content">
 <strong>关键价位：</strong>若次日高开在100以上且不破97可持有；低开跌破95需警惕<br>
@@ -309,7 +331,7 @@ td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
 </div>
 </div>
 
-<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid var(--accent-yellow-border);">
 <div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
 <div class="dim-content">
 <strong>关键价位：</strong>前高4.40为中期压力位，3.60为短线支撑<br>
@@ -363,7 +385,7 @@ td { padding:8px; border-bottom:1px solid rgba(48,54,61,0.5); }
 </div>
 </div>
 
-<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid rgba(210,153,34,0.3);">
+<div class="risk-box" style="background:var(--accent-yellow-bg); border:1px solid var(--accent-yellow-border);">
 <div class="dim-title"><span class="yellow">●</span> 次日关注点 & 风险等级</div>
 <div class="dim-content">
 <strong>关键价位：</strong>突破位13.15(涨停价)，前高13.72为中期压力。支撑位11.70(5日线附近)<br>

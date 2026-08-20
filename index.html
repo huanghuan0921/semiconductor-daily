@@ -17,6 +17,11 @@
   --red: #3fb950;
   --yellow: #d29922;
   --tab-active: #1f6feb;
+  --tab-count-bg: rgba(255,255,255,0.15);
+  --red-bg: rgba(63,185,80,0.15);
+  --red-border: rgba(63,185,80,0.3);
+  --accent-bg: rgba(88,166,255,0.12);
+  --accent-border: rgba(88,166,255,0.25);
 }
 @media (prefers-color-scheme: light) {
   :root {
@@ -31,6 +36,11 @@
     --red: #1a7f37;
     --yellow: #9a6700;
     --tab-active: #0969da;
+    --tab-count-bg: rgba(0,0,0,0.08);
+    --red-bg: rgba(26,127,55,0.12);
+    --red-border: rgba(26,127,55,0.3);
+    --accent-bg: rgba(9,105,218,0.1);
+    --accent-border: rgba(9,105,218,0.25);
   }
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -87,7 +97,7 @@ header .subtitle {
 .tab .tab-icon { font-size: 16px; }
 .tab .tab-count {
   font-size: 11px;
-  background: rgba(255,255,255,0.15);
+  background: var(--tab-count-bg);
   padding: 1px 6px;
   border-radius: 8px;
   margin-left: 4px;
@@ -140,14 +150,14 @@ header .subtitle {
   vertical-align: middle;
 }
 .badge-new {
-  background: rgba(63, 185, 80, 0.15);
+  background: var(--red-bg);
   color: var(--green);
-  border: 1px solid rgba(63, 185, 80, 0.3);
+  border: 1px solid var(--red-border);
 }
 .badge-cat {
-  background: rgba(88, 166, 255, 0.12);
+  background: var(--accent-bg);
   color: var(--accent);
-  border: 1px solid rgba(88, 166, 255, 0.25);
+  border: 1px solid var(--accent-border);
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 12px;

@@ -19,6 +19,16 @@
   --orange: #ffb74d;
   --yellow: #ffd54f;
   --tag-bg: #1e3a5f;
+  --bull-bg: rgba(255,82,82,0.12);
+  --bull-border: rgba(255,82,82,0.25);
+  --bear-bg: rgba(0,230,118,0.12);
+  --bear-border: rgba(0,230,118,0.25);
+  --neutral-bg: rgba(255,213,79,0.12);
+  --neutral-border: rgba(255,213,79,0.25);
+  --nav-bg: rgba(13,17,23,0.92);
+  --nav-link: #58a6ff;
+  --nav-sep: #30363d;
+  --nav-current: #8b949e;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -131,9 +141,9 @@ body {
   flex-shrink: 0;
   margin-top: 2px;
 }
-.tag-good { background: rgba(255,82,82,0.12); color: var(--green); border: 1px solid rgba(255,82,82,0.25); }
-.tag-bad { background: rgba(0,230,118,0.12); color: var(--red); border: 1px solid rgba(0,230,118,0.25); }
-.tag-neutral { background: rgba(255,213,79,0.12); color: var(--yellow); border: 1px solid rgba(255,213,79,0.25); }
+.tag-good { background: var(--bull-bg); color: var(--green); border: 1px solid var(--bull-border); }
+.tag-bad { background: var(--bear-bg); color: var(--red); border: 1px solid var(--bear-border); }
+.tag-neutral { background: var(--neutral-bg); color: var(--yellow); border: 1px solid var(--neutral-border); }
 .news-item .analysis {
   font-size: 13px;
   color: var(--text-dim);
@@ -271,28 +281,19 @@ body {
   position: sticky; top: 0; z-index: 9999;
   display: flex; align-items: center; gap: 12px;
   padding: 10px 20px;
-  background: rgba(13,17,23,0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid #30363d;
+  border-bottom: 1px solid var(--nav-sep);
   font-size: 14px;
 }
 .site-nav a {
-  color: #58a6ff; text-decoration: none; font-weight: 500;
+  color: var(--nav-link); text-decoration: none; font-weight: 500;
   display: flex; align-items: center; gap: 6px;
 }
 .site-nav a:hover { text-decoration: underline; }
-.site-nav .nav-sep { color: #30363d; }
-.site-nav .nav-current { color: #8b949e; }
-@media (prefers-color-scheme: light) {
-  .site-nav {
-    background: rgba(246,248,250,0.92);
-    border-bottom-color: #d0d7de;
-  }
-  .site-nav a { color: #0969da; }
-  .site-nav .nav-sep { color: #d0d7de; }
-  .site-nav .nav-current { color: #656d76; }
-}
+.site-nav .nav-sep { color: var(--nav-sep); }
+.site-nav .nav-current { color: var(--nav-current); }
 </style>
 <style>
 @media (prefers-color-scheme: light) {
@@ -302,6 +303,16 @@ body {
     --text-source: #6e7681; --accent: #0969da;
     --green: #cf222e; --red: #1a7f37; --orange: #9a6700;
     --yellow: #9a6700; --tag-bg: #dbe9f6;
+    --bull-bg: rgba(207,34,46,0.12);
+    --bull-border: rgba(207,34,46,0.25);
+    --bear-bg: rgba(26,127,55,0.12);
+    --bear-border: rgba(26,127,55,0.25);
+    --neutral-bg: rgba(154,103,0,0.12);
+    --neutral-border: rgba(154,103,0,0.25);
+    --nav-bg: rgba(246,248,250,0.92);
+    --nav-link: #0969da;
+    --nav-sep: #d0d7de;
+    --nav-current: #656d76;
   }
 }
 

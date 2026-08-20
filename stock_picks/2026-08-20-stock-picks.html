@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日多维选股分析报告 | 2026-08-20</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text-dim: #8b949e;
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+  --accent-yellow: #d29922;
+  --accent-red-bg: rgba(248,81,73,0.1);
+  --accent-green-bg: rgba(63,185,80,0.1);
+  --accent-yellow-bg: rgba(210,153,34,0.1);
+  --score-high: #f85149;
+  --score-mid: #d29922;
+  --score-low: #3fb950;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.6; padding:20px; max-width:960px; margin:0 auto; }
+h1 { font-size:1.5em; text-align:center; margin-bottom:8px; color:#f0f6fc; }
+.subtitle { text-align:center; color:var(--text-dim); font-size:0.85em; margin-bottom:24px; }
+h2 { font-size:1.2em; color:#f0f6fc; border-left:3px solid var(--accent-red); padding-left:10px; margin:24px 0 12px; }
+h3 { font-size:1.05em; color:#f0f6fc; margin:16px 0 8px; }
+.card { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:16px; }
+.card-pick { background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:16px; border-left:3px solid var(--accent-red); }
+.metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:12px 0; }
+.metric { background:rgba(255,255,255,0.03); border-radius:6px; padding:10px 12px; }
+.metric-label { font-size:0.75em; color:var(--text-dim); }
+.metric-value { font-size:1.1em; font-weight:bold; margin-top:2px; }
+.red { color:var(--accent-red); }
+.green { color:var(--accent-green); }
+.yellow { color:var(--accent-yellow); }
+.red-bg { background:var(--accent-red-bg); }
+.green-bg { background:var(--accent-green-bg); }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.75em; margin:2px 4px 2px 0; }
+.tag-red { background:var(--accent-red-bg); color:var(--accent-red); border:1px solid rgba(248,81,73,0.3); }
+.tag-green { background:var(--accent-green-bg); color:var(--accent-green); border:1px solid rgba(63,185,80,0.3); }
+.tag-yellow { background:var(--accent-yellow-bg); color:var(--accent-yellow); border:1px solid rgba(210,153,34,0.3); }
+.stock-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px; }
+.stock-name { font-size:1.2em; font-weight:bold; color:#f0f6fc; }
+.stock-code { font-size:0.85em; color:var(--text-dim); margin-left:8px; }
+.dim-section { margin:8px 0; padding:8px 12px; background:rgba(255,255,255,0.02); border-radius:6px; }
+.dim-title { font-weight:bold; font-size:0.9em; margin-bottom:4px; }
+.dim-content { font-size:0.85em; color:var(--text-dim); line-height:1.5; }
+.dim-content strong { color:var(--text); }
+.price-box { display:flex; gap:16px; flex-wrap:wrap; margin:8px 0; }
+.price-item { flex:1; min-width:120px; }
+.price-label { font-size:0.75em; color:var(--text-dim); }
+.price-value { font-size:1.05em; font-weight:bold; margin-top:2px; }
+.risk-box { margin-top:10px; padding:10px 12px; border-radius:6px; }
+.risk-low { background:rgba(248,81,73,0.08); border:1px solid rgba(248,81,73,0.2); }
+.risk-mid { background:rgba(210,153,34,0.08); border:1px solid rgba(210,153,34,0.2); }
+.risk-high { background:rgba(63,185,80,0.08); border:1px solid rgba(63,185,80,0.2); }
+.risk-label { font-weight:bold; font-size:0.85em; margin-bottom:4px; }
+.risk-low .risk-label { color:var(--accent-red); }
+.risk-mid .risk-label { color:var(--accent-yellow); }
+.risk-high .risk-label { color:var(--accent-green); }
+.risk-content { font-size:0.8em; color:var(--text-dim); }
+.summary-box { background:rgba(248,81,73,0.06); border:1px solid rgba(248,81,73,0.2); border-radius:8px; padding:14px; margin:12px 0; }
+.summary-box h3 { color:var(--accent-red); margin-bottom:6px; }
+ul { padding-left:18px; }
+li { margin:4px 0; font-size:0.85em; color:var(--text-dim); }
+li strong { color:var(--text); }
+.disclaimer { text-align:center; font-size:0.75em; color:var(--text-dim); margin-top:24px; padding:16px; border-top:1px solid var(--border); }
+.sector-tag { display:inline-block; padding:3px 10px; border-radius:4px; font-size:0.8em; margin:3px; }
+table { width:100%; border-collapse:collapse; margin:10px 0; font-size:0.82em; }
+th { text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); color:var(--text-dim); font-size:0.8em; }
+td { padding:6px 8px; border-bottom:1px solid rgba(48,54,61,0.5); }
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+  body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
+
+<h1>每日多维选股分析报告 | 2026-08-20</h1>
+<p class="subtitle">数据截至14:20 | 多维共振选股系统 v3.0 | 缠论+520均线+游资+情绪</p>
+
+<h2>一、市场概况（截至14:20）</h2>
+<div class="card">
+<div class="metric-grid">
+<div class="metric"><div class="metric-label">上证指数</div><div class="metric-value green">3893.38 (-0.03%)</div></div>
+<div class="metric"><div class="metric-label">深证成指</div><div class="metric-value red">13899.95 (+0.07%)</div></div>
+<div class="metric"><div class="metric-label">创业板指</div><div class="metric-value green">3466.82 (-0.19%)</div></div>
+<div class="metric"><div class="metric-label">涨停家数</div><div class="metric-value red">80家</div></div>
+<div class="metric"><div class="metric-label">跌停家数</div><div class="metric-value green">10家</div></div>
+<div class="metric"><div class="metric-label">两市成交</div><div class="metric-value">约1.81万亿</div></div>
+</div>
+<div style="margin-top:12px;">
+<h3>市场情绪判断：<span class="red">温和发酵期</span></h3>
+<p style="font-size:0.85em; color:var(--text-dim);">
+昨日连板7只，今日仅金健米业（600127）实现2连板，深华发A跌停，其余大幅分化，<strong>连板高度2板</strong>，炸板率偏高。市场呈现<strong>结构性行情</strong>特征，资金集中进攻三大方向。
+</p>
+</div>
+<div style="margin-top:12px;">
+<h3>当日三大主线题材</h3>
+<div>
+<span class="sector-tag tag-red">生物医药（mRNA癌症疫苗）</span>
+<span class="sector-tag tag-red">黄金有色（金价突破4500美元）</span>
+<span class="sector-tag tag-yellow">光通信/CPO（太辰光+16%）</span>
+</div>
+</div>
+</div>
+
+<div class="summary-box">
+<h3>重大催化事件</h3>
+<p style="font-size:0.85em;">
+<strong>1. mRNA癌症疫苗III期成功：</strong>默沙东与莫德纳宣布个性化mRNA癌症疫苗intismeran autogene首个III期临床试验取得初步阳性结果，达到无复发生存期及降低远处转移风险两大终点。隔夜莫德纳股价暴涨177%，纳斯达克生物科技指数大涨6.4%创六年最大涨幅。国内沃森生物、智飞生物、康泰生物等多股20%涨停。<br>
+<strong>2. 金价站上4500美元：</strong>现货黄金最高报4524美元/盎司，美国财政部扩大长期国债回购提振债市，瑞银目标价5400美元，花旗预测12个月5000美元。紫金矿业港股涨超7%，A股+3.85%。
+</p>
+</div>
+
+<h2>二、选股结果（4只）</h2>
+
+<!-- 标的1: 紫金矿业 -->
+<div class="card-pick">
+<div class="stock-header">
+<div><span class="stock-name">紫金矿业</span><span class="stock-code">601899 | 沪市</span></div>
+<div><span class="tag tag-red">4维共振</span> <span class="tag tag-red">黄金有色</span></div>
+</div>
+<div class="metric-grid">
+<div class="metric red-bg"><div class="metric-label">现价/涨幅</div><div class="metric-value red">34.02 / +3.85%</div></div>
+<div class="metric"><div class="metric-label">主力净流入</div><div class="metric-value red">22.24亿（全市场第一）</div></div>
+<div class="metric"><div class="metric-label">换手率/量比</div><div class="metric-value">1.82% / 2.00</div></div>
+<div class="metric"><div class="metric-label">PE(TTM)</div><div class="metric-value">14.66</div></div>
+<div class="metric"><div class="metric-label">总市值</div><div class="metric-value">9046亿</div></div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title">缠论结构 <span class="red">●</span></div>
+<div class="dim-content">7月形成上升趋势，8月6日高点35.80回调，在<strong>32-33区间形成中枢</strong>。今日放量突破中枢上沿，处于<strong>二类买点</strong>确认区域。笔结构：上升笔延续中，线段方向向上。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">520均线 <span class="red">●</span></div>
+<div class="dim-content"><strong>5日(33.26) > 20日(约33.0) > 60日(约30.5)</strong>，均线多头排列。今日放量站上5日均线，5日均线金叉20日均线趋势明确。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">游资动向 <span class="red">●</span></div>
+<div class="dim-content">主力净流入<strong>22.24亿元，全市场第一</strong>。外资连续增持，沪股通持股比例较高。量比2.00，明显放量，大单买入积极。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">市场情绪 <span class="red">●</span></div>
+<div class="dim-content">黄金板块全线爆发，黄金股ETF涨超5%，金ETF涨超2.8%。瑞银目标价5400美元、花旗预测5000美元，<strong>题材处于发酵期强化阶段</strong>。港股紫金黄金国际涨超14%。</div>
+</div>
+
+<h3>操作策略</h3>
+<div class="price-box">
+<div class="price-item"><div class="price-label">尾盘买入区间</div><div class="price-value red">33.80 - 34.20</div></div>
+<div class="price-item"><div class="price-label">量能要求</div><div class="price-value">量比>1.5</div></div>
+<div class="price-item"><div class="price-label">次日止盈位</div><div class="price-value red">35.00 - 35.80</div></div>
+<div class="price-item"><div class="price-label">止损位</div><div class="price-value green">33.00（跌破20日均线）</div></div>
+</div>
+<div class="risk-box risk-low">
+<div class="risk-label">风险等级：低</div>
+<div class="risk-content">PE仅14.66，估值合理；黄金长期逻辑（美元信用重构+央行增持）支撑；主力流入全市场第一，资金面极强。风险在于金价短期回调，但4500美元上方支撑较强。</div>
+</div>
+</div>
+
+<!-- 标的2: 药明康德 -->
+<div class="card-pick">
+<div class="stock-header">
+<div><span class="stock-name">药明康德</span><span class="stock-code">603259 | 沪市</span></div>
+<div><span class="tag tag-red">4维共振</span> <span class="tag tag-red">CXO/医药</span></div>
+</div>
+<div class="metric-grid">
+<div class="metric red-bg"><div class="metric-label">现价/涨幅</div><div class="metric-value red">166.67 / +1.63%</div></div>
+<div class="metric"><div class="metric-label">主力净流入</div><div class="metric-value red">9.53亿</div></div>
+<div class="metric"><div class="metric-label">换手率/量比</div><div class="metric-value">3.14% / 1.50</div></div>
+<div class="metric"><div class="metric-label">PE(TTM)</div><div class="metric-value">25.97</div></div>
+<div class="metric"><div class="metric-label">总市值</div><div class="metric-value">4973亿</div></div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title">缠论结构 <span class="red">●</span></div>
+<div class="dim-content">7月10日123元起步形成上升趋势，8月初在150-160区间形成<strong>震荡中枢</strong>，8月7日突破中枢上沿后高位整理，目前处于<strong>中枢上移</strong>确认阶段。线段方向向上，笔结构仍在上升中。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">520均线 <span class="red">●</span></div>
+<div class="dim-content"><strong>5日(约165) > 20日(约155) > 60日(约140)</strong>，标准多头排列。股价站稳5日均线上方，均线间距逐步扩大，趋势加速迹象。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">游资动向 <span class="red">●</span></div>
+<div class="dim-content">主力净流入<strong>9.53亿元</strong>，今年以来涨幅+87%。外资持续增持，沪深300成分股。今日量比1.50，温和放量，机构资金稳步流入。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">市场情绪 <span class="red">●</span></div>
+<div class="dim-content">mRNA癌症疫苗III期成功引爆医药板块涨停潮，沃森生物/智飞生物20%涨停。<strong>医药板块处于发酵期高潮前段</strong>，公募调研热度居首（8月104次），创新药ETF今年净流入超410亿。CXO龙头直接受益于疫苗研发热潮。</div>
+</div>
+
+<h3>操作策略</h3>
+<div class="price-box">
+<div class="price-item"><div class="price-label">尾盘买入区间</div><div class="price-value red">165.00 - 167.00</div></div>
+<div class="price-item"><div class="price-label">量能要求</div><div class="price-value">量比>1.3</div></div>
+<div class="price-item"><div class="price-label">次日止盈位</div><div class="price-value red">170.00 - 175.00</div></div>
+<div class="price-item"><div class="price-label">止损位</div><div class="price-value green">159.00（跌破20日均线）</div></div>
+</div>
+<div class="risk-box risk-low">
+<div class="risk-label">风险等级：低</div>
+<div class="risk-content">CXO龙头，PE 25.97合理；mRNA疫苗突破带来行业级利好，中长期催化明确；今年以来涨幅+87%但趋势未破。风险在于涨幅较大后短期获利盘兑现。</div>
+</div>
+</div>
+
+<!-- 标的3: 凯莱英 -->
+<div class="card-pick">
+<div class="stock-header">
+<div><span class="stock-name">凯莱英</span><span class="stock-code">002821 | 深市</span></div>
+<div><span class="tag tag-red">4维共振</span> <span class="tag tag-red">CXO/医药</span></div>
+</div>
+<div class="metric-grid">
+<div class="metric red-bg"><div class="metric-label">现价/涨幅</div><div class="metric-value red">181.40 / +6.34%</div></div>
+<div class="metric"><div class="metric-label">主力净流入</div><div class="metric-value red">7.32亿</div></div>
+<div class="metric"><div class="metric-label">换手率/量比</div><div class="metric-value">7.34% / 2.14</div></div>
+<div class="metric"><div class="metric-label">PE(TTM)</div><div class="metric-value">62.98</div></div>
+<div class="metric"><div class="metric-label">总市值</div><div class="metric-value">654亿</div></div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title">缠论结构 <span class="red">●</span></div>
+<div class="dim-content">7月15日高点195.75回调至7月30日低点145.95形成下跌中枢，8月反弹<strong>突破中枢上沿</strong>，今日放量上涨，处于反弹趋势加速段。笔结构上升中，接近前高压力。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">520均线 <span class="red">●</span></div>
+<div class="dim-content"><strong>5日(约176) > 20日(约166) > 60日(约165)</strong>，均线刚形成多头排列。5日均线上穿20日和60日均线，金叉确认中。站上20日均线后回踩不破。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">游资动向 <span class="red">●</span></div>
+<div class="dim-content">主力净流入<strong>7.32亿元</strong>，量比2.14大幅放量。今年已有8次涨停记录，股性活跃。但注意尾盘主力转为小幅流出（-0.98亿），需关注资金持续性。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">市场情绪 <span class="red">●</span></div>
+<div class="dim-content">CXO板块跟随医药涨停潮联动上涨，与药明康德同属医药CXO赛道。<strong>医药板块情绪高潮期</strong>，多只医药股20%涨停带动板块情绪外溢。</div>
+</div>
+
+<h3>操作策略</h3>
+<div class="price-box">
+<div class="price-item"><div class="price-label">尾盘买入区间</div><div class="price-value red">178.00 - 181.50</div></div>
+<div class="price-item"><div class="price-label">量能要求</div><div class="price-value">量比>1.8</div></div>
+<div class="price-item"><div class="price-label">次日止盈位</div><div class="price-value red">188.00 - 195.00</div></div>
+<div class="price-item"><div class="price-label">止损位</div><div class="price-value green">170.00（跌破5日均线）</div></div>
+</div>
+<div class="risk-box risk-mid">
+<div class="risk-label">风险等级：中</div>
+<div class="risk-content">今日冲高187.65后回落至181.40，留较长上影线，短线抛压明显；PE 62.98偏高；尾盘主力小幅流出需警惕。但均线多头排列+板块情绪共振，短线仍有上行动能。建议轻仓试探，严格止损。</div>
+</div>
+</div>
+
+<!-- 标的4: 亨通光电 -->
+<div class="card-pick">
+<div class="stock-header">
+<div><span class="stock-name">亨通光电</span><span class="stock-code">600487 | 沪市</span></div>
+<div><span class="tag tag-red">3维共振</span> <span class="tag tag-yellow">光通信/CPO</span></div>
+</div>
+<div class="metric-grid">
+<div class="metric red-bg"><div class="metric-label">现价/涨幅</div><div class="metric-value red">61.08 / +3.68%</div></div>
+<div class="metric"><div class="metric-label">主力净流入</div><div class="metric-value red">5.04亿</div></div>
+<div class="metric"><div class="metric-label">换手率/量比</div><div class="metric-value">6.93% / 0.75</div></div>
+<div class="metric"><div class="metric-label">PE(TTM)</div><div class="metric-value">53.24</div></div>
+<div class="metric"><div class="metric-label">总市值</div><div class="metric-value">1506亿</div></div>
+</div>
+
+<div class="dim-section">
+<div class="dim-title">缠论结构 <span class="red">●</span></div>
+<div class="dim-content">7月大幅下跌后形成底部（45.60低点），8月反弹至65.41后回调至58.91，今日反弹至61.08。<strong>在55-65区间形成震荡中枢</strong>，处于中枢内反弹段，尚未突破中枢上沿。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">520均线 <span class="yellow">●</span></div>
+<div class="dim-content"><strong>5日(约62.7) > 20日(约58)</strong>，但<strong>60日均线(约68)仍在上方</strong>，均线尚未完全多头排列。5日均线上穿20日均线，金叉中。需关注能否站上60日均线。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">游资动向 <span class="red">●</span></div>
+<div class="dim-content">主力净流入<strong>5.04亿元</strong>，今年已有10次涨停记录，股性活跃。外盘略大于内盘，买盘力量较强。沪股通持股，外资参与度高。</div>
+</div>
+<div class="dim-section">
+<div class="dim-title">市场情绪 <span class="red">●</span></div>
+<div class="dim-content">光通信/CPO板块强势，太辰光+16%、仕佳光子+6.91%。AI算力需求持续拉动光模块产业链，<strong>题材处于发酵期扩散阶段</strong>。</div>
+</div>
+
+<h3>操作策略</h3>
+<div class="price-box">
+<div class="price-item"><div class="price-label">尾盘买入区间</div><div class="price-value red">60.00 - 61.10</div></div>
+<div class="price-item"><div class="price-label">量能要求</div><div class="price-value">量比>0.8</div></div>
+<div class="price-item"><div class="price-label">次日止盈位</div><div class="price-value red">63.00 - 65.00</div></div>
+<div class="price-item"><div class="price-label">止损位</div><div class="price-value green">58.00（跌破5日均线）</div></div>
+</div>
+<div class="risk-box risk-mid">
+<div class="risk-label">风险等级：中</div>
+<div class="risk-content">60日均线仍在上方，均线未完全多头排列（3维共振而非4维）；PE 53.24偏高；量比0.75偏低，今日缩量反弹。但主力流入大+板块联动强，短线博弈机会存在。建议轻仓参与，突破65后加仓。</div>
+</div>
+</div>
+
+<h2>三、板块机会梳理</h2>
+<div class="card">
+<table>
+<tr><th>板块</th><th>代表个股</th><th>今日表现</th><th>发酵阶段</th><th>次日延续性判断</th></tr>
+<tr><td><strong>生物医药</strong></td><td>沃森生物/智飞生物涨停</td><td class="red">板块涨幅超8%</td><td><span class="tag tag-red">高潮前段</span></td><td class="red">高</td></tr>
+<tr><td><strong>黄金有色</strong></td><td>紫金矿业/赤峰黄金</td><td class="red">板块涨幅超5%</td><td><span class="tag tag-red">发酵强化</span></td><td class="red">高</td></tr>
+<tr><td><strong>光通信/CPO</strong></td><td>太辰光/仕佳光子</td><td class="red">板块涨幅超6%</td><td><span class="tag tag-yellow">发酵扩散</span></td><td class="yellow">中</td></tr>
+<tr><td><strong>CXO医药</strong></td><td>药明康德/凯莱英</td><td class="red">板块涨幅超3%</td><td><span class="tag tag-red">联动跟涨</span></td><td class="red">高</td></tr>
+<tr><td><strong>消费电子</strong></td><td>蓝思科技/比亚迪</td><td class="red">板块涨幅约2%</td><td><span class="tag tag-yellow">弱修复</span></td><td class="green">低</td></tr>
+</table>
+<p style="font-size:0.8em; color:var(--text-dim); margin-top:8px;">
+<strong>明日关注重点：</strong>生物医药板块能否延续涨停潮（关注沃森生物是否2连板），黄金板块是否继续受金价催化（关注4500美元支撑），光通信板块是否扩散至二三线。
+</p>
+</div>
+
+<h2>四、风险提示</h2>
+<div class="card">
+<ul>
+<li><strong>市场风险偏好变化：</strong>连板高度仅2板，昨日连板今日分化明显（深华发A跌停），高位股接力意愿下降。若明日医药板块冲高回落，可能引发获利盘集中兑现。</li>
+<li><strong>个股特殊风险：</strong>
+  <ul>
+    <li>药明康德/凯莱英：今年以来涨幅分别+87%/+98%，需关注大股东减持风险</li>
+    <li>凯莱英今日冲高187.65回落至181.40，上影线较长，短线抛压明显</li>
+    <li>亨通光电60日均线仍在上方（约68元），均线未完全修复</li>
+  </ul>
+</li>
+<li><strong>策略失效情景：</strong>
+  <ul>
+    <li>若金价跌破4450美元，紫金矿业逻辑弱化，应放弃介入</li>
+    <li>若医药板块明日开盘大幅低开（超过-3%），全线止盈离场</li>
+    <li>若上证指数跌破3850点，市场情绪转弱，整体降低仓位</li>
+  </ul>
+</li>
+<li><strong>仓位建议：</strong>单只标的仓位不超过总资金20%，总仓位控制在60-70%。凯莱英和亨通光电风险偏高，建议各10-15%。</li>
+</ul>
+</div>
+
+<div class="disclaimer">
+<p><strong>重要声明</strong></p>
+<p>本报告仅为基于公开数据的多维技术分析，数据来源：通达信实时行情（截至2026-08-20 14:20）。任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎，所有内容不构成投资建议。报告中涉及的个股均为基于多维度量化筛选的结果，不代表任何形式的推荐或承诺。投资者应自行判断并承担投资风险。</p>
+</div>
+
+</body>
+</html>

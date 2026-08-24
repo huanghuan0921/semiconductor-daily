@@ -13,27 +13,23 @@ NAV_CSS = """<style>
   position: sticky; top: 0; z-index: 9999;
   display: flex; align-items: center; gap: 12px;
   padding: 10px 20px;
-  background: rgba(13,17,23,0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid #30363d;
   font-size: 14px;
 }
-.site-nav a {
-  color: #58a6ff; text-decoration: none; font-weight: 500;
-  display: flex; align-items: center; gap: 6px;
-}
+.site-nav a { text-decoration: none; font-weight: 500; }
 .site-nav a:hover { text-decoration: underline; }
-.site-nav .nav-sep { color: #30363d; }
-.site-nav .nav-current { color: #8b949e; }
 @media (prefers-color-scheme: light) {
-  .site-nav {
-    background: rgba(246,248,250,0.92);
-    border-bottom-color: #d0d7de;
-  }
+  .site-nav { background: rgba(246,248,250,0.92); border-bottom: 1px solid #d0d7de; }
   .site-nav a { color: #0969da; }
   .site-nav .nav-sep { color: #d0d7de; }
   .site-nav .nav-current { color: #656d76; }
+}
+@media (prefers-color-scheme: dark) {
+  .site-nav { background: rgba(13,17,23,0.92); border-bottom: 1px solid #30363d; }
+  .site-nav a { color: #58a6ff; }
+  .site-nav .nav-sep { color: #30363d; }
+  .site-nav .nav-current { color: #8b949e; }
 }
 </style>"""
 
@@ -55,58 +51,70 @@ CATEGORY_MAP = {
 }
 
 def get_nav_html(filepath):
-    """Build nav bar HTML based on file location."""
     relpath = os.path.relpath(filepath, BASE)
     parts = relpath.split(os.sep)
-
     if len(parts) == 1:
-        # Root directory file (e.g., semiconductor_daily_20260818.html)
         home_link = "index.html"
         label = "半导体每日早报"
     else:
-        # Subdirectory file (e.g., ai_server/xxx.html)
         subdir = parts[0]
         home_link = "../index.html"
         label = CATEGORY_MAP.get(subdir, subdir)
-
     return f'<nav class="site-nav">\n  <a href="{home_link}">← 半导体投研信息中心</a>\n  <span class="nav-sep">/</span>\n  <span class="nav-current">{label}</span>\n</nav>'
 
+def is_dark_themed(content):
+    """Detect if file uses dark background by default."""
+    dark_patterns = [
+        r'--bg[^:]*:\s*#0[0-9a-f]',
+        r'--bg[^:]*:\s*#1[0-9a-f]',
+        r'background:\s*#0[0-9a-f]',
+        r'background:\s*#1[0-9a-f]',
+    ]
+    for pattern in dark_patterns:
+        if re.search(pattern, content, re.I):
+            return True
+    return False
+
 def process_file(filepath):
-    """Inject nav bar + light mode if missing."""
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
     original = content
-    changed = False
+    has_nav = "site-nav" in content
+    has_light = "prefers-color-scheme: light" in content
+    has_dark = "prefers-color-scheme: dark" in content
 
-    # 1. Inject nav CSS + light/dark mode CSS before </head>
-    if "site-nav" not in content:
-        # Determine if file is dark or light themed
-        has_dark_bg = bool(re.search(r'--bg[^:]*:\s*#0[0-9a-f]', content, re.I))
-        has_light_bg = bool(re.search(r'--bg[^:]*:\s*#f[0-9a-f]', content, re.I))
+    if has_nav and has_light and has_dark:
+        return False
 
-        mode_css = GENERIC_LIGHT_MODE if has_dark_bg else GENERIC_DARK_MODE
-        style_block = f"\n{NAV_CSS}\n<style>\n{mode_css}\n</style>\n"
+    dark_bg = is_dark_themed(content)
+
+    css_parts = []
+    if not has_nav:
+        css_parts.append(NAV_CSS)
+    if dark_bg and not has_light:
+        css_parts.append(f"<style>\n{GENERIC_LIGHT_MODE}\n</style>")
+    if not dark_bg and not has_dark:
+        css_parts.append(f"<style>\n{GENERIC_DARK_MODE}\n</style>")
+
+    if css_parts:
+        style_block = "\n" + "\n".join(css_parts) + "\n"
         content = content.replace("</head>", f"{style_block}</head>", 1)
-        changed = True
 
-    # 2. Inject nav bar after <body> tag
-    if "site-nav" not in content or (changed and "site-nav" not in original):
+    if not has_nav:
         nav_html = get_nav_html(filepath)
         body_match = re.search(r'<body[^>]*>', content)
         if body_match:
             insert_pos = body_match.end()
             content = content[:insert_pos] + "\n" + nav_html + content[insert_pos:]
-            changed = True
 
-    if changed and content != original:
+    if content != original:
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
         return True
     return False
 
 def main():
-    # Find all HTML files
     patterns = [
         os.path.join(BASE, "semiconductor_daily_*.html"),
         os.path.join(BASE, "ai_server", "*.html"),
@@ -120,7 +128,7 @@ def main():
                 print(f"  injected: {os.path.relpath(filepath, BASE)}")
                 total += 1
             else:
-                print(f"  skip (already has nav): {os.path.relpath(filepath, BASE)}")
+                print(f"  skip (already complete): {os.path.relpath(filepath, BASE)}")
 
     print(f"  Post-process complete: {total} file(s) updated")
 

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日多维选股分析报告 | 2026-08-24</title>
+<style>
+:root {
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+  --accent-yellow: #d29922;
+  --bg-dark: #0d1117;
+  --bg-card: #161b22;
+  --bg-border: #30363d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --red-rgba: rgba(248, 81, 73, 0.12);
+  --green-rgba: rgba(63, 185, 80, 0.12);
+  --yellow-rgba: rgba(210, 153, 34, 0.12);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.7;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+h1 { font-size: 1.6em; text-align: center; margin-bottom: 5px; }
+.subtitle { text-align: center; color: var(--text-secondary); font-size: 0.85em; margin-bottom: 25px; }
+h2 { font-size: 1.25em; margin: 25px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--bg-border); }
+h3 { font-size: 1.05em; margin: 15px 0 8px; }
+.section { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+.stock-card { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 8px; padding: 18px; margin-bottom: 16px; }
+.stock-header { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.stock-name { font-size: 1.2em; font-weight: bold; }
+.stock-code { color: var(--text-secondary); font-size: 0.9em; }
+.stock-badge { background: var(--red-rgba); color: var(--accent-red); padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.dim-item { padding: 8px 12px; border-radius: 6px; font-size: 0.88em; }
+.dim-bullish { background: var(--red-rgba); color: var(--accent-red); border-left: 3px solid var(--accent-red); }
+.dim-neutral { background: var(--yellow-rgba); color: var(--accent-yellow); border-left: 3px solid var(--accent-yellow); }
+.dim-bearish { background: var(--green-rgba); color: var(--accent-green); border-left: 3px solid var(--accent-green); }
+.info-row { display: flex; gap: 15px; flex-wrap: wrap; margin: 6px 0; font-size: 0.88em; }
+.info-label { color: var(--text-secondary); min-width: 80px; }
+.info-value { color: var(--text-primary); font-weight: 500; }
+.red { color: var(--accent-red); }
+.green { color: var(--accent-green); }
+.yellow { color: var(--accent-yellow); }
+.price-box { display: flex; gap: 20px; flex-wrap: wrap; margin: 10px 0; padding: 12px; background: rgba(110, 118, 129, 0.08); border-radius: 6px; }
+.price-item { font-size: 0.85em; }
+.price-item .label { color: var(--text-secondary); font-size: 0.85em; }
+.price-item .value { font-weight: bold; font-size: 1.05em; }
+.risk-tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+.risk-low { background: var(--red-rgba); color: var(--accent-red); }
+.risk-mid { background: var(--yellow-rgba); color: var(--accent-yellow); }
+.risk-high { background: var(--green-rgba); color: var(--accent-green); }
+.resonance { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+.resonance span { font-size: 0.75em; padding: 2px 8px; border-radius: 3px; background: rgba(248,81,73,0.15); color: var(--accent-red); border: 1px solid rgba(248,81,73,0.3); }
+.market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+.market-card { text-align: center; padding: 12px 8px; border-radius: 6px; }
+.market-card .name { font-size: 0.8em; color: var(--text-secondary); }
+.market-card .price { font-size: 1.1em; font-weight: bold; margin: 4px 0; }
+.market-card .chg { font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.85em; }
+th, td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--bg-border); }
+th { color: var(--text-secondary); font-weight: normal; }
+.disclaimer { text-align: center; color: var(--text-secondary); font-size: 0.8em; margin-top: 20px; padding: 15px; border-top: 1px solid var(--bg-border); }
+.tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 0.75em; margin-left: 4px; }
+.tag-ferment { background: var(--red-rgba); color: var(--accent-red); }
+.tag-climax { background: var(--yellow-rgba); color: var(--accent-yellow); }
+.tag-ebbing { background: var(--green-rgba); color: var(--accent-green); }
+ul { list-style: none; padding-left: 0; }
+ul li { padding: 4px 0 4px 16px; position: relative; font-size: 0.88em; }
+ul li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-yellow); }
+strong { color: var(--text-primary); }
+.summary-box { padding: 12px 15px; border-radius: 6px; margin: 10px 0; font-size: 0.88em; }
+.summary-alert { background: var(--green-rgba); border-left: 3px solid var(--accent-green); color: var(--accent-green); }
+.summary-info { background: var(--yellow-rgba); border-left: 3px solid var(--accent-yellow); color: var(--accent-yellow); }
+@media (max-width: 600px) {
+  .dim-grid { grid-template-columns: 1fr; }
+  .market-grid { grid-template-columns: 1fr; }
+  .price-box { flex-direction: column; gap: 8px; }
+}
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #30363d;
+  font-size: 14px;
+}
+.site-nav a {
+  color: #58a6ff; text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #30363d; }
+.site-nav .nav-current { color: #8b949e; }
+@media (prefers-color-scheme: light) {
+  .site-nav {
+    background: rgba(246,248,250,0.92);
+    border-bottom-color: #d0d7de;
+  }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+  body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
+
+<h1>每日多维选股分析报告</h1>
+<p class="subtitle">2026-08-24（周一）｜数据截至14:25｜缠论结构 + 520均线 + 游资动向 + 市场情绪</p>
+
+<!-- 一、市场概况 -->
+<div class="section">
+<h2>一、市场概况（截至14:25）</h2>
+
+<div class="market-grid">
+  <div class="market-card" style="background:var(--green-rgba);">
+    <div class="name">上证指数</div>
+    <div class="price">3872.23</div>
+    <div class="chg green">-0.84%</div>
+  </div>
+  <div class="market-card" style="background:var(--green-rgba);">
+    <div class="name">深证成指</div>
+    <div class="price">13741.06</div>
+    <div class="chg green">-2.51%</div>
+  </div>
+  <div class="market-card" style="background:var(--green-rgba);">
+    <div class="name">创业板指</div>
+    <div class="price">3412.60</div>
+    <div class="chg green">-3.75%</div>
+  </div>
+</div>
+
+<table>
+  <tr><th>涨停家数</th><th>跌停家数</th><th>连板数</th><th>炸板率</th><th>涨家数/跌家数</th></tr>
+  <tr>
+    <td class="red">43只</td>
+    <td class="green">5只+</td>
+    <td class="red">11只</td>
+    <td class="green">~45%</td>
+    <td class="green">超4400只下跌</td>
+  </tr>
+</table>
+
+<div class="summary-box summary-alert">
+  <strong>市场情绪阶段：退潮期</strong><br>
+  创业板指大跌3.75%，"杀成长、杀估值"趋势延续。连板接力情绪极差，11只连板股中5只断板下跌，双鹭药业从连板直接跌停。但价值板块逆势走强，煤炭、银行、有色等板块获得资金流入，存在<strong>结构性机会</strong>。
+</div>
+
+<p style="font-size:0.88em;margin-top:10px;"><strong>主线题材概览：</strong></p>
+<ul>
+  <li><span class="red">有色金属/贵金属</span> — 黄金突破4650美元创新高，"货币贬值"交易回归，白银跟涨</li>
+  <li><span class="red">煤炭/价值</span> — 资金从高估值科技向低估值高股息方向再平衡，中证红利逆势涨1.11%</li>
+  <li><span class="red">种业</span> — 厄尔尼诺减产预期发酵，登海种业、秋乐种业等多股涨停</li>
+  <li><span class="red">锂矿/固态电池</span> — 碳酸锂主力涨近4%站上16.2万，固态电池国际标准立项</li>
+  <li><span class="yellow">智能驾驶</span> — 特斯拉Cybercab即将推出，博科测试、众合科技涨停</li>
+</ul>
+</div>
+
+<!-- 二、选股结果 -->
+<div class="section">
+<h2>二、选股结果（4只，均4维共振）</h2>
+
+<!-- 股票1: 上海能源 -->
+<div class="stock-card">
+  <div class="stock-header">
+    <span class="stock-name">上海能源</span>
+    <span class="stock-code">600508.SH</span>
+    <span class="stock-badge red">涨停 +10.02%</span>
+    <span class="risk-tag risk-low">风险：低</span>
+  </div>
+  
+  <div class="resonance">
+    <span>缠论：多头排列+中枢上移</span>
+    <span>520均线：多头排列</span>
+    <span>游资：涨停+封单1.42亿</span>
+    <span>情绪：煤炭价值板块高潮</span>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-item dim-bullish"><strong>缠论结构：</strong>均线多头排列+10天涨停+20天涨停+60日阳线多于阴线，趋势向上，中枢持续上移，处于主升浪阶段</div>
+    <div class="dim-item dim-bullish"><strong>520均线：</strong>5日/20日/60日均线多头排列确认，股价站上所有短中期均线</div>
+    <div class="dim-item dim-bullish"><strong>游资动向：</strong>涨停封单13.3万手（1.42亿），量比4.18，放量明显，主力资金积极介入</div>
+    <div class="dim-item dim-bullish"><strong>市场情绪：</strong>煤炭板块今日最强方向之一，价值风格占优，资金从科技板块向价值板块迁移</div>
+  </div>
+
+  <p style="font-size:0.88em;margin:8px 0;"><strong>入选理由：</strong>4维全共振。煤炭+价值风格是今日市场最确定方向，均线多头排列+连板+放量三重确认，PE(TTM)33.5倍估值合理，今年涨幅19.6%仍处合理区间。</p>
+
+  <div class="price-box">
+    <div class="price-item"><div class="label">尾盘买入区间</div><div class="value red">9.60 - 9.88</div></div>
+    <div class="price-item"><div class="label">止损位</div><div class="value green">8.98（前收）</div></div>
+    <div class="price-item"><div class="label">次日止盈参考</div><div class="value red">10.50 - 10.87</div></div>
+    <div class="price-item"><div class="label">换手率</div><div class="value">3.50%</div></div>
+  </div>
+
+  <p style="font-size:0.85em;color:var(--text-secondary);"><strong>次日关注点：</strong>若高开3%以上（10.18+）可持有观察，跌破9.50减仓，跌破8.98止损。关注煤炭板块整体强度，若大盘继续杀跌则需谨慎。</p>
+</div>
+
+<!-- 股票2: 白银有色 -->
+<div class="stock-card">
+  <div class="stock-header">
+    <span class="stock-name">白银有色</span>
+    <span class="stock-code">601212.SH</span>
+    <span class="stock-badge red">涨停 +10.02%</span>
+    <span class="risk-tag risk-mid">风险：中</span>
+  </div>
+  
+  <div class="resonance">
+    <span>缠论：多头排列+突破120日均线</span>
+    <span>520均线：多头排列</span>
+    <span>游资：涨停+封单4.41亿(最大)</span>
+    <span>情绪：有色/货币贬值交易发酵</span>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-item dim-bullish"><strong>缠论结构：</strong>多头排列+10天涨停+20天强势+突破120日均线压制，中枢上移，趋势确认</div>
+    <div class="dim-item dim-bullish"><strong>520均线：</strong>5日/20日/60日均线多头排列，今日放量突破120日均线</div>
+    <div class="dim-item dim-bullish"><strong>游资动向：</strong>涨停封单62万手（4.41亿，全场最大封单），主力净流入1.87亿，资金高度看好</div>
+    <div class="dim-item dim-bullish"><strong>市场情绪：</strong>有色板块发酵期，黄金创新高+货币贬值交易+白银跟涨，今年涨幅14.5%仍有空间</div>
+  </div>
+
+  <p style="font-size:0.88em;margin:8px 0;"><strong>入选理由：</strong>4维全共振。全场最大封单4.41亿，有色金属/贵金属是今日最确定方向之一。黄金突破4650美元+美国财政部干预债券市场推动"货币贬值"主题回归，白银作为贵金属跟涨标的受益。</p>
+
+  <div class="price-box">
+    <div class="price-item"><div class="label">尾盘买入区间</div><div class="value red">6.50 - 6.70</div></div>
+    <div class="price-item"><div class="label">止损位</div><div class="value green">6.09（前收）</div></div>
+    <div class="price-item"><div class="label">次日止盈参考</div><div class="value red">7.00 - 7.37</div></div>
+    <div class="price-item"><div class="label">换手率</div><div class="value">2.92%</div></div>
+  </div>
+
+  <p style="font-size:0.85em;color:var(--text-secondary);"><strong>次日关注点：</strong>若高开2%以上（6.83+）可持有，跌破6.50减半仓，跌破6.09止损。关注国际金价走势及美元指数变化。注意公司PE为负（亏损），炒有色价格逻辑不看PE。</p>
+</div>
+
+<!-- 股票3: 登海种业 -->
+<div class="stock-card">
+  <div class="stock-header">
+    <span class="stock-name">登海种业</span>
+    <span class="stock-code">002041.SZ</span>
+    <span class="stock-badge red">涨停 +10.04%</span>
+    <span class="risk-tag risk-mid">风险：中</span>
+  </div>
+  
+  <div class="resonance">
+    <span>缠论：多头排列+趋势向上</span>
+    <span>520均线：多头排列</span>
+    <span>游资：涨停+封单1.97亿</span>
+    <span>情绪：种业板块发酵期</span>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-item dim-bullish"><strong>缠论结构：</strong>均线多头排列+10天涨停+20天强势+60日阳线多于阴线，走势结构完美，中枢持续上移</div>
+    <div class="dim-item dim-bullish"><strong>520均线：</strong>5日/20日/60日均线多头排列确认，股价站上所有均线</div>
+    <div class="dim-item dim-bullish"><strong>游资动向：</strong>涨停封单19万手（1.97亿），内外盘比1.31，买盘占优，主力资金积极</div>
+    <div class="dim-item dim-bullish"><strong>市场情绪：</strong>种业板块发酵期，厄尔尼诺减产预期+农产品涨价逻辑，板块涨停潮</div>
+  </div>
+
+  <p style="font-size:0.88em;margin:8px 0;"><strong>入选理由：</strong>4维全共振。种业板块今日涨停潮（秋乐种业涨16%+），厄尔尼诺减产催化明确。登海种业作为种业龙头，均线多头排列+涨停+板块共振，技术面和题材面共振。今年涨幅6.8%，空间尚可。</p>
+
+  <div class="price-box">
+    <div class="price-item"><div class="label">尾盘买入区间</div><div class="value red">9.90 - 10.19</div></div>
+    <div class="price-item"><div class="label">止损位</div><div class="value green">9.26（前收）</div></div>
+    <div class="price-item"><div class="label">次日止盈参考</div><div class="value red">10.60 - 11.00</div></div>
+    <div class="price-item"><div class="label">换手率</div><div class="value">5.03%</div></div>
+  </div>
+
+  <p style="font-size:0.85em;color:var(--text-secondary);"><strong>次日关注点：</strong>若高开3%以上（10.50+）持有观察，跌破9.80减仓，跌破9.26止损。关注种业板块整体涨停潮能否延续，厄尔尼诺消息面变化。PE 89倍偏高，种业炒预期不看当期PE。</p>
+</div>
+
+<!-- 股票4: 汉森制药 -->
+<div class="stock-card">
+  <div class="stock-header">
+    <span class="stock-name">汉森制药</span>
+    <span class="stock-code">002412.SZ</span>
+    <span class="stock-badge red">连板涨停 +10.01%</span>
+    <span class="risk-tag risk-high">风险：中高</span>
+  </div>
+  
+  <div class="resonance">
+    <span>缠论：多头排列+10日创新高</span>
+    <span>520均线：多头排列</span>
+    <span>游资：连板+封单3.22亿</span>
+    <span>情绪：医药板块发酵</span>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-item dim-bullish"><strong>缠论结构：</strong>多头排列+10日创新高+10天涨停+20日放量强势，趋势加速，处于主升段</div>
+    <div class="dim-item dim-bullish"><strong>520均线：</strong>5日/20日/60日均线多头排列，股价创近期新高</div>
+    <div class="dim-item dim-bullish"><strong>游资动向：</strong>连板涨停+封单28.5万手（3.22亿），今年累计涨幅83.5%，游资持续接力</div>
+    <div class="dim-item dim-bullish"><strong>市场情绪：</strong>医药板块逆势走强，今年涨幅83.5%，市场抱团效应明显</div>
+  </div>
+
+  <p style="font-size:0.88em;margin:8px 0;"><strong>入选理由：</strong>4维全共振。连板+均线多头排列+创新高三重确认，医药板块在杀估值行情中逆势走强。PE(TTM) 25倍估值合理，内外盘比1.21买盘占优。但今年涨幅已达83.5%，需警惕高位抱团松动风险。</p>
+
+  <div class="price-box">
+    <div class="price-item"><div class="label">尾盘买入区间</div><div class="value red">10.90 - 11.21</div></div>
+    <div class="price-item"><div class="label">止损位</div><div class="value green">10.19（前收）</div></div>
+    <div class="price-item"><div class="label">次日止盈参考</div><div class="value red">11.60 - 12.00</div></div>
+    <div class="price-item"><div class="label">换手率</div><div class="value">7.25%</div></div>
+  </div>
+
+  <p style="font-size:0.85em;color:var(--text-secondary);"><strong>次日关注点：</strong>连板股断板风险高（今日5/11连板股断板）。若高开5%以上（11.77+）可获利了结，跌破10.80减仓，跌破10.19止损。今年涨幅83.5%属高位，严格控制仓位。</p>
+</div>
+
+</div>
+
+<!-- 三、板块机会梳理 -->
+<div class="section">
+<h2>三、板块机会梳理</h2>
+
+<table>
+  <tr><th>板块</th><th>代表标的</th><th>今日表现</th><th>发酵阶段</th><th>次日延续性</th></tr>
+  <tr>
+    <td>有色金属/贵金属</td>
+    <td>白银有色、金钼股份、红星发展</td>
+    <td class="red">多股涨停</td>
+    <td><span class="tag tag-ferment">发酵期</span></td>
+    <td class="red">高（金价创新高+货币贬值主题）</td>
+  </tr>
+  <tr>
+    <td>煤炭/价值</td>
+    <td>上海能源、中国石化、中国平安</td>
+    <td class="red">逆势大涨</td>
+    <td><span class="tag tag-climax">高潮期</span></td>
+    <td class="yellow">中高（风格切换持续，但拥挤度上升）</td>
+  </tr>
+  <tr>
+    <td>种业</td>
+    <td>登海种业、秋乐种业、隆平高科</td>
+    <td class="red">涨停潮</td>
+    <td><span class="tag tag-ferment">发酵期</span></td>
+    <td class="red">高（厄尔尼诺催化+减产预期）</td>
+  </tr>
+  <tr>
+    <td>锂矿/固态电池</td>
+    <td>融捷股份(2连板)、天华新能、赣锋锂业</td>
+    <td class="red">强势大涨</td>
+    <td><span class="tag tag-ferment">发酵期</span></td>
+    <td class="red">中高（碳酸锂涨价+标准立项）</td>
+  </tr>
+  <tr>
+    <td>智能驾驶</td>
+    <td>博科测试、众合科技、华阳集团</td>
+    <td class="red">多股涨停</td>
+    <td><span class="tag tag-ferment">启动期</span></td>
+    <td class="yellow">中（催化明确但需持续验证）</td>
+  </tr>
+  <tr>
+    <td>绿色算力/算电协同</td>
+    <td>协鑫能科(一字涨停)</td>
+    <td class="red">一字涨停</td>
+    <td><span class="tag tag-ferment">启动期</span></td>
+    <td class="yellow">中（1361亿签约催化）</td>
+  </tr>
+  <tr>
+    <td>科技/AI（风险）</td>
+    <td>通信、电子板块</td>
+    <td class="green">大跌-4%+</td>
+    <td><span class="tag tag-ebbing">退潮期</span></td>
+    <td class="green">低（杀估值持续，避险）</td>
+  </tr>
+</table>
+
+<div class="summary-box summary-info">
+  <strong>板块轮动判断：</strong>资金正从高估值科技板块（通信、电子）向低估值价值板块（煤炭、有色、银行）迁移。有色/贵金属受国际金价创新高+货币贬值交易驱动，持续性较强。种业受厄尔尼诺催化，处于发酵期。锂矿受碳酸锂涨价+固态电池标准双催化。智能驾驶和绿色算力为新启动题材，需观察持续性。
+</div>
+</div>
+
+<!-- 四、风险提示 -->
+<div class="section">
+<h2>四、风险提示</h2>
+
+<ul>
+  <li><strong style="color:var(--accent-green);">市场风险偏好极低：</strong>创业板指-3.75%，超4400只个股下跌，"杀成长杀估值"趋势延续。连板接力情绪差（45%炸板率），双鹭药业从连板直接跌停，亏钱效应明显。若明日继续杀跌，即使涨停股也可能低开。</li>
+  <li><strong style="color:var(--accent-green);">连板股断板风险：</strong>今日11只连板股中5只断板下跌，断板率45%。汉森制药作为连板股，次日存在断板风险，需严格执行止损纪律。</li>
+  <li><strong style="color:var(--accent-green);">白银有色特殊风险：</strong>公司PE为负（亏损），炒作逻辑为有色价格弹性，非基本面驱动。若国际贵金属价格回落，股价可能快速回落。流通市值496亿，大市值股封板稳定性优于小盘股。</li>
+  <li><strong style="color:var(--accent-green);">策略失效情景：</strong>①若明日大盘继续恐慌性下跌（创业板再跌2%+），所有标的可能低开，建议放弃介入；②若国际金价大幅回落，白银有色需立即止损；③种业板块若无明显新催化，可能一日游，需关注次日板块整体表现。</li>
+  <li><strong style="color:var(--accent-yellow);">仓位建议：</strong>当前市场极端弱势，建议单只标的不超过总仓位15%，4只合计不超过50%，保留至少50%现金应对不确定性。</li>
+</ul>
+</div>
+
+<!-- 重要声明 -->
+<div class="disclaimer">
+  <p><strong>重要声明</strong></p>
+  <p>本报告仅为基于公开数据（通达信实时行情）的多维技术分析，涵盖缠论结构、520均线战法、游资动向和市场情绪四个维度。所有数据均来源于公开行情，未经任何编造。</p>
+  <p>任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎。本报告所有内容不构成投资建议，投资者应独立判断和决策，盈亏自负。</p>
+  <p style="margin-top:8px;">数据来源：通达信TDX实时行情 ｜ 报告生成时间：2026-08-24 14:25</p>
+</div>
+
+</body>
+</html>

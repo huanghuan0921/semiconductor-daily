@@ -12,9 +12,13 @@
   function initChart(id, optionFn) {
     var el = document.getElementById(id);
     if (!el) return;
-    var chart = echarts.init(el, null, { renderer: 'svg' });
-    chart.setOption(optionFn());
-    window.addEventListener('resize', function() { chart.resize(); });
+    try {
+      var chart = echarts.init(el, null, { renderer: 'svg' });
+      chart.setOption(optionFn());
+      window.addEventListener('resize', function() { chart.resize(); });
+    } catch(e) {
+      console.error('Chart init failed for ' + id + ':', e.message);
+    }
   }
 
   // ===== 光模块报告图表 =====

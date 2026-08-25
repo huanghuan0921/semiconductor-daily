@@ -70,8 +70,46 @@ else
   echo "  AI服务器报告: 0 篇"
 fi
 
-# --- Category 3: 次日必涨股票分析 ---
-echo "[3/5] 扫描次日必涨股票分析..."
+# --- Category 3: A股市场情绪与题材复盘报告 ---
+echo "[3/6] 扫描A股市场情绪与题材复盘报告..."
+SENTIMENT_REPORTS=()
+for f in market_sentiment/*.html; do
+  [ -e "$f" ] || continue
+  title=$(grep -o '<title>[^<]*</title>' "$f" | head -1 | sed 's/<title>\([^<]*\)<\/title>/\1/')
+  title="${title//|/ - }"
+  if [ -z "$title" ]; then
+    title="A股市场情绪与题材复盘报告"
+  fi
+  fname=$(basename "$f")
+  file_date=$(echo "$fname" | grep -o '[0-9]\{8\}' | head -1)
+  if [ ${#file_date} -eq 8 ]; then
+    formatted="${file_date:0:4}-${file_date:4:2}-${file_date:6:2}"
+  else
+    file_date=$(date -r "$f" '+%Y%m%d' 2>/dev/null || echo "")
+    formatted="${file_date:0:4}-${file_date:4:2}-${file_date:6:2}"
+  fi
+  SENTIMENT_REPORTS+=("$file_date|{\"date\":\"$formatted\",\"title\":\"$title\",\"file\":\"$f\",\"subtitle\":\"点击查看完整复盘\"}")
+done
+
+SENTIMENT_JSON=""
+if [ ${#SENTIMENT_REPORTS[@]} -gt 0 ]; then
+  IFS=$'\n' SENTIMENT_SORTED=($(printf '%s\n' "${SENTIMENT_REPORTS[@]}" | sort -r))
+  unset IFS
+  for entry in "${SENTIMENT_SORTED[@]}"; do
+    json=$(echo "$entry" | cut -d'|' -f2)
+    if [ -z "$SENTIMENT_JSON" ]; then
+      SENTIMENT_JSON="$json"
+    else
+      SENTIMENT_JSON="$SENTIMENT_JSON,$json"
+    fi
+  done
+  echo "  情绪复盘: ${#SENTIMENT_SORTED[@]} 篇"
+else
+  echo "  情绪复盘: 0 篇"
+fi
+
+# --- Category 4: 次日必涨股票分析 ---
+echo "[4/6] 扫描次日必涨股票分析..."
 STOCK_REPORTS=()
 for f in stock_picks/*.html; do
   [ -e "$f" ] || continue
@@ -107,21 +145,22 @@ else
 fi
 
 # --- Build manifest.json ---
-echo "[4/5] 生成 manifest.json..."
+echo "[5/6] 生成 manifest.json..."
 
 DAILY_CAT='{"id":"semiconductor_daily","name":"半导体每日早报","icon":"📡","description":"覆盖全球半导体产业重磅资讯 + 宏观金融传导分析 + A股半导体选股逻辑","reports":['"$DAILY_JSON"']}'
 AI_CAT='{"id":"ai_server","name":"AI服务器分析报告","icon":"🖥️","description":"AI服务器产业链深度分析与前瞻研究","reports":['"$AI_JSON"']}'
+SENTIMENT_CAT='{"id":"market_sentiment","name":"A股市场情绪与题材复盘报告","icon":"🎭","description":"A股市场情绪量化评分 + 题材轮动分析 + 操作策略建议","reports":['"$SENTIMENT_JSON"']}'
 STOCK_CAT='{"id":"stock_picks","name":"次日必涨股票分析","icon":"📈","description":"多维选股分析：缠论+520+游资+情绪共振，筛选次日高概率标的","reports":['"$STOCK_JSON"']}'
 
-echo '{"categories":['"$DAILY_CAT"','"$AI_CAT"','"$STOCK_CAT"']}' > manifest.json
+echo '{"categories":['"$DAILY_CAT"','"$AI_CAT"','"$SENTIMENT_CAT"','"$STOCK_CAT"']}' > manifest.json
 echo "  manifest.json 已更新"
 
 # --- Post-process: inject nav bar + light mode ---
-echo "[4.5/5] 后处理：注入导航栏与浅色模式..."
+echo "[5.5/6] 后处理：注入导航栏与浅色模式..."
 python3 "$WORK_DIR/post_process.py"
 
 # --- Git commit & push ---
-echo "[5/5] Git 提交与推送..."
+echo "[6/6] Git 提交与推送..."
 git add -A
 if git diff --cached --quiet; then
   echo "  无变更，跳过提交"

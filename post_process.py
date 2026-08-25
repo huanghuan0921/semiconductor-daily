@@ -47,6 +47,7 @@ GENERIC_DARK_MODE = """@media (prefers-color-scheme: dark) {
 CATEGORY_MAP = {
     "semiconductor_daily": "半导体每日早报",
     "ai_server": "AI服务器分析报告",
+    "market_sentiment": "A股市场情绪与题材复盘报告",
     "stock_picks": "次日必涨股票分析",
 }
 
@@ -118,6 +119,7 @@ def main():
     patterns = [
         os.path.join(BASE, "semiconductor_daily_*.html"),
         os.path.join(BASE, "ai_server", "*.html"),
+        os.path.join(BASE, "market_sentiment", "*.html"),
         os.path.join(BASE, "stock_picks", "*.html"),
     ]
 

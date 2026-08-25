@@ -11,7 +11,7 @@ SITE_URL="https://huanghuan0921.github.io/semiconductor-daily/"
 echo "=== 半导体投研信息中心 发布脚本 ==="
 
 # --- Category 1: 半导体每日早报 ---
-echo "[1/5] 扫描半导体每日早报..."
+echo "[1/6] 扫描半导体每日早报..."
 DAILY_REPORTS=()
 for f in semiconductor_daily_*.html; do
   [ -e "$f" ] || continue
@@ -40,7 +40,7 @@ else
 fi
 
 # --- Category 2: AI服务器分析报告 ---
-echo "[2/5] 扫描AI服务器分析报告..."
+echo "[2/6] 扫描AI服务器分析报告..."
 AI_REPORTS=()
 for f in ai_server/*.html; do
   [ -e "$f" ] || continue

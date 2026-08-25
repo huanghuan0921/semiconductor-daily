@@ -98,14 +98,14 @@ body {
   margin-top: 12px;
 }
 .sentiment-score {
-  background: var(--fear-bg);
-  border: 1px solid var(--fear-border);
+  background: var(--gold-bg);
+  border: 1px solid rgba(255,213,79,0.3);
   border-radius: 10px;
   padding: 16px 24px;
   text-align: center;
   flex: 0 0 auto;
 }
-.sentiment-score .score-num { font-size: 36px; font-weight: 800; color: var(--fear); line-height: 1.2; }
+.sentiment-score .score-num { font-size: 36px; font-weight: 800; color: var(--neutral); line-height: 1.2; }
 .sentiment-score .score-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
 .sentiment-core {
   background: var(--accent-blue-bg);
@@ -350,7 +350,7 @@ body {
 .cycle-table .score-greed { color: var(--bull); font-weight: 600; }
 .cycle-table .score-neutral { color: var(--neutral); font-weight: 600; }
 .cycle-table .sub-score { color: var(--text-muted); font-size: 12px; }
-.cycle-table .today { background: var(--fear-bg); }
+.cycle-table .today { background: var(--gold-bg); }
 .footer {
   text-align: center;
   padding: 24px 0;
@@ -463,27 +463,27 @@ body {
 
 <div class="header">
   <h1>A股市场情绪与题材复盘报告</h1>
-  <div class="date">报告时间：<span>2026-08-25 17:00</span> ｜ 数据截至：2026-08-25 收盘 ｜ 数据源：<a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信</a><a href="https://data.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a><a href="https://www.jin10.com/" target="_blank" class="src-link jin10">金十</a></div>
+  <div class="date">报告时间：<span>2026-08-25 17:20</span> ｜ 数据截至：2026-08-25 收盘 ｜ 数据源：<a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信</a><a href="https://data.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a><a href="https://www.jin10.com/" target="_blank" class="src-link jin10">金十</a></div>
   <div class="sentiment-banner">
     <div class="sentiment-score">
-      <div class="score-num">38.5</div>
-      <div class="score-label">恐惧（修复中）</div>
+      <div class="score-num">58.0</div>
+      <div class="score-label">中性</div>
     </div>
     <div class="sentiment-core">
       <div class="core-label">核心主线</div>
-      <div class="core-text">科技止跌反弹 · 主力回流选股<br>亨通光电/寒武纪/兆易创新大幅净流入，英维克涨停</div>
+      <div class="core-text">个股普涨反弹 · 题材活跃<br>机械设备/医药/通信领涨，但权重股拖累指数</div>
     </div>
   </div>
   <div class="sentiment-meta">
-    <div class="meta-item">情绪周期：极度恐惧→恐惧（20.8→38.5，单日 <span>+17.7</span> 分）</div>
-    <div class="meta-item">市场广度：<span>~48%</span>（涨停70 / 跌停4）</div>
+    <div class="meta-item">情绪周期：极度恐惧→中性（20.8→58.0，单日 <span>+37.2</span> 分）</div>
+    <div class="meta-item">市场广度：<span>76.3%</span>（4234涨 / 1246跌 / 66平）</div>
   </div>
 </div>
 
 <div class="section">
   <h2><span class="icon">📋</span>核心结论</h2>
   <div class="core-conclusion">
-    今日三大指数分化：上证 3889.44（+0.19%）、深证成指 13745.87（-0.35%）、创业板指 3397.52（-1.00%），两市成交约 1.83 万亿（缩量约1800亿）。市场情绪 38.5 分从极度恐惧区修复——在 08-24 的 20.8 后单日反弹 17.7 分。涨停 70 家 vs 跌停仅 4 家（昨日 48/14），赚钱效应大幅改善。主力资金大幅回流科技：亨通光电 +19.02 亿、英维克 +17.35 亿（涨停）、寒武纪 +16.10 亿、兆易创新 +12.82 亿——与昨日科技杀跌完全反转。芯片板块 +0.78% 止跌（昨日 -3.13%），NAND 制造由钨转钼催化黄河旋风涨停。风格切换信号：科技止跌反弹 + 防御方向高位歇整，市场进入"恐慌修复→选股布局"阶段。
+    今日三大指数分化：上证 3889.44（+0.19%）、深证成指 13745.87（-0.35%）、创业板指 3397.52（-1.00%），两市成交 1.83 万亿（缩量约1800亿）。情绪 58.0 分回到中性区——在 08-24 的 20.8 极度恐惧后单日反弹 37.2 分。全A广度 76.3%（4234涨/1246跌/66平），涨停 70 家 vs 跌停 4 家，个股赚钱效应显著恢复。风格特征：小盘题材股活跃（机械设备、医药生物、建筑装饰涨停个股居前），但权重股拖累指数（创业板跌1%）；通信/半导体有个股获主力大幅流入（亨通光电+19.0亿、寒武纪+16.1亿、英维克涨停+17.4亿），显示资金在科技方向做结构性布局。
   </div>
 </div>
 
@@ -513,12 +513,13 @@ body {
       <text x="70" y="38" fill="var(--bull)" font-size="10" opacity="0.6">贪婪区</text>
       <text x="70" y="178" fill="var(--bear)" font-size="10" opacity="0.6">恐惧区</text>
 
-      <!-- Data points: 10 days ending 08/25 -->
-      <!-- 08/12:76.5, 08/13:29.4, 08/14:40.2, 08/17:83.9, 08/18:38.6, 08/19:14.9, 08/20:67.1, 08/21:47.7, 08/24:20.8, 08/25:38.5 -->
+      <!-- Data points: x positions evenly spaced for 10 days -->
+      <!-- 08/12:76.5, 08/13:29.4, 08/14:40.2, 08/17:83.9, 08/18:38.6, 08/19:14.9, 08/20:67.1, 08/21:47.7, 08/24:20.8, 08/25:58.0 -->
       <!-- y = 300 - (score * 2.8) -->
+      <!-- 76.5->y=85.8, 29.4->y=217.68, 40.2->y=187.44, 83.9->y=64.08, 38.6->y=191.92, 14.9->y=258.28, 67.1->y=112.12, 47.7->y=166.44, 20.8->y=241.76, 58.0->y=137.6 -->
 
       <!-- Polyline -->
-      <polyline points="95,86 176,218 257,187 338,65 419,192 500,258 581,112 662,166 743,242 824,192"
+      <polyline points="95,86 180,218 265,187 350,64 435,192 520,258 605,112 690,166 775,242 825,138"
         fill="none" stroke="var(--accent-blue)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 
       <!-- Data points -->
@@ -526,42 +527,42 @@ body {
       <text x="95" y="75" fill="var(--text-secondary)" font-size="11" text-anchor="middle">76.5</text>
       <text x="95" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/12</text>
 
-      <circle cx="176" cy="218" r="5" fill="var(--bear)" opacity="0.8"/>
-      <text x="176" y="238" fill="var(--text-secondary)" font-size="11" text-anchor="middle">29.4</text>
-      <text x="176" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/13</text>
+      <circle cx="180" cy="218" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="180" y="240" fill="var(--text-secondary)" font-size="11" text-anchor="middle">29.4</text>
+      <text x="180" y="254" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/13</text>
 
-      <circle cx="257" cy="187" r="5" fill="var(--neutral)" opacity="0.8"/>
-      <text x="257" y="178" fill="var(--text-secondary)" font-size="11" text-anchor="middle">40.2</text>
-      <text x="257" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/14</text>
+      <circle cx="265" cy="187" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="265" y="178" fill="var(--text-secondary)" font-size="11" text-anchor="middle">40.2</text>
+      <text x="265" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/14</text>
 
-      <circle cx="338" cy="65" r="5" fill="var(--bull)" opacity="0.8"/>
-      <text x="338" y="54" fill="var(--text-secondary)" font-size="11" text-anchor="middle">83.9</text>
-      <text x="338" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/17</text>
+      <circle cx="350" cy="64" r="5" fill="var(--bull)" opacity="0.8"/>
+      <text x="350" y="53" fill="var(--text-secondary)" font-size="11" text-anchor="middle">83.9</text>
+      <text x="350" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/17</text>
 
-      <circle cx="419" cy="192" r="5" fill="var(--neutral)" opacity="0.8"/>
-      <text x="419" y="212" fill="var(--text-secondary)" font-size="11" text-anchor="middle">38.6</text>
-      <text x="419" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/18</text>
+      <circle cx="435" cy="192" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="435" y="212" fill="var(--text-secondary)" font-size="11" text-anchor="middle">38.6</text>
+      <text x="435" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/18</text>
 
-      <circle cx="500" cy="258" r="5" fill="var(--bear)" opacity="0.8"/>
-      <text x="500" y="278" fill="var(--text-secondary)" font-size="11" text-anchor="middle">14.9</text>
-      <text x="500" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/19</text>
+      <circle cx="520" cy="258" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="520" y="278" fill="var(--text-secondary)" font-size="11" text-anchor="middle">14.9</text>
+      <text x="520" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/19</text>
 
-      <circle cx="581" cy="112" r="5" fill="var(--bull)" opacity="0.8"/>
-      <text x="581" y="101" fill="var(--text-secondary)" font-size="11" text-anchor="middle">67.1</text>
-      <text x="581" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/20</text>
+      <circle cx="605" cy="112" r="5" fill="var(--bull)" opacity="0.8"/>
+      <text x="605" y="101" fill="var(--text-secondary)" font-size="11" text-anchor="middle">67.1</text>
+      <text x="605" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/20</text>
 
-      <circle cx="662" cy="166" r="5" fill="var(--neutral)" opacity="0.8"/>
-      <text x="662" y="157" fill="var(--text-secondary)" font-size="11" text-anchor="middle">47.7</text>
-      <text x="662" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/21</text>
+      <circle cx="690" cy="166" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="690" y="157" fill="var(--text-secondary)" font-size="11" text-anchor="middle">47.7</text>
+      <text x="690" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/21</text>
 
-      <circle cx="743" cy="242" r="5" fill="var(--bear)" opacity="0.8"/>
-      <text x="743" y="262" fill="var(--text-secondary)" font-size="11" text-anchor="middle">20.8</text>
-      <text x="743" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/24</text>
+      <circle cx="775" cy="242" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="775" y="262" fill="var(--text-secondary)" font-size="11" text-anchor="middle">20.8</text>
+      <text x="775" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/24</text>
 
       <!-- Today - highlighted -->
-      <circle cx="824" cy="192" r="7" fill="var(--neutral)" stroke="var(--bg)" stroke-width="2"/>
-      <text x="824" y="212" fill="var(--neutral)" font-size="12" text-anchor="middle" font-weight="bold">★38.5</text>
-      <text x="824" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/25</text>
+      <circle cx="825" cy="138" r="7" fill="var(--neutral)" stroke="var(--bg)" stroke-width="2"/>
+      <text x="825" y="125" fill="var(--neutral)" font-size="12" text-anchor="middle" font-weight="bold">★58.0</text>
+      <text x="825" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/25</text>
     </svg>
   </div>
 </div>
@@ -572,53 +573,52 @@ body {
     <div class="indicator-card">
       <div class="ind-name">上证指数 <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信</a></div>
       <div class="ind-value">3889.44</div>
-      <div class="ind-change red">+0.19%</div>
+      <div class="ind-change green">+0.19%</div>
       <div class="ind-sub">沪市成交 8589亿</div>
     </div>
     <div class="indicator-card">
       <div class="ind-name">深证成指 <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信</a></div>
       <div class="ind-value">13745.87</div>
-      <div class="ind-change green">-0.35%</div>
+      <div class="ind-change red">-0.35%</div>
     </div>
     <div class="indicator-card">
       <div class="ind-name">创业板指 <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信</a></div>
       <div class="ind-value">3397.52</div>
-      <div class="ind-change green">-1.00%</div>
+      <div class="ind-change red">-1.00%</div>
     </div>
     <div class="indicator-card">
       <div class="ind-name">两市成交额 <a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财资金</a></div>
-      <div class="ind-value">~1.83万亿</div>
-      <div class="ind-change green">缩量</div>
+      <div class="ind-value">1.83万亿</div>
+      <div class="ind-change red">缩量</div>
       <div class="ind-sub">量能比 0.91</div>
     </div>
   </div>
-  <h3>主力净流入 TOP <a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金</a></h3>
+  <h3>主力净流入 TOP</h3>
   <div class="indicators-grid">
     <div class="indicator-card" style="border-color:var(--bull-border);">
-      <div class="ind-name">科技主力 TOP <a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金</a></div>
+      <div class="ind-name">行业 TOP <a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财行业资金流</a></div>
       <div style="font-size:14px;font-weight:600;line-height:1.8;">
-        亨通光电 <span style="color:var(--bull);">+6.90%</span> 净流入19.0亿<br>
-        寒武纪 <span style="color:var(--bull);">+4.28%</span> 净流入16.1亿<br>
-        兆易创新 <span style="color:var(--bull);">+3.63%</span> 净流入12.8亿<br>
-        長飞光纤 <span style="color:var(--bull);">+4.04%</span> 净流入7.2亿
+        机械设备 <span style="color:var(--bull);">涨停9只</span><br>
+        建筑装饰 <span style="color:var(--bull);">涨停8只</span><br>
+        医药生物 <span style="color:var(--bull);">涨停8只</span><br>
+        通信 <span style="color:var(--bull);">+6.90%</span>
       </div>
     </div>
     <div class="indicator-card" style="border-color:var(--bull-border);">
-      <div class="ind-name">涨停板 TOP <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信涨停</a></div>
+      <div class="ind-name">概念 TOP <a href="https://data.eastmoney.com/bkzj/gn.html" target="_blank" class="src-link eastmoney">东财概念资金流</a></div>
       <div style="font-size:14px;font-weight:600;line-height:1.8;">
-        英维克 <span style="color:var(--bull);">+10.01%</span> 封单3.3亿<br>
-        凯莱英 <span style="color:var(--bull);">+10.00%</span> 封单1.6亿<br>
-        黄河旋风 <span style="color:var(--bull);">+9.98%</span> 封单1.9亿<br>
-        石头科技 <span style="color:var(--bull);">+20.00%</span> 20cm
+        液冷服务器 <span style="color:var(--bull);">英维克涨停</span><br>
+        培育钻石 <span style="color:var(--bull);">黄河旋风涨停</span><br>
+        白酒 <span style="color:var(--bull);">逆势上涨</span>
       </div>
     </div>
     <div class="indicator-card" style="border-color:var(--bull-border);">
-      <div class="ind-name">芯片板块 <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信板块</a></div>
+      <div class="ind-name">个股 TOP <a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金</a></div>
       <div style="font-size:14px;font-weight:600;line-height:1.8;">
-        芯片指数 <span style="color:var(--bull);">+0.78%</span><br>
-        生益科技 <span style="color:var(--bull);">+2.14%</span><br>
-        中天科技 <span style="color:var(--bull);">+4.18%</span><br>
-        华正新材 <span style="color:var(--bull);">+5.67%</span>
+        N高凯 <span style="color:var(--bull);">+282.99%</span><br>
+        亨通光电 <span style="color:var(--bull);">+6.90%</span><br>
+        英维克 <span style="color:var(--bull);">+10.01%</span><br>
+        寒武纪 <span style="color:var(--bull);">+4.28%</span>
       </div>
     </div>
   </div>
@@ -722,12 +722,12 @@ body {
       </tr>
       <tr class="today">
         <td><strong>08/25</strong></td>
-        <td class="score-fear"><strong>38.5</strong></td>
-        <td>恐惧 ★</td>
-        <td class="sub-score">48</td>
-        <td class="sub-score">35</td>
-        <td class="sub-score">25</td>
-        <td class="sub-score">45</td>
+        <td class="score-neutral"><strong>58.0</strong></td>
+        <td>中性 ★</td>
+        <td class="sub-score">76</td>
+        <td class="sub-score">52</td>
+        <td class="sub-score">30</td>
+        <td class="sub-score">60</td>
       </tr>
     </tbody>
   </table>
@@ -735,73 +735,73 @@ body {
 
 <div class="section">
   <h2><span class="icon">🎯</span>题材发酵逻辑 · 市场在发生什么</h2>
-  <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">通过<a href="https://www.jin10.com/" target="_blank" class="src-link jin10">金十快讯</a> + <a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东方财富资金流</a> + <a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信AI智能听</a>交叉验证 ✓ 多源确认</div>
+  <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">通过<a href="https://www.jin10.com/" target="_blank" class="src-link jin10">金十快讯</a> + <a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东方财富资金流</a>交叉验证 ✓ 多源确认</div>
   <div class="core-conclusion">
-    <strong>一句话逻辑：</strong>08-24 科技杀跌后，今日主力资金大幅回流科技板块（亨通光电+19亿、寒武纪+16.1亿、兆易创新+12.8亿），芯片板块+0.78%止跌。NAND制造由钨转钼的产业变革催化黄河旋风涨停，英维克涨停确认AI算力散热持续景气。涨停70家/跌停仅4家，赚钱效应从冰点修复。但创业板仍跌1%、两市连续四日缩量至1.83万亿，属于"恐慌修复但信心未完全恢复"阶段——资金选择性地回流科技主线，而非普涨反弹。
+    <strong>一句话逻辑：</strong>08-24 科技股重挫后，今日市场情绪修复但指数分化——个股普涨（4234涨/76.3%广度）但权重股拖累指数（创业板-1%）。资金主攻方向：通信/半导体（亨通光电+6.90%、寒武纪+4.28%、英维克涨停）、医药生物（汉森制药5连板、福瑞医科+15.78%）、机械设备（智云股份+20.05%）。白酒逆势上涨。两市缩量至1.83万亿，反弹力度受量能制约。
   </div>
 
   <div class="theme-card tech">
     <div class="theme-header">
-      <span class="theme-title">科技反弹主线：光通信 / 半导体 / 算力散热</span>
+      <span class="theme-title">科技修复：通信 / 半导体 / 液冷</span>
       <span class="theme-tag high">张力度 ★★★</span>
-      <span class="theme-tag medium">主力回流+产业催化</span>
+      <span class="theme-tag medium">资金回流</span>
     </div>
     <div class="theme-chain">
-      亨通光电+6.90%（净流入19.0亿）、寒武纪+4.28%（16.1亿）、兆易创新+3.63%（12.8亿）<span class="arrow">→</span>英维克涨停（液冷散热，净流入17.35亿）<span class="arrow">→</span>長飞光纤+4.04%、生益科技+2.14%、华正新材+5.67%<span class="arrow">→</span>芯片板块+0.78%止跌（昨日-3.13%），科技退潮后的主力回流信号
+      亨通光电+6.90%（主力+19.0亿）<span class="arrow">→</span>寒武纪+4.28%（主力+16.1亿）<span class="arrow">→</span>英维克+10.01%涨停（主力+17.4亿，液冷服务器）<span class="arrow">→</span>兆易创新+3.63%（主力+12.8亿）<span class="arrow">→</span>08-24科技股杀跌后资金快速回流，结构性布局特征明显
     </div>
     <div class="theme-evidence">
-      <strong>佐证：</strong><a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金流</a>（亨通光电/寒武纪/兆易创新居主力净流入TOP）；<a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信涨停数据</a>（英维克涨停封单3.3亿，AI散热方向持续景气）；<a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">芯片板块K线</a> 8/25收阳+0.78%，较8/24的-3.13%止跌回升。主力净流入TOP15中科技占10席，资金方向明确。
-    </div>
-  </div>
-
-  <div class="theme-card tech">
-    <div class="theme-header">
-      <span class="theme-title">钼/新材料：NAND制造由钨转钼</span>
-      <span class="theme-tag high">张力度 ★★★</span>
-      <span class="theme-tag medium">颠覆性技术变革</span>
-    </div>
-    <div class="theme-chain">
-      NAND制造由钨转钼，钼沉积设备迎10亿美元增量市场<span class="arrow">→</span>黄河旋风涨停+9.98%（钼概念，净流入5.37亿）<span class="arrow">→</span>洛阳钼业H1净利润创历史新高<span class="arrow">→</span>厦门钨业H1净利润+126.4%<span class="arrow">→</span>钼在NAND产能占比从个位数升至2027年约30%
-    </div>
-    <div class="theme-evidence">
-      <strong>佐证：</strong><a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信AI智能听</a>（881084板块资讯）：①洛阳钼业H1净利润创历史新高（权重85）②厦门钨业H1净利+126.4%（权重75）③NAND由钨转钼，10亿美元增量市场（权重85）。技术变革催化明确，产业链重构受益方向清晰。
-    </div>
-  </div>
-
-  <div class="theme-card consume">
-    <div class="theme-header">
-      <span class="theme-title">医药/消费：凯莱英涨停 + 石头科技20cm</span>
-      <span class="theme-tag high">张力度 ★★</span>
-      <span class="theme-tag medium">超跌反弹+业绩驱动</span>
-    </div>
-    <div class="theme-chain">
-      凯莱英涨停+10.00%（医药CDMO，封单1.6亿）<span class="arrow">→</span>药明康德+3.31%（净流入4.65亿）、誉衡药业+9.14%（净流入4.72亿）<span class="arrow">→</span>石头科技20cm涨停（智能家居/消费复苏）<span class="arrow">→</span>超跌+中报业绩驱动，消费/医药方向承接避险溢出资金
-    </div>
-    <div class="theme-evidence">
-      <strong>佐证：</strong><a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信涨停数据</a>（凯莱英涨停封单1.6亿、石头科技20cm涨停）；<a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金流</a>（药明康德净流入4.65亿、誉衡药业净流入4.72亿）。医药/消费在昨日防御走强后今日延续，但领涨标的从白酒/煤炭切换至CDMO/智能家居，说明资金在防御内部也在寻找有业绩支撑的方向。
+      <strong>佐证：</strong><a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金流</a>（亨通光电、寒武纪、英维克、兆易创新主力净流入居前）；<a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">通信行业</a> 多只权重股获大额资金流入。英维克涨停原因：英伟达下一代800HVDC架构CDU拟采用高压直流电子屏蔽泵，公司液冷服务器管路产品达V0级标准并获美国UL认证。
     </div>
   </div>
 
   <div class="theme-card defensive">
     <div class="theme-header">
-      <span class="theme-title">防御方向：高位歇整</span>
-      <span class="theme-tag warn">张力度 ★☆</span>
-      <span class="theme-tag warn">涨高歇整</span>
+      <span class="theme-title">医药活跃：汉森制药 / 福瑞医科</span>
+      <span class="theme-tag high">张力度 ★★</span>
+      <span class="theme-tag medium">事件驱动</span>
     </div>
     <div class="theme-chain">
-      昨日白银双涨停（湖南白银+9.98%、白银有色+10.02%）今日歇整<span class="arrow">→</span>焦炭Ⅱ/煤炭/白酒高位盘整<span class="arrow">→</span>资金从防御方向溢出至科技/医药<span class="arrow">→</span>典型的"恐慌见底→风格轮动"信号
+      汉森制药5连板<span class="arrow">→</span>福瑞医科+15.78%、透景生命+20.00%、西点药业+17.01%<span class="arrow">→</span>医药生物行业涨停个股8只（与建筑装饰、机械设备并列居前）<span class="arrow">→</span>防御+事件双驱动，医药板块持续活跃
     </div>
     <div class="theme-evidence">
-      <strong>佐证：</strong><a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财行业资金流</a> 昨日防御TOP（焦炭/煤炭/白银/白酒）今日未继续领涨，资金转回流科技。这是市场从"极度恐惧→恐惧修复"阶段的典型特征：恐慌期避险方向暴涨，修复期资金回流进攻方向。
+      <strong>佐证：</strong><a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财热门板块</a>（医药生物涨停8只居前）；<a href="https://www.stcn.com/article/detail/4115833.html" target="_blank" class="src-link eastmoney">证券时报涨停复盘</a> 汉森制药连续5日涨停，为当前市场最高连板。医药板块在08-20爆发后今日继续活跃，防御属性+个股事件共振。
+    </div>
+  </div>
+
+  <div class="theme-card consume">
+    <div class="theme-header">
+      <span class="theme-title">机械设备 / 建筑装饰</span>
+      <span class="theme-tag high">张力度 ★★</span>
+      <span class="theme-tag medium">题材扩散</span>
+    </div>
+    <div class="theme-chain">
+      智云股份+20.05%<span class="arrow">→</span>机械设备行业涨停9只（全市场第一）<span class="arrow">→</span>建筑装饰涨停8只<span class="arrow">→</span>建设机械涨停板封单3295万股（仅次于中南文化、海鸥住工）<span class="arrow">→</span>基建/设备更新预期+低位补涨逻辑
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://www.stcn.com/article/detail/4115833.html" target="_blank" class="src-link eastmoney">证券时报涨停复盘</a>（机械设备、建筑装饰涨停个股数量分列前两位）；建设机械、甘咨询等基建股涨停。低位板块轮动补涨特征明显。
+    </div>
+  </div>
+
+  <div class="theme-card consume">
+    <div class="theme-header">
+      <span class="theme-title">消费/防御：白酒逆势上涨</span>
+      <span class="theme-tag medium">张力度 ★</span>
+      <span class="theme-tag medium">低位防御</span>
+    </div>
+    <div class="theme-chain">
+      白酒板块逆势上涨<span class="arrow">→</span>贵州茅台领涨<span class="arrow">→</span>酒ETF融资净买入额居市场前列<span class="arrow">→</span>消费低位板块承接避险资金，与08-24防御方向（白银/煤炭）轮动
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财热门板块</a>（白酒逆势上涨）；<a href="https://www.jin10.com/" target="_blank" class="src-link jin10">金十快讯</a> 白酒板块融资净买入额居市场前列。白酒作为超跌+防御方向，与昨日白银/煤炭形成防御内部轮动。
     </div>
   </div>
 
   <h3>发酵持续性分级</h3>
   <div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">
-    <strong>① 高置信（主力回流+产业催化）：</strong>光通信/半导体/算力散热——亨通光电/寒武纪/英维克大幅净流入确认，NAND钼变革加催化，科技反弹具有持续性<br>
-    <strong>② 高置信（颠覆性技术变革）：</strong>钼/新材料——NAND钨转钼10亿美元增量，洛阳钼业H1创新高，产业重构逻辑硬<br>
-    <strong>③ 中置信（超跌+业绩）：</strong>医药CDMO/智能家居——凯莱英涨停+药明康德流入，但需确认业绩持续性<br>
-    <strong>④ 回避（涨高歇整）：</strong>白银/焦炭/煤炭——昨日暴涨后高位盘整，追高风险大，等回调再看
+    <strong>① 高置信（资金+事件双驱动）：</strong>通信/液冷——英维克、亨通光电获大额主力流入，英伟达产业链催化<br>
+    <strong>② 中高置信（连板+资金）：</strong>医药生物——汉森制药5连板带动板块，但需警惕连板高度限制<br>
+    <strong>③ 中置信（低位补涨）：</strong>机械设备/建筑装饰——涨停数量多但分散，持续性待观察<br>
+    <strong>④ 低置信（防御轮动）：</strong>白酒——防御资金轮动，持续性较弱
   </div>
 </div>
 
@@ -818,52 +818,40 @@ body {
     </thead>
     <tbody>
       <tr>
-        <td>光通信/算力</td>
-        <td>亨通光电+6.90%｜長飞光纤+4.04%｜中天科技+4.18%｜净流入19.0亿</td>
-        <td class="up">+6.90%</td>
-        <td>止跌反弹</td>
+        <td>通信/液冷</td>
+        <td>亨通光电+6.90%｜英维克+10.01%涨停｜寒武纪+4.28%</td>
+        <td class="up">+6.90% / 涨停</td>
+        <td>资金回流</td>
       </tr>
       <tr>
-        <td>半导体/芯片</td>
-        <td>寒武纪+4.28%｜兆易创新+3.63%｜生益科技+2.14%｜芯片+0.78%</td>
-        <td class="up">+0.78%</td>
-        <td>止跌反弹</td>
+        <td>医药生物</td>
+        <td>汉森制药5连板｜福瑞医科+15.78%｜透景生命+20.00%</td>
+        <td class="up">+15.78% / 涨停</td>
+        <td>持续活跃</td>
       </tr>
       <tr>
-        <td>AI散热/液冷</td>
-        <td>英维克涨停+10.01%｜封单3.3亿｜净流入17.35亿</td>
-        <td class="up">涨停</td>
-        <td>持续主升</td>
+        <td>机械设备</td>
+        <td>智云股份+20.05%｜行业涨停9只｜建设机械封单居前</td>
+        <td class="up">+20.05%</td>
+        <td>低位补涨</td>
       </tr>
       <tr>
-        <td>钼/新材料</td>
-        <td>黄河旋风涨停+9.98%｜洛阳钼业H1创新高｜NAND钨转钼</td>
-        <td class="up">涨停</td>
-        <td>催化启动</td>
+        <td>半导体</td>
+        <td>寒武纪+4.28%｜兆易创新+3.63%｜黄河旋风+9.98%涨停</td>
+        <td class="up">+3.63% / 涨停</td>
+        <td>结构性修复</td>
       </tr>
       <tr>
-        <td>医药/CDMO</td>
-        <td>凯莱英涨停+10.00%｜药明康德+3.31%｜誉衡药业+9.14%</td>
-        <td class="up">涨停</td>
-        <td>超跌反弹</td>
-      </tr>
-      <tr>
-        <td>消费/智能</td>
-        <td>石头科技+20.00%（20cm）｜中南文化+10.09%</td>
-        <td class="up">+20.00%</td>
-        <td>个股催化</td>
-      </tr>
-      <tr>
-        <td>防御方向</td>
-        <td>白银/焦炭/煤炭/白酒（昨日领涨标的）高位歇整</td>
-        <td class="down">歇整</td>
-        <td>涨高盘整</td>
+        <td>白酒/消费</td>
+        <td>白酒板块逆势上涨｜贵州茅台领涨｜酒ETF融资净买入</td>
+        <td class="up">逆势上涨</td>
+        <td>防御轮动</td>
       </tr>
       <tr>
         <td>全市场</td>
-        <td>涨停70/跌停4（昨48/14）｜成交~1.83万亿缩量｜主力净流入科技</td>
-        <td class="up">修复</td>
-        <td>恐慌修复</td>
+        <td>4234涨/1246跌/66平（76.3%）｜成交1.83万亿缩量｜涨停70/跌停4</td>
+        <td class="up">+37.2分</td>
+        <td>情绪修复</td>
       </tr>
     </tbody>
   </table>
@@ -874,27 +862,27 @@ body {
   <div class="checkpoint-grid">
     <div class="checkpoint-card">
       <div class="cp-title">① 情绪关口</div>
-      <div class="cp-body">情绪 38.5 从极度恐惧修复至恐惧区（+17.7分），涨停70/跌停4大幅改善。但尚未回到中性（50），创业板仍跌1%——属于"修复中但未确认反转"。若明日情绪站上45则确认修复，若回落至30以下则双底失败。</div>
+      <div class="cp-body">情绪 58.0 回到中性区，从 08-24 的 20.8 极度恐惧单日反弹 37.2 分。广度从 26.9% 修复至 76.3%，涨停70家/跌停4家，恐慌情绪明显缓解。但需确认能否站稳 50 分以上。</div>
     </div>
     <div class="checkpoint-card">
       <div class="cp-title">② 量能关口</div>
-      <div class="cp-body">两市 ~1.83 万亿连续四日缩量（2.51→2.08→2.01→1.83万亿）。缩量反弹说明抛压减轻但增量资金不足；若明日放量至2万亿+且收阳则确认反弹，若继续缩量则仍有二次探底风险。</div>
+      <div class="cp-body">两市 1.83 万亿（缩量约1800亿），连续第四日缩量（2.51→2.08→2.01→1.83万亿）。缩量反弹反映抛压减少但买盘也不足；若后续不能补量至 2 万亿以上，反弹高度受限。</div>
     </div>
     <div class="checkpoint-card">
       <div class="cp-title">③ 风格切换关口</div>
-      <div class="cp-body">科技止跌反弹（芯片+0.78%、亨通光电+6.90%）vs 防御方向歇整。若明日科技继续领涨+防御回调，"科技→防御"切换确认反转；若科技冲高回落，则仍为超跌反弹而非趋势反转。</div>
+      <div class="cp-body">小盘题材股活跃 vs 权重股拖累指数（创业板-1%）。若明日权重股企稳+题材股继续活跃，则反弹延续；若权重股继续下挫，可能拖累个股情绪回落。</div>
     </div>
     <div class="checkpoint-card">
-      <div class="cp-title">④ 产业催化关口</div>
-      <div class="cp-body">NAND制造由钨转钼（10亿美元增量市场）+ 洛阳钼业H1创新高 + 英维克涨停（AI散热）——产业催化明确。关注钼概念和AI散热方向能否形成持续主线，而非一日游。</div>
+      <div class="cp-title">④ 宏观关口</div>
+      <div class="cp-body">8月下旬中报密集披露进入尾声，业绩暴雷个股仍将拖累板块；美联储9月议息会议临近，降息预期变化影响全球风险偏好。关注明日是否有宏观政策催化。</div>
     </div>
     <div class="checkpoint-card">
       <div class="cp-title">⑤ 结构关口</div>
-      <div class="cp-body">创业板指距 8/17 高点（3740）已 -9.1%，套牢盘沉重。涨停70家中科技占多数，但创业板指仍跌1%说明分化严重——选股比选板块更重要。关注有产业催化+主力流入的个股。</div>
+      <div class="cp-body">创业板指距 8/17 高点（3740）已 -9.2%，高位套牢盘沉重；但今日科创50上涨0.14%，科技方向出现结构性修复。关注通信/半导体能否持续获得资金流入。</div>
     </div>
     <div class="checkpoint-card">
       <div class="cp-title">⑥ 资金结构关口</div>
-      <div class="cp-body">主力净流入TOP15中科技占10席（亨通光电19亿/英维克17.35亿/寒武纪16.1亿/兆易创新12.8亿），资金方向明确回流科技。若明日延续流入则科技反弹确认；若流出则仅为短炒。N高凯（新股）净流入23.1亿为新股因素，剔除后科技仍是主线。</div>
+      <div class="cp-body">主力资金今日大幅流入科技龙头（亨通光电+19.0亿、寒武纪+16.1亿、英维克+17.4亿），与 08-24 的净流出 801 亿形成鲜明对比。若明日科技方向资金继续流入，则反弹主线确立。</div>
     </div>
   </div>
 </div>
@@ -903,34 +891,34 @@ body {
   <h2><span class="icon">💡</span>策略建议</h2>
   <div class="strategy-grid">
     <div class="strategy-card attack">
-      <div class="str-label">⚔️ 进攻（科技持仓者）</div>
-      <div class="str-body">科技止跌+主力大幅回流，持仓可持有观察。重点：亨通光电/寒武纪/兆易创新有主力净流入支撑，英维克涨停确认AI散热景气。若明日继续放量上攻则加仓，冲高回落则减仓至半仓。</div>
+      <div class="str-label">⚔️ 进攻（主线持有者）</div>
+      <div class="str-body">情绪回到中性区，科技方向（通信/液冷/半导体）获大额资金流入，可重点关注英维克、亨通光电等资金龙头；医药连板股（汉森制药）需警惕高度风险。</div>
     </div>
     <div class="strategy-card balanced">
       <div class="str-label">⚖️ 均衡（空仓/轻仓者）</div>
-      <div class="str-body">仓位 4-5 成：科技方向分批布局（光通信/半导体/AI散热），选择有主力流入+产业催化的标的。防御方向（白银/煤炭）昨日涨高今日歇整，等回调再配。情绪 38.5 仍偏低，左侧分批窗口打开。</div>
+      <div class="str-body">仓位 4-5 成，科技修复+医药活跃双主线配置：通信/液冷（亨通、英维克）+ 医药（福瑞医科等趋势股）；机械设备低位补涨可轻仓参与；等待量能补至 2 万亿以上再加仓。</div>
     </div>
     <div class="strategy-card defend">
       <div class="str-label">🛡️ 防御（风险偏好低）</div>
-      <div class="str-body">创业板仍跌1%，连续四日缩量，不宜满仓。建议 3-4 成仓位，优先有催化方向：钼概念（NAND钨转钼）、AI散热（英维克涨停），回避昨日暴涨的防御方向（追高风险大）。等情绪站上45再加仓。</div>
+      <div class="str-body">创业板仍跌1%，权重股尚未企稳，缩量反弹持续性存疑；可轻仓参与科技龙头反弹，但不宜追高；若情绪再度跌破 45 分，及时减仓防御。</div>
     </div>
   </div>
   <div class="strategy-summary">
-    <strong>关键时点：</strong>情绪 38.5（恐惧修复中）对应仓位建议 4-5 成。<strong>操作节奏：</strong>①科技止跌反弹+主力大幅回流，分批布局光通信/半导体/AI散热；②NAND钼变革是今日最强产业催化，黄河旋风涨停+洛阳钼业H1创新高，关注持续性；③防御方向（白银/煤炭/白酒）昨日暴涨后歇整，不追高、等回调；④若明日放量至2万亿+且科技继续领涨，确认反弹反转；若缩量回落则仍有二次探底风险。中报尾声关注业绩确定性。
+    <strong>关键时点：</strong>情绪 58.0（中性）对应仓位建议均衡（4-5成）。<strong>操作节奏：</strong>①科技方向（通信/液冷/半导体）今日获大额资金流入，明日若持续可加仓；②医药连板股谨慎追高，关注低位补涨机会；③机械设备/建筑装饰低位轮动，快进快出；④量能若不能补至 2 万亿，反弹高度受限，需控制仓位。中报披露尾期业绩确定性优先。
   </div>
 </div>
 
 <div class="section">
   <h2><span class="icon">⚠️</span>风险提示与数据校验</h2>
   <ul class="risk-list">
-    <li><strong>缩量反弹风险：</strong>连续四日缩量（2.51→2.08→2.01→1.83万亿），今日反弹但量能进一步萎缩。缩量反弹说明增量资金不足，若不能放量则反弹空间有限，仍有二次探底风险。</li>
-    <li><strong>创业板持续走弱风险：</strong>创业板指距8/17高点已-9.1%，今日再跌1%。科技虽有反弹但创业板未止跌，说明中小盘股仍在调整，结构性风险未完全释放。</li>
-    <li><strong>科技反弹一日游风险：</strong>今日科技主力大幅流入，但若明日资金再度流出则仅为超跌反弹而非趋势反转。需连续2-3日确认主力流入方向。</li>
-    <li><strong>防御方向补跌风险：</strong>白银/焦炭/煤炭昨日暴涨后今日歇整，若科技企稳则避险资金可能撤出防御，导致防御板块补跌。</li>
-    <li><strong>中报尾声业绩风险：</strong>8月下旬中报密集披露最后阶段，业绩暴雷个股仍将拖累板块。需关注已披露中报的科技/医药公司业绩验证。</li>
+    <li><strong>缩量反弹风险：</strong>连续四日缩量（2.51→2.08→2.01→1.83万亿），无量反弹持续性存疑；若后续不能补量，可能重回震荡或二次探底。</li>
+    <li><strong>权重股拖累风险：</strong>创业板跌1%，深证成指跌0.35%，权重股尚未企稳；若权重股继续下挫，可能拖累个股普涨格局。</li>
+    <li><strong>连板高度风险：</strong>汉森制药5连板为当前最高，连板高度受限后可能引发医药板块获利回吐；追高风险上升。</li>
+    <li><strong>科技分化风险：</strong>通信/半导体有个股获大额资金流入，但板块整体分化（创业板跌1%）；若资金龙头熄火，板块可能重回调整。</li>
+    <li><strong>外部扰动风险：</strong>美联储9月议息临近，降息预期反复将冲击全球风险资产；中报尾期业绩暴雷个股拖累板块情绪。</li>
   </ul>
   <div style="font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.7;">
-    <strong>数据校验与置信度：</strong><a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信K线</a>（沪/深/创）✓、<a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财全A广度/资金流/涨跌停</a> ✓、<a href="https://data.eastmoney.com/zjlx/" target="_blank" class="src-link eastmoney">东财个股资金流</a> ✓、<a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信AI智能听</a>（881084板块资讯）✓——多源交叉整体置信度高；市场广度为估算值，题材部分为AI基于盘面结构与资讯的推断，仅供参考。
+    <strong>数据校验与置信度：</strong><a href="https://www.tdx.com.cn/" target="_blank" class="src-link tdx">通达信K线</a>（沪/深/创）✓、<a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财全A广度/资金流/涨跌停</a> ✓、<a href="https://data.eastmoney.com/bkzj/hy.html" target="_blank" class="src-link eastmoney">东财热门板块/个股</a> ✓ ——多源交叉整体置信度高；题材部分为AI基于盘面结构的推断，仅供参考。
   </div>
 </div>
 
@@ -941,7 +929,7 @@ body {
     <div class="source-card">
       <div class="src-name">📊 通达信 (TDX)</div>
       <div class="src-url">官网：<a href="https://www.tdx.com.cn/" target="_blank">https://www.tdx.com.cn/</a></div>
-      <div class="src-desc">提供上证指数、深证成指、创业板指日K线数据，全市场涨跌停统计，以及AI智能听板块资讯聚合。</div>
+      <div class="src-desc">提供上证指数、深证成指、创业板指日K线数据，以及全市场涨跌家数统计。</div>
       <div class="src-pages">
         <a href="https://www.tdx.com.cn/" target="_blank">通达信官网</a>
         <a href="https://www.tdx.com.cn/product.html" target="_blank">软件下载</a>
@@ -969,7 +957,7 @@ body {
     </div>
   </div>
   <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--card-border);">
-    <strong>情绪评分模型：</strong>市场广度40% + 指数强度25% + 量能动能20% + 资金确认15%，区间映射：&gt;75极度贪婪 / 60-75贪婪 / 45-60中性 / 30-45恐惧 / &lt;30极度恐惧。报告生成时间：2026-08-25 17:00。
+    <strong>情绪评分模型：</strong>市场广度40% + 指数强度25% + 量能动能20% + 资金确认15%，区间映射：&gt;75极度贪婪 / 60-75贪婪 / 45-60中性 / 30-45恐惧 / &lt;30极度恐惧。报告生成时间：2026-08-25 17:20。
   </div>
   <div style="font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;line-height:1.7;">
     本报告基于公开数据与量化模型的自动分析，仅供研究参考，不构成任何投资建议。<br>

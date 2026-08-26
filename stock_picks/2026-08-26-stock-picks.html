@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-26 A股盘中多维框架选股分析报告</title>
+<style>
+:root {
+  --bg-page: #f6f8fa;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f0f3f6;
+  --border: #d0d7de;
+  --border-light: #e6e8eb;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --red: #cf222e;
+  --green: #1a7f37;
+  --blue: #0969da;
+  --orange: #bc4c00;
+  --yellow: #9a6700;
+  --purple: #8250df;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 14px;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+/* Header */
+.header {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.header .subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.header .summary-box {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--bg-card-alt);
+  border-radius: 8px;
+  border-left: 4px solid var(--red);
+}
+.header .summary-box strong { color: var(--red); }
+.header .candidate-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #ddf4ff;
+  color: var(--blue);
+  border: 1px solid #54aeff;
+}
+.tag.red { background: #ffebe9; color: var(--red); border-color: #ff8182; }
+.tag.purple { background: #fbefff; color: var(--purple); border-color: #d2a8ff; }
+.tag.orange { background: #fff4e5; color: var(--orange); border-color: #ffa726; }
+
+/* Market Overview */
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 20px 0 10px;
+  padding-left: 10px;
+  border-left: 4px solid var(--red);
+}
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.index-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+.index-card .name { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+.index-card .value { font-size: 20px; font-weight: 700; }
+.index-card .change { font-size: 13px; font-weight: 600; margin-top: 2px; }
+.red-text { color: var(--red); }
+.green-text { color: var(--green); }
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.stat-card .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.stat-card .value { font-size: 18px; font-weight: 700; }
+.stat-card .sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Sentiment Meter */
+.sentiment-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.sentiment-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--green) 0%, #d4a72c 50%, var(--red) 100%);
+  margin: 8px 0;
+  position: relative;
+}
+.sentiment-pointer {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 18px;
+  background: var(--text-primary);
+  border-radius: 2px;
+}
+.sentiment-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.sentiment-desc {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Stock Cards */
+.stock-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.stock-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stock-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+.stock-code {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+.stock-price-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.stock-price { font-size: 20px; font-weight: 700; }
+.stock-change { font-size: 15px; font-weight: 600; }
+.stock-concept {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.concept-tag {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+}
+
+/* Score Table */
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+.score-table th {
+  background: var(--bg-card-alt);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.score-table td {
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-light);
+}
+.score-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.score-value {
+  font-weight: 700;
+  font-size: 15px;
+}
+.score-high { color: var(--red); }
+.score-mid { color: var(--orange); }
+.score-low { color: var(--green); }
+.score-total {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--blue);
+}
+
+/* Analysis Frames */
+.analysis-frames {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.frame-box {
+  padding: 14px 18px;
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.frame-box:nth-child(2n) { border-right: none; }
+.frame-box:last-child, .frame-box:nth-last-child(2) { border-bottom: none; }
+.frame-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.frame-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.frame-content {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.frame-content ul {
+  list-style: none;
+  padding: 0;
+}
+.frame-content li {
+  padding: 1px 0;
+}
+.frame-content li::before {
+  content: "▸ ";
+  color: var(--text-muted);
+}
+
+/* Operation Box */
+.operation-box {
+  background: var(--bg-card-alt);
+  padding: 14px 18px;
+  border-top: 1px solid var(--border-light);
+}
+.operation-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+.op-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.op-item {
+  text-align: center;
+}
+.op-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.op-value {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Risk Warning */
+.risk-warning {
+  background: #fff8c5;
+  border: 1px solid #d4a72c;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--yellow);
+  line-height: 1.8;
+}
+.risk-warning strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Disclaimer */
+.disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 16px;
+  padding: 12px;
+}
+
+/* Market Stage Box */
+.market-stage {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.stage-flow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+.stage-item {
+  flex: 1;
+  text-align: center;
+  padding: 6px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.stage-active {
+  background: #ffebe9;
+  color: var(--red);
+  border: 2px solid var(--red);
+}
+.stage-inactive {
+  background: var(--bg-card-alt);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+.stage-arrow {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+/* Capital Flow */
+.capital-flow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.flow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.flow-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.flow-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 2px 0;
+}
+.flow-in .flow-value { color: var(--red); font-weight: 600; }
+.flow-out .flow-value { color: var(--green); font-weight: 600; }
+
+/* Limit-up Ladder */
+.ladder-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.ladder-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.ladder-row:last-child { border-bottom: none; }
+.ladder-level {
+  min-width: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.level-5 { background: #ffebe9; color: var(--red); }
+.level-4 { background: #fff1cf; color: var(--yellow); }
+.level-3 { background: #dafbe1; color: var(--green); }
+.level-2 { background: var(--bg-card-alt); color: var(--text-secondary); }
+.level-1 { background: var(--bg-card-alt); color: var(--text-muted); }
+.ladder-stocks {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.ladder-stocks strong { color: var(--text-primary); }
+
+/* Sector Section */
+.sector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.sector-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.sector-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sector-change {
+  font-size: 13px;
+  font-weight: 600;
+}
+.sector-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.sector-stage {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.stage-ferment { background: #dafbe1; color: var(--green); }
+.stage-climax { background: #ffebe9; color: var(--red); }
+.stage-ebb { background: #fff4e5; color: var(--orange); }
+
+@media (max-width: 768px) {
+  .index-grid, .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .analysis-frames { grid-template-columns: 1fr; }
+  .frame-box { border-right: none; }
+  .op-grid { grid-template-columns: repeat(3, 1fr); }
+  .capital-flow { grid-template-columns: 1fr; }
+  .sector-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 14px;
+}
+.site-nav a { text-decoration: none; font-weight: 500; }
+.site-nav a:hover { text-decoration: underline; }
+@media (prefers-color-scheme: light) {
+  .site-nav { background: rgba(246,248,250,0.92); border-bottom: 1px solid #d0d7de; }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+@media (prefers-color-scheme: dark) {
+  .site-nav { background: rgba(13,17,23,0.92); border-bottom: 1px solid #30363d; }
+  .site-nav a { color: #58a6ff; }
+  .site-nav .nav-sep { color: #30363d; }
+  .site-nav .nav-current { color: #8b949e; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+  body { background: #0d1117 !important; color: #e6edf3 !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>每日多维选股分析报告</h1>
+  <div class="subtitle">2026年8月26日 14:20 | 数据来源：iFinD金融数据终端 | 分析框架：缠论结构+520均线+游资动向+市场情绪</div>
+  <div class="summary-box">
+    <strong>市场摘要：</strong>大盘分化震荡，上证+0.19%、创业板-1.00%，两市成交约1.83万亿。约70只个股涨停，连板高度5板，深中华A领涨。市场情绪偏活跃，创业板调整拖累指数，但题材股表现活跃，处于<strong>发酵期局部分化</strong>阶段。
+    <br><strong>候选标的：</strong>海鸥住工(002084)、康盛股份(002418)、捷荣技术(002855)、楚天龙(003040)、浙江世宝(002703)
+  </div>
+  <div class="candidate-tags">
+    <span class="tag red">海鸥住工 8.25分</span>
+    <span class="tag">康盛股份 7.75分</span>
+    <span class="tag purple">捷荣技术 7.5分</span>
+    <span class="tag orange">楚天龙 7.25分</span>
+    <span class="tag">浙江世宝 7.0分</span>
+  </div>
+</div>
+
+<!-- Market Overview -->
+<div class="section-title">一、市场概况（截至14:20）</div>
+<div class="index-grid">
+  <div class="index-card">
+    <div class="name">上证指数</div>
+    <div class="value red-text">+0.19%</div>
+    <div class="change red-text">3889.44</div>
+  </div>
+  <div class="index-card">
+    <div class="name">深证成指</div>
+    <div class="value green-text">-0.35%</div>
+    <div class="change green-text">13745.87</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="value green-text">-1.00%</div>
+    <div class="change green-text">领跌调整</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="value red-text">+0.14%</div>
+    <div class="change red-text">1604.59</div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="label">涨停家数</div>
+    <div class="value red-text">~70只</div>
+    <div class="sub">含20cm涨停标的</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">连板高度</div>
+    <div class="value red-text">5板</div>
+    <div class="sub">深中华A(000017)</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">两市成交额</div>
+    <div class="value" style="color:var(--blue);">~1.83万亿</div>
+    <div class="sub">沪8589亿 / 深9730亿</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">跌幅最大</div>
+    <div class="value green-text">-17.77%</div>
+    <div class="sub">中远通(301516)</div>
+  </div>
+</div>
+
+<!-- Sentiment Meter -->
+<div class="sentiment-box">
+  <div style="font-size:13px;font-weight:600;margin-bottom:4px;">市场情绪温度计</div>
+  <div class="sentiment-bar">
+    <div class="sentiment-pointer" style="left: 62%;"></div>
+  </div>
+  <div class="sentiment-labels">
+    <span>恐慌</span>
+    <span>谨慎</span>
+    <span>均衡</span>
+    <span>活跃</span>
+    <span>亢奋</span>
+  </div>
+  <div class="sentiment-desc">
+    当前情绪温度：<strong style="color:var(--red);">62/100 偏活跃</strong>。涨停约70只维持较高热度，连板梯队完整（5-4-3-2板均有），但创业板指跌1%显示权重股承压。赚钱效应集中于小盘题材股，游资活跃度高，市场处于发酵期局部分化阶段。
+  </div>
+</div>
+
+<!-- Market Stage -->
+<div class="market-stage">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px;">情绪周期阶段判断</div>
+  <div class="stage-flow">
+    <div class="stage-item stage-inactive">启动</div>
+    <span class="stage-arrow">→</span>
+    <div class="stage-item stage-active">发酵期</div>
+    <span class="stage-arrow">→</span>
+    <div class="stage-item stage-inactive">高潮</div>
+    <span class="stage-arrow">→</span>
+    <div class="stage-item stage-inactive">退潮</div>
+    <span class="stage-arrow">→</span>
+    <div class="stage-item stage-inactive">冰点</div>
+  </div>
+  <div style="font-size:12px;color:var(--text-secondary);margin-top:8px;">
+    判断依据：连板梯队完整（5板深中华A、4板楚天龙、3板海鸥住工、多只2板），涨停家数约70只维持较高水平；但创业板指调整1%，权重股拖累指数，呈现"指数弱、题材强"的分化格局。游资活跃，题材轮动快，符合发酵期特征。
+  </div>
+</div>
+
+<!-- Capital Flow -->
+<div class="capital-flow">
+  <div class="flow-card flow-in">
+    <div class="flow-title">主力资金净流入方向</div>
+    <div class="flow-item"><span>黄金/贵金属</span><span class="flow-value">净流入居前</span></div>
+    <div class="flow-item"><span>数字货币/信创</span><span class="flow-value">净流入</span></div>
+    <div class="flow-item"><span>智能家居/家电</span><span class="flow-value">净流入</span></div>
+    <div class="flow-item"><span>无人驾驶/汽车</span><span class="flow-value">净流入</span></div>
+    <div class="flow-item"><span>消费电子/华为链</span><span class="flow-value">净流入</span></div>
+  </div>
+  <div class="flow-card flow-out">
+    <div class="flow-title">主力资金净流出方向</div>
+    <div class="flow-item"><span>新能源/光伏</span><span class="flow-value">净流出居前</span></div>
+    <div class="flow-item"><span>医药生物</span><span class="flow-value">净流出</span></div>
+    <div class="flow-item"><span>半导体/芯片</span><span class="flow-value">净流出</span></div>
+    <div class="flow-item"><span>白酒/食品饮料</span><span class="flow-value">净流出</span></div>
+    <div class="flow-item"><span>券商/金融</span><span class="flow-value">净流出</span></div>
+  </div>
+</div>
+
+<!-- Limit-up Ladder -->
+<div class="ladder-box">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px;">涨停连板梯队</div>
+  <div class="ladder-row">
+    <div class="ladder-level level-5">5板</div>
+    <div class="ladder-stocks"><strong>深中华A</strong>(000017) 黄金概念+智能穿戴 | 5天5板 | 市场情绪龙头</div>
+  </div>
+  <div class="ladder-row">
+    <div class="ladder-level level-4">4板</div>
+    <div class="ladder-stocks"><strong>楚天龙</strong>(003040) 数字货币+华为+AI | 4连板 | 板块龙头</div>
+  </div>
+  <div class="ladder-row">
+    <div class="ladder-level level-3">3板</div>
+    <div class="ladder-stocks"><strong>海鸥住工</strong>(002084) 智能家居+一带一路 | 3连板 | 封板质量极高</div>
+  </div>
+  <div class="ladder-row">
+    <div class="ladder-level level-2">2板</div>
+    <div class="ladder-stocks"><strong>康盛股份</strong>(002418) 液冷+算力+新能源 | <strong>浙江世宝</strong>(002703) 无人驾驶+小米汽车 | <strong>捷荣技术</strong>(002855) 华为+消费电子 | <strong>华天酒店</strong>(000428) 旅游 | <strong>青岛金王</strong>(002094) 化妆品 | <strong>冀衡医药</strong>(002742) 医药</div>
+  </div>
+  <div class="ladder-row">
+    <div class="ladder-level level-1">首板</div>
+    <div class="ladder-stocks"><strong>高凯技术</strong>(688835) +23.47% | <strong>迪阿股份</strong>(301177) +20% | <strong>康希诺</strong>(688185) +20% | <strong>同宇新材</strong>(301630) +20% | <strong>超频三</strong>(300647) +17.5% | <strong>兆日科技</strong>(300333) +16.8% | 其他首板约50余只</div>
+  </div>
+</div>
+
+<!-- ============ Stock 1: 海鸥住工 ============ -->
+<div class="section-title">二、选股结果（3-5只）</div>
+
+<div class="stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">海鸥住工</span>
+      <span class="stock-code">002084.SZ｜轻工制造-家居用品</span>
+      <div class="stock-concept">
+        <span class="concept-tag">智能家居</span>
+        <span class="concept-tag">一带一路</span>
+        <span class="concept-tag">3D打印</span>
+        <span class="concept-tag">空气能热泵</span>
+      </div>
+    </div>
+    <div class="stock-price-info">
+      <div class="stock-price red-text">涨停</div>
+      <div class="stock-change red-text">+10.11% 3连板</div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <tr><th>分析维度</th><th>评分</th><th>核心判断</th></tr>
+    <tr><td>缠论结构</td><td><span class="score-value score-high">9</span></td><td>3连板突破中枢，走势极强，低换手缩量涨停显示筹码高度锁定</td></tr>
+    <tr><td>520均线战法</td><td><span class="score-value score-high">8</span></td><td>5日/20日/60日均线多头排列，3连板量价配合完美</td></tr>
+    <tr><td>游资动向</td><td><span class="score-value score-high">8</span></td><td>换手率仅0.45%极度缩量涨停，筹码高度集中，封板质量极高</td></tr>
+    <tr><td>市场情绪</td><td><span class="score-value score-mid">8</span></td><td>发酵期连板梯队完整，3板位置安全边际较高</td></tr>
+    <tr style="background:var(--bg-card-alt);"><td style="font-weight:800;">综合评分</td><td><span class="score-total">8.25</span></td><td style="color:var(--red);font-weight:700;">★★★★☆ 推荐度最高</td></tr>
+  </table>
+
+  <div class="analysis-frames">
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--red);"></span>缠论结构分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>走势类型：日线级别上涨走势，3连板加速突破</li>
+          <li>中枢结构：突破前期盘整中枢上沿，进入主升段</li>
+          <li>背驰判断：3连板缩量涨停，未见背驰迹象</li>
+          <li>买卖点：第三类买点后加速段，缩量显示抛压极轻</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--blue);"></span>520均线战法</div>
+      <div class="frame-content">
+        <ul>
+          <li>均线系统：5日线上穿20日、60日线，完美多头排列</li>
+          <li>量价配合：3连板逐日缩量，筹码锁定度极高</li>
+          <li>突破确认：连续3日涨停，有效突破前期平台</li>
+          <li>优势特征：低价股（约4.8元）+低换手，游资偏爱</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--purple);"></span>游资动向分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>换手特征：今日换手率仅0.45%，极度缩量涨停</li>
+          <li>筹码结构：3连板换手逐日降低，筹码高度集中</li>
+          <li>封板质量：一字板/缩量板，封单资金充裕</li>
+          <li>市值优势：低价小市值，游资拉升成本低</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--orange);"></span>市场情绪分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>情绪阶段：发酵期，连板梯队完整，赚钱效应较好</li>
+          <li>题材催化：智能家居+一带一路+空气能热泵多重概念</li>
+          <li>梯队位置：3板处于连板梯队中间，向上空间仍存</li>
+          <li>风险提示：缩量涨停一旦开板可能引发获利盘涌出</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-box">
+    <div class="operation-title">尾盘买入建议（14:30-15:00）</div>
+    <div class="op-grid">
+      <div class="op-item">
+        <div class="op-label">买入区间</div>
+        <div class="op-value" style="color:var(--blue);">4.60-4.80</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止损位</div>
+        <div class="op-value green-text">4.30</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位1</div>
+        <div class="op-value red-text">5.30</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位2</div>
+        <div class="op-value red-text">5.80</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">仓位建议</div>
+        <div class="op-value" style="color:var(--orange);">20%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Stock 2: 康盛股份 ============ -->
+<div class="stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">康盛股份</span>
+      <span class="stock-code">002418.SZ｜家用电器-家电零部件</span>
+      <div class="stock-concept">
+        <span class="concept-tag">液冷服务器</span>
+        <span class="concept-tag">算力租赁</span>
+        <span class="concept-tag">氢能源</span>
+        <span class="concept-tag">新能源汽车</span>
+      </div>
+    </div>
+    <div class="stock-price-info">
+      <div class="stock-price red-text">涨停</div>
+      <div class="stock-change red-text">+10.12% 2连板</div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <tr><th>分析维度</th><th>评分</th><th>核心判断</th></tr>
+    <tr><td>缠论结构</td><td><span class="score-value score-high">8</span></td><td>2连板突破盘整中枢，日线第二类买点确认后加速</td></tr>
+    <tr><td>520均线战法</td><td><span class="score-value score-high">8</span></td><td>5日线上穿20日线，均线多头排列，量价配合良好</td></tr>
+    <tr><td>游资动向</td><td><span class="score-value score-mid">7</span></td><td>换手率10.33%，筹码交换充分，游资参与度高</td></tr>
+    <tr><td>市场情绪</td><td><span class="score-value score-high">8</span></td><td>液冷+算力+新能源多重热门概念叠加，题材共振</td></tr>
+    <tr style="background:var(--bg-card-alt);"><td style="font-weight:800;">综合评分</td><td><span class="score-total">7.75</span></td><td style="color:var(--blue);font-weight:700;">★★★★☆ 强烈关注</td></tr>
+  </table>
+
+  <div class="analysis-frames">
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--red);"></span>缠论结构分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>走势类型：日线级别突破上涨，2连板确认方向</li>
+          <li>中枢结构：突破前期盘整中枢，进入上涨段</li>
+          <li>背驰判断：2板位置适中，未见明显背驰</li>
+          <li>买卖点：第二类买点确认后突破，回踩即介入机会</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--blue);"></span>520均线战法</div>
+      <div class="frame-content">
+        <ul>
+          <li>均线系统：5日线在20日线上方，多头排列确立</li>
+          <li>量价配合：成交放量，换手率10.33%，量价齐升</li>
+          <li>价格优势：低价股（约4.5元），群众基础好</li>
+          <li>位置安全：2板位置不高，偏离均线幅度可控</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--purple);"></span>游资动向分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>换手情况：换手率10.33%，资金介入充分</li>
+          <li>概念叠加：液冷+算力+氢能+新能源汽车，多热点共振</li>
+          <li>资金偏好：低价小市值标的，游资偏爱</li>
+          <li>龙虎榜预期：2连板+多概念叠加，预计龙虎榜活跃</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--orange);"></span>市场情绪分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>题材热度：液冷服务器、算力租赁为近期持续热点</li>
+          <li>概念叠加：同时叠加氢能、新能源汽车，概念丰富</li>
+          <li>情绪匹配：发酵期资金偏好多概念叠加标的</li>
+          <li>风险提示：概念多但主业不突出，情绪退潮易跌</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-box">
+    <div class="operation-title">尾盘买入建议（14:30-15:00）</div>
+    <div class="op-grid">
+      <div class="op-item">
+        <div class="op-label">买入区间</div>
+        <div class="op-value" style="color:var(--blue);">4.20-4.45</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止损位</div>
+        <div class="op-value green-text">3.95</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位1</div>
+        <div class="op-value red-text">4.90</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位2</div>
+        <div class="op-value red-text">5.40</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">仓位建议</div>
+        <div class="op-value" style="color:var(--orange);">15%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Stock 3: 捷荣技术 ============ -->
+<div class="stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">捷荣技术</span>
+      <span class="stock-code">002855.SZ｜电子-消费电子</span>
+      <div class="stock-concept">
+        <span class="concept-tag">华为概念</span>
+        <span class="concept-tag">消费电子</span>
+        <span class="concept-tag">VR设备</span>
+        <span class="concept-tag">智能穿戴</span>
+      </div>
+    </div>
+    <div class="stock-price-info">
+      <div class="stock-price red-text">涨停</div>
+      <div class="stock-change red-text">+10.00% 2连板</div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <tr><th>分析维度</th><th>评分</th><th>核心判断</th></tr>
+    <tr><td>缠论结构</td><td><span class="score-value score-mid">7</span></td><td>2连板突破平台，日线走势转强，低位启动安全边际高</td></tr>
+    <tr><td>520均线战法</td><td><span class="score-value score-high">8</span></td><td>5日线刚上穿20日线，均线金叉，首板位置低</td></tr>
+    <tr><td>游资动向</td><td><span class="score-value score-mid">7</span></td><td>换手率1.93%偏低，筹码稳定，华为概念游资熟悉</td></tr>
+    <tr><td>市场情绪</td><td><span class="score-value score-high">8</span></td><td>华为Mate70系列预期催化，消费电子板块回暖</td></tr>
+    <tr style="background:var(--bg-card-alt);"><td style="font-weight:800;">综合评分</td><td><span class="score-total">7.5</span></td><td style="color:var(--blue);font-weight:700;">★★★☆ 重点关注</td></tr>
+  </table>
+
+  <div class="analysis-frames">
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--red);"></span>缠论结构分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>走势类型：日线级别盘整后突破，2连板启动</li>
+          <li>中枢结构：突破长期盘整中枢，空间打开</li>
+          <li>背驰判断：低位2板，无背驰风险</li>
+          <li>买卖点：第一类买点后第二类买点确认，位置安全</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--blue);"></span>520均线战法</div>
+      <div class="frame-content">
+        <ul>
+          <li>均线系统：5日线上穿20日线，均线金叉形成</li>
+          <li>量价配合：2连板温和放量，量价健康</li>
+          <li>位置优势：长期横盘后突破，底部启动</li>
+          <li>历史记忆：曾为华为概念老妖股，股性活跃</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--purple);"></span>游资动向分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>换手特征：换手率1.93%偏低，筹码锁定良好</li>
+          <li>股性记忆：华为概念老牌妖股，游资辨识度高</li>
+          <li>市值适中：总市值约50亿，适合游资运作</li>
+          <li>封板质量：2连板封板稳定，资金态度坚决</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--orange);"></span>市场情绪分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>催化因素：华为Mate70系列发布预期升温</li>
+          <li>板块联动：消费电子板块整体回暖，多股涨停</li>
+          <li>情绪匹配：发酵期低位启动标的安全性更高</li>
+          <li>风险提示：2板后分歧可能加大，需观察量能</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-box">
+    <div class="operation-title">尾盘买入建议（14:30-15:00）</div>
+    <div class="op-grid">
+      <div class="op-item">
+        <div class="op-label">买入区间</div>
+        <div class="op-value" style="color:var(--blue);">11.50-12.10</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止损位</div>
+        <div class="op-value green-text">10.80</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位1</div>
+        <div class="op-value red-text">13.30</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位2</div>
+        <div class="op-value red-text">14.50</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">仓位建议</div>
+        <div class="op-value" style="color:var(--orange);">15%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Stock 4: 楚天龙 ============ -->
+<div class="stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">楚天龙</span>
+      <span class="stock-code">003040.SZ｜通信-通信设备</span>
+      <div class="stock-concept">
+        <span class="concept-tag">数字货币</span>
+        <span class="concept-tag">华为概念</span>
+        <span class="concept-tag">AI智能体</span>
+        <span class="concept-tag">信创</span>
+      </div>
+    </div>
+    <div class="stock-price-info">
+      <div class="stock-price red-text">涨停</div>
+      <div class="stock-change red-text">+10.01% 4连板</div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <tr><th>分析维度</th><th>评分</th><th>核心判断</th></tr>
+    <tr><td>缠论结构</td><td><span class="score-value score-mid">7</span></td><td>4连板加速上涨，位置偏高，需警惕背驰风险</td></tr>
+    <tr><td>520均线战法</td><td><span class="score-value score-mid">7</span></td><td>均线多头排列，但4连板后偏离5日线较大</td></tr>
+    <tr><td>游资动向</td><td><span class="score-value score-high">8</span></td><td>数字货币+AI+华为多重热门概念，游资关注度极高</td></tr>
+    <tr><td>市场情绪</td><td><span class="score-value score-high">7</span></td><td>板块龙头，4板高辨识度，但位置偏高风险加大</td></tr>
+    <tr style="background:var(--bg-card-alt);"><td style="font-weight:800;">综合评分</td><td><span class="score-total">7.25</span></td><td style="color:var(--orange);font-weight:700;">★★★☆ 谨慎关注</td></tr>
+  </table>
+
+  <div class="analysis-frames">
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--red);"></span>缠论结构分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>走势类型：日线级别上涨走势加速，4连板</li>
+          <li>中枢结构：连续突破小级别中枢，趋势强劲</li>
+          <li>背驰判断：4板后需警惕60分钟级别背驰</li>
+          <li>买卖点：第三类买点后加速段尾端，追高需谨慎</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--blue);"></span>520均线战法</div>
+      <div class="frame-content">
+        <ul>
+          <li>均线系统：5日线大幅上穿20、60日线，多头排列</li>
+          <li>量价配合：成交放量，换手率约10%，量价齐升</li>
+          <li>偏离风险：4连板后偏离5日线较大，回踩风险增加</li>
+          <li>趋势强度：趋势极强，但短期超买严重</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--purple);"></span>游资动向分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>概念龙头：数字货币板块短期情绪龙头</li>
+          <li>多概念叠加：数字货币+华为+AI+信创，热点共振</li>
+          <li>资金参与：机构+游资+深股通多方资金参与</li>
+          <li>风险提示：4板位置偏高，资金分歧可能加剧</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--orange);"></span>市场情绪分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>板块地位：数字货币板块龙头，4连板高辨识度</li>
+          <li>情绪阶段：发酵期，连板梯队完整，龙头有溢价</li>
+          <li>催化因素：数字人民币扩容+AI应用落地双重催化</li>
+          <li>风险提示：公司提示数字人民币收入占比低，谨防情绪退潮</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-box">
+    <div class="operation-title">尾盘买入建议（14:30-15:00）</div>
+    <div class="op-grid">
+      <div class="op-item">
+        <div class="op-label">买入区间</div>
+        <div class="op-value" style="color:var(--blue);">16.00-17.00</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止损位</div>
+        <div class="op-value green-text">15.20</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位1</div>
+        <div class="op-value red-text">18.70</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位2</div>
+        <div class="op-value red-text">20.00</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">仓位建议</div>
+        <div class="op-value" style="color:var(--orange);">10%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Stock 5: 浙江世宝 ============ -->
+<div class="stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">浙江世宝</span>
+      <span class="stock-code">002703.SZ｜汽车-汽车零部件</span>
+      <div class="stock-concept">
+        <span class="concept-tag">无人驾驶</span>
+        <span class="concept-tag">小米汽车</span>
+        <span class="concept-tag">比亚迪概念</span>
+        <span class="concept-tag">汽车电子</span>
+      </div>
+    </div>
+    <div class="stock-price-info">
+      <div class="stock-price red-text">涨停</div>
+      <div class="stock-change red-text">+10.02% 2连板</div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <tr><th>分析维度</th><th>评分</th><th>核心判断</th></tr>
+    <tr><td>缠论结构</td><td><span class="score-value score-mid">7</span></td><td>2连板突破平台，走势转强，老妖股股性活跃</td></tr>
+    <tr><td>520均线战法</td><td><span class="score-value score-mid">7</span></td><td>5日线上穿20日线，均线多头，但位置偏高</td></tr>
+    <tr><td>游资动向</td><td><span class="score-value score-high">7</span></td><td>换手率12.89%，资金介入充分，游资偏爱老妖股</td></tr>
+    <tr><td>市场情绪</td><td><span class="score-value score-mid">7</span></td><td>无人驾驶+小米汽车催化，板块轮动机会</td></tr>
+    <tr style="background:var(--bg-card-alt);"><td style="font-weight:800;">综合评分</td><td><span class="score-total">7.0</span></td><td style="color:var(--text-secondary);font-weight:700;">★★★☆ 适度关注</td></tr>
+  </table>
+
+  <div class="analysis-frames">
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--red);"></span>缠论结构分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>走势类型：日线级别反弹上涨，2连板确认</li>
+          <li>中枢结构：突破短期盘整区间，向上拓展空间</li>
+          <li>背驰判断：2板位置，暂未出现背驰</li>
+          <li>买卖点：第二类买点附近，回踩确认可介入</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--blue);"></span>520均线战法</div>
+      <div class="frame-content">
+        <ul>
+          <li>均线系统：5日线在20日线上方，多头排列</li>
+          <li>量价配合：换手率12.89%，成交活跃</li>
+          <li>股性特征：老妖股，历史股性极其活跃</li>
+          <li>位置评估：相对前期高点仍有距离，空间尚可</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--purple);"></span>游资动向分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>换手特征：换手率12.89%，资金博弈充分</li>
+          <li>股性记忆：历史著名老妖股，游资辨识度极高</li>
+          <li>概念催化：小米汽车+无人驾驶+比亚迪多重概念</li>
+          <li>风险提示：高换手意味着分歧大，波动剧烈</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-box">
+      <div class="frame-title"><span class="dot" style="background:var(--orange);"></span>市场情绪分析</div>
+      <div class="frame-content">
+        <ul>
+          <li>板块催化：小米汽车进展+无人驾驶政策催化</li>
+          <li>板块轮动：汽车板块轮动机会，无人驾驶持续活跃</li>
+          <li>情绪匹配：发酵期题材轮动，老妖股容易被资金挖掘</li>
+          <li>风险提示：板块非今日最强主线，持续性待验证</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="operation-box">
+    <div class="operation-title">尾盘买入建议（14:30-15:00）</div>
+    <div class="op-grid">
+      <div class="op-item">
+        <div class="op-label">买入区间</div>
+        <div class="op-value" style="color:var(--blue);">16.50-17.45</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止损位</div>
+        <div class="op-value green-text">15.50</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位1</div>
+        <div class="op-value red-text">19.20</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">止盈位2</div>
+        <div class="op-value red-text">21.00</div>
+      </div>
+      <div class="op-item">
+        <div class="op-label">仓位建议</div>
+        <div class="op-value" style="color:var(--orange);">10%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: 板块机会梳理 -->
+<div class="section-title">三、板块机会梳理</div>
+<div class="sector-grid">
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>数字货币/信创</span>
+      <span class="sector-change red-text">活跃</span>
+    </div>
+    <div class="sector-desc">
+      楚天龙4连板领涨，新晨科技等跟涨。央行数字人民币扩容政策持续催化，AI+信创+数字货币多重概念共振。
+    </div>
+    <span class="sector-stage stage-ferment">发酵期</span>
+  </div>
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>智能家居/家电</span>
+      <span class="sector-change red-text">强势</span>
+    </div>
+    <div class="sector-desc">
+      海鸥住工3连板领涨，康盛股份2板。智能家居+一带一路+空气能热泵多概念叠加，低价小市值标的受追捧。
+    </div>
+    <span class="sector-stage stage-ferment">发酵期</span>
+  </div>
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>黄金/贵金属</span>
+      <span class="sector-change red-text">领涨</span>
+    </div>
+    <div class="sector-desc">
+      深中华A 5连板成为市场总龙头，黄金概念板块整体强势。国际金价上涨+避险情绪双重驱动。
+    </div>
+    <span class="sector-stage stage-climax">高潮期</span>
+  </div>
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>消费电子/华为链</span>
+      <span class="sector-change red-text">回暖</span>
+    </div>
+    <div class="sector-desc">
+      捷荣技术2连板，石头科技等科创板标的大涨。华为Mate70系列发布预期催化，板块底部回暖。
+    </div>
+    <span class="sector-stage stage-ferment">启动期</span>
+  </div>
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>无人驾驶/汽车</span>
+      <span class="sector-change" style="color:var(--orange);">轮动</span>
+    </div>
+    <div class="sector-desc">
+      浙江世宝2连板，无人驾驶板块轮动活跃。小米汽车+自动驾驶政策催化，板块持续性较好。
+    </div>
+    <span class="sector-stage stage-ferment">发酵期</span>
+  </div>
+  <div class="sector-card">
+    <div class="sector-name">
+      <span>液冷/算力</span>
+      <span class="sector-change red-text">持续</span>
+    </div>
+    <div class="sector-desc">
+      康盛股份2板，液冷服务器+算力租赁概念持续活跃。AI算力需求旺盛，产业链相关标的反复活跃。
+    </div>
+    <span class="sector-stage stage-ferment">发酵期</span>
+  </div>
+</div>
+
+<!-- Risk Warning -->
+<div class="section-title">四、风险提示</div>
+<div class="risk-warning">
+  <strong>⚠️ 核心风险提示</strong>
+  本报告基于公开行情数据的多维技术分析，任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎，所有内容不构成投资建议。<br><br>
+  <strong>市场风险：</strong>
+  <ul style="margin-left:20px;margin-top:4px;">
+    <li>创业板指跌1%，权重股承压，若次日指数继续调整，所有标的均面临系统性风险</li>
+    <li>市场处于发酵期，题材轮动速度快，追高容易被套，建议低吸为主</li>
+    <li>两市成交约1.83万亿，量能维持但分化严重，注意高低切换风险</li>
+  </ul>
+  <br>
+  <strong>个股风险：</strong>
+  <ul style="margin-left:20px;margin-top:4px;">
+    <li>海鸥住工3连板缩量涨停，一旦开板可能引发获利盘集中涌出，需严格止损</li>
+    <li>楚天龙4连板位置偏高，且公司提示数字人民币收入占比低，情绪退潮风险大</li>
+    <li>康盛股份概念多但主业不突出，纯题材炒作，情绪退潮时跌幅可能较大</li>
+    <li>捷荣技术为老妖股，股性活跃但波动剧烈，适合高风险偏好投资者</li>
+    <li>浙江世宝高换手意味着资金分歧大，次日持续性存疑</li>
+  </ul>
+  <br>
+  <strong>策略失效情景：</strong>
+  <ul style="margin-left:20px;margin-top:4px;">
+    <li>次日大盘低开低走，跌幅超1%，应放弃介入观望为主</li>
+    <li>连板龙头深中华A、楚天龙出现断板或大幅低开，情绪退潮信号</li>
+    <li>涨停家数骤降至30只以下，市场情绪快速降温</li>
+    <li>持仓个股跌破止损位，应无条件止损离场</li>
+  </ul>
+</div>
+
+<div class="disclaimer">
+  <strong>重要声明</strong><br>
+  本报告仅为基于公开数据的多维技术分析，任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎，所有内容不构成投资建议。<br><br>
+  报告生成时间：2026-08-26 14:20 | 数据来源：iFinD金融数据终端<br>
+  分析框架：缠论结构 + 520均线战法 + 游资动向 + 市场情绪周期 + 板块轮动
+</div>
+
+</div>
+</body>
+</html>

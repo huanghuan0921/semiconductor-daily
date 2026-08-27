@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球半导体每日早报 | 2026-08-27</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fa;
+  --bg-card-alt: #f0f1f3;
+  --text: #1a1a2e;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --border: #e0e0e0;
+  --accent: #2563eb;
+  --bull: #cf222e;
+  --bear: #1a7f37;
+  --neutral: #bf8700;
+  --bull-bg: rgba(207,34,46,0.06);
+  --bear-bg: rgba(26,127,55,0.06);
+  --neutral-bg: rgba(191,135,0,0.06);
+  --tag-bull: #cf222e;
+  --tag-bear: #1a7f37;
+  --tag-neutral: #9a6f00;
+  --highlight: #fff3cd;
+  --nav-bg: #1a1a2e;
+  --nav-text: #e0e0e0;
+  --section-border: #2563eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-alt: #1c2129;
+    --text: #e6edf3;
+    --text-secondary: #b0b8c4;
+    --text-muted: #6e7681;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --bull: #f85149;
+    --bear: #3fb950;
+    --neutral: #d29922;
+    --bull-bg: rgba(248,81,73,0.1);
+    --bear-bg: rgba(63,185,80,0.1);
+    --neutral-bg: rgba(210,153,34,0.1);
+    --tag-bull: #f85149;
+    --tag-bear: #3fb950;
+    --tag-neutral: #d29922;
+    --highlight: rgba(210,153,34,0.15);
+    --nav-bg: #0d1117;
+    --nav-text: #e6edf3;
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+nav {
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  padding: 12px 24px;
+  font-size: 14px;
+  border-bottom: 2px solid var(--section-border);
+  position: sticky; top:0; z-index:100;
+}
+nav a { color: var(--accent); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 24px 20px 60px; }
+
+.header {
+  text-align: center;
+  padding: 32px 0 20px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+.header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.header .date {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.header .subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--section-border);
+  margin-bottom: 16px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon { font-size: 20px; }
+
+.market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.market-item {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+.market-item .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.market-item .value { font-size: 18px; font-weight: 700; }
+.market-item .change { font-size: 13px; margin-left: 6px; }
+
+.up { color: var(--bull); }
+.down { color: var(--bear); }
+.neutral-c { color: var(--neutral); }
+
+.sentiment-box {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sentiment-box p { font-size: 14px; color: var(--text-secondary); }
+
+.news-item {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+}
+.news-item.bullish { border-left-color: var(--bull); background: var(--bull-bg); }
+.news-item.bearish { border-left-color: var(--bear); background: var(--bear-bg); }
+.news-item.neutral { border-left-color: var(--neutral); background: var(--neutral-bg); }
+
+.news-item .summary { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.news-item .detail { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.6; }
+.news-item .logic { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-style: italic; }
+.news-item .source {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+.news-item .source a { color: var(--text-muted); text-decoration: underline; }
+.news-item .source a:hover { color: var(--accent); }
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+.tag-bull { background: var(--bull); color: #fff; }
+.tag-bear { background: var(--bear); color: #fff; }
+.tag-neutral { background: var(--neutral); color: #fff; }
+
+.stock-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+}
+.stock-card .stock-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.stock-card .stock-code { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+.stock-card .stock-section { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+.stock-card h4 { font-size: 14px; margin: 12px 0 4px; color: var(--text); }
+.stock-card p, .stock-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.stock-card ul { padding-left: 18px; margin: 4px 0; }
+.stock-card .risk { color: var(--bear); }
+
+.chain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.chain-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+.chain-card h4 { font-size: 15px; margin-bottom: 6px; }
+.chain-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.catalyst-box {
+  background: var(--bull-bg);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--bull);
+  margin-bottom: 12px;
+}
+.risk-box {
+  background: var(--bear-bg);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--bear);
+  margin-bottom: 12px;
+}
+.logic-box {
+  background: var(--bg-card-alt);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.disclaimer {
+  margin-top: 40px;
+  padding: 16px;
+  background: var(--bg-card-alt);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+@media (max-width: 640px) {
+  .market-grid, .chain-grid { grid-template-columns: 1fr; }
+  .container { padding: 12px 14px 40px; }
+  .header h1 { font-size: 22px; }
+}
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 14px;
+}
+.site-nav a { text-decoration: none; font-weight: 500; }
+.site-nav a:hover { text-decoration: underline; }
+@media (prefers-color-scheme: light) {
+  .site-nav { background: rgba(246,248,250,0.92); border-bottom: 1px solid #d0d7de; }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+@media (prefers-color-scheme: dark) {
+  .site-nav { background: rgba(13,17,23,0.92); border-bottom: 1px solid #30363d; }
+  .site-nav a { color: #58a6ff; }
+  .site-nav .nav-sep { color: #30363d; }
+  .site-nav .nav-current { color: #8b949e; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+  body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">半导体每日早报</span>
+</nav>
+
+<nav>
+  ← <a href="https://huanghuan0921.github.io/semiconductor-daily/">半导体投研信息中心</a> / 每日早报
+</nav>
+
+<div class="container">
+
+<div class="header">
+  <h1>全球半导体每日早报</h1>
+  <div class="date">2026年8月27日（周四）</div>
+  <div class="subtitle">信息覆盖时段：8月26日 08:00 ~ 8月27日 07:30（北京时间）</div>
+</div>
+
+<!-- ====== 一、隔夜全球核心行情 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> 一、隔夜全球核心行情（外围情绪参考）</div>
+
+  <div class="market-grid">
+    <div class="market-item">
+      <div class="label">费城半导体指数 (SOX)</div>
+      <div class="value">11,611.24 <span class="change up">+0.20%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">英伟达 (NVDA) 收盘</div>
+      <div class="value">209.66 <span class="change down">-1.59%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">英伟达 (NVDA) 盘后</div>
+      <div class="value"><span class="change up">+4.19%</span>（财报超预期）</div>
+    </div>
+    <div class="market-item">
+      <div class="label">美光科技 (MU)</div>
+      <div class="value"><span class="change up">+0.58%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">10年期美债收益率</div>
+      <div class="value">4.663% <span class="change up">+2.6bp</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">美元指数</div>
+      <div class="value">99.14 <span class="change up">+0.22%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">北向资金（8/26）</div>
+      <div class="value"><span class="change down">净流出约26-30亿</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">在岸人民币</div>
+      <div class="value">6.7229 <span class="neutral-c">稳定</span></div>
+    </div>
+  </div>
+
+  <div class="sentiment-box">
+    <p><strong>情绪解读：</strong>隔夜美股三大指数微跌，但英伟达盘后财报大超预期（营收<span class="up">+106%</span> YoY），盘后涨超4%，为今日A股半导体板块注入强催化剂。宏观面美债收益率维持4.66%高位，PCE略超预期，9月加息概率升至51.2%，对成长股估值形成压制。整体呈现<span class="up">产业面强劲</span> vs <span class="down">宏观面偏紧</span>的博弈格局，AI算力链有望带动A股半导体结构性行情。</p>
+  </div>
+  <div class="source" style="font-size:11px;color:var(--text-muted);">行情数据来源：NASDAQ、第一财经、东方财富，数据获取时间：2026-08-27 07:30 BJT</div>
+</div>
+
+<!-- ====== 二、全球宏观金融要闻 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🌐</span> 二、全球宏观金融要闻【流动性风向标｜最高优先级】</div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 美国7月PCE通胀略超预期，10年期美债收益率走高</div>
+    <div class="detail">美国7月PCE物价指数同比上涨3.7%，核心PCE同比3.3%，均较市场预期高0.1个百分点。数据公布后美股小幅回落，10年期美债收益率升至4.66%，30年期一度触及5.337%创2007年以来新高。</div>
+    <div class="logic">→ 传导逻辑：PCE超预期强化通胀黏性叙事，推升美债收益率，科技成长股估值模型中的折现率上升，高久期半导体板块承压。同时抬高AI资本开支的融资成本预期。</div>
+    <div class="source">📍 2026-08-26 21:10 BJT | 新浪财经/环球市场播报 | <a href="https://finance.sina.com.cn/stock/usstock/c/2026-08-26/doc-inipsezp5934160.shtml" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> CME美联储观察：9月加息25bp概率升至51.2%</div>
+    <div class="detail">CME"美联储观察"显示，美联储9月维持利率不变概率48.8%，累计加息25bp概率51.2%；到10月累计加息25bp概率50.5%，累计加息50bp概率14.8%。市场对加息路径重新定价。</div>
+    <div class="logic">→ 传导逻辑：加息预期升温直接压制成长股估值。若9月FOMC前加息概率继续走高，半导体板块风险溢价将抬升，AI算力链资本开支扩张节奏可能受融资成本上行影响放缓。</div>
+    <div class="source">📍 2026-08-26 | 东方财富全球财经快讯（引用CME FedWatch）| <a href="https://kuaixun.eastmoney.com/qqyh_mlc.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 美联储柯林斯：通胀仍然过高，关注降通胀证据</div>
+    <div class="detail">波士顿联储主席柯林斯表示通胀仍然过高，未来几个月将关注通胀是否能持续回落至2%的证据，强调美联储维持物价稳定的职责。讲话偏鹰，与PCE数据形成呼应。</div>
+    <div class="logic">→ 传导逻辑：联储官员鹰派表态强化"通胀未充分回落"叙事，削弱市场宽松预期。高久期科技成长股对利率预期更敏感，半导体板块短期风险偏好受压制。</div>
+    <div class="source">📍 2026-08-25 22:04 BJT | 财联社/东方财富 | <a href="https://finance.eastmoney.com/a/202608253853352650.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 杰克逊霍尔年会前瞻：美联储主席沃什周五讲话成关键</div>
+    <div class="detail">全球央行官员本周参加杰克逊霍尔年会，美联储主席沃什定于8月28日上午10点发表主旨演讲。当前30年期美债收益率一度攀升至5.337%创2007年以来新高，市场高度关注沃什对通胀、长端利率和政策路径的判断。</div>
+    <div class="logic">→ 传导逻辑：杰克逊霍尔年会历来放大债市、汇市波动。若沃什偏鹰，长端利率和科技股估值压力上升；若偏鸽，则可能缓解风险溢价。对半导体而言，核心传导路径仍是美债收益率和AI资本开支预期。</div>
+    <div class="source">📍 2026-08-25 10:47 BJT | 界面新闻/东方财富 | <a href="https://finance.eastmoney.com/a/202608253852528273.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 欧央行Schnabel：需进一步加息以控制通胀</div>
+    <div class="detail">欧央行官员Schnabel表示，在当前政策利率下通胀中期内不太可能回到目标，进一步紧缩是必要的。她指出能源成本推动的消费者价格增长可能长期高于2%。</div>
+    <div class="logic">→ 传导逻辑：欧央行偏鹰削弱欧洲宽松预期，欧洲成长股估值承压。对半导体而言，欧洲地区AI、汽车电子和工业半导体需求可能阶段性走弱。</div>
+    <div class="source">📍 2026-08-26 | Brussels Signal | <a href="https://brusselssignal.eu/2026/08/schnabel-says-ecb-must-raise-rates-further-to-contain-inflation/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 北向资金8月26日净流出约26-30亿，但外资中长期仍偏好硬科技</div>
+    <div class="detail">北向资金8月26日合计净流出约26-30亿元，沪股通净流出约23.5亿。但寒武纪位列沪股通成交前三（成交额18.52亿元），显示外资对AI算力方向仍有配置意愿。Q2北向持股市值首次突破3万亿元，主要加仓AI、算力芯片、半导体产业链方向。</div>
+    <div class="logic">→ 传导逻辑：短期北向资金净流出压制A股成长股风险偏好，但中长期外资对AI产业链、算力芯片、半导体国产替代方向的配置仍在增加。若后续外资回流硬科技，半导体板块将获估值和资金面双重支撑。</div>
+    <div class="source">📍 2026-08-26 | 东方财富Choice、格隆汇 | <a href="https://finance.eastmoney.com/a/202608263854707227.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 人民币中间价6.7829，在岸6.72附近稳定</div>
+    <div class="detail">8月26日人民币兑美元中间价报6.7829，在岸人民币16:30收盘报6.7229，汇率整体稳定，未形成明显贬值压力。</div>
+    <div class="logic">→ 传导逻辑：人民币稳定有助于降低外资配置A股成长板块的汇率风险，同时也降低半导体进口设备、材料和零部件的成本波动。对A股半导体板块形成中性偏正面的汇率环境。</div>
+    <div class="source">📍 2026-08-26 09:15 BJT | 中国货币网 | <a href="https://www.chinamoney.org.cn/chinese/index.html" target="_blank">原文链接</a></div>
+  </div>
+</div>
+
+<!-- ====== 三、全球半导体重磅产业资讯 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔬</span> 三、全球半导体重磅产业资讯汇总</div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">重磅利好</span> 英伟达Q2 FY2027业绩爆表：营收962亿美元同比+106%，盘后涨超4%</div>
+    <div class="detail">英伟达8月26日盘后公布2027财年Q2业绩：总营收962.21亿美元（同比+106%，环比+18%），非GAAP EPS 2.22美元，均超市场预期。数据中心收入890亿美元（同比+117%），超大规模客户收入487.1亿美元占总营收过半。CFO Kress在电话会上表示预计2028财年营收增长约70%，远超市场此前预期的45%，并强调"如果获得更多供应，增长速度还会更快"。</div>
+    <div class="source">📍 2026-08-26 美股盘后 | NVIDIA官方投资者关系 | <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 韩国DRAM出口价格同比暴涨401%，AI挤压常规存储供应</div>
+    <div class="detail">8月1-20日韩国DRAM出口单价达每公斤9.2183万美元，同比上涨401%，较2023年1月低点上涨约12.5倍。AI驱动的HBM生产挤占常规DRAM产能，高盛预计DRAM供应缺口今年5.0%、明年扩大至5.9%。SK海力士表示2027年可能成为"内存行业史上最严重短缺年"。</div>
+    <div class="source">📍 2026-08-26 | 朝鲜日报/c114pro | <a href="https://www.c114pro.com/chipnews/188283.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 三星/SK海力士计划增加8层HBM4供应，调整英伟达交付结构</div>
+    <div class="detail">三星电子与SK海力士计划在2026年下半年增加对英伟达的8层HBM4内存供应量。此前两家主要供应12层HBM4，但英伟达出于AI服务器散热管理和供应稳定性考虑，要求提升8层HBM4交付比例。HBM4E作为下一代产品也可能以8层为主力形态。</div>
+    <div class="source">📍 2026-08-26 | ZDNET Korea/财联社 | <a href="https://zdnet.co.kr/view/?no=20260826094826" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 台积电CoWoS持续扩产，AI芯片成本上升传导至产业链</div>
+    <div class="detail">台积电因AI芯片需求持续旺盛，持续投入升级CoWoS先进封装产能。英伟达是台积电CoWoS最大客户（订单约占产能60%），亚马逊、博通等客户也出现紧急订单。随着供应链扩产及中间材料成本上升，AI芯片未来价格可能上涨。</div>
+    <div class="source">📍 2026-08-26 | 台湾联合报/Shulou转引 | <a href="https://www.shulou.com/a604277" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 美国推动MATCH法案：拟全面禁售ASML DUV光刻机并限制售后维修</div>
+    <div class="detail">美国正推动《硬件技术管制多边协调法案》（MATCH Act），要求盟友将出口管制政策与美国同步。若通过，荷兰将禁止向中国出售剩余ASML DUV光刻机，并限制已交付设备的售后维护和零部件服务；若荷兰不配合，美国可能启动制裁。</div>
+    <div class="source">📍 2026-08-25 | TrendForce | <a href="https://www.trendforce.com/news/2026/08/25/news-u-s-may-push-near-total-asml-china-ban-on-duv-sales-and-servicing-amid-chinas-domestic-lithography-push/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 先进封装产能缺口至少持续至2028年，库存处于三年新低</div>
+    <div class="detail">2026年全球电子元器件月销售额达1344亿美元，库存处于三年新低。先进封装产能呈现"结构性紧缺、整体满产、大幅扩产"格局，AI算力、HBM、Chiplet需求叠加，产能缺口预计至少持续到2028年。</div>
+    <div class="source">📍 2026-08 | 芯智云 | <a href="http://www.smc-cloud.com/cn/gongsixinwen/158.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 国产半导体设备：刻蚀、薄膜沉积、清洗和CMP进入规模化销售</div>
+    <div class="detail">截至8月25日，国产半导体设备在刻蚀、薄膜沉积、清洗和CMP部分工艺已进入规模化销售阶段，涂胶显影和检测正在加快导入，先进封装也为国产设备打开新增量。伯恩斯坦大幅上调中国半导体设备预测，北方华创获跑赢大盘评级。</div>
+    <div class="source">📍 2026-08-25 | 头条"设备芯闻" | <a href="http://m.toutiao.com/group/7678164247544742450/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> SEMI：2026年全球300mm晶圆厂设备支出预计达1420亿美元，创历史新高</div>
+    <div class="detail">SEMI 300mm Fab Outlook显示，全球300mm前端设备支出2026年预计达1420亿美元（同比+25%），创历史新高。Fab设备投资预计2027年再增11%、2028年增6%、2029年增18%，资本开支周期持续上行。</div>
+    <div class="source">📍 2026年7月（SEMI Mid-Year Forecast）| SEMI | <a href="https://www.semi.org/eu/products-services/market-data/300mm-fab-outlook" target="_blank">原文链接</a></div>
+  </div>
+</div>
+
+<!-- ====== 四、产业链景气变化梳理 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📈</span> 四、产业链景气变化梳理</div>
+
+  <div class="chain-grid">
+    <div class="chain-card">
+      <h4>🖥️ 算力芯片</h4>
+      <p><span class="up">景气上行 ↑</span> 英伟达Q2数据中心收入890亿美元（+117%），FY2028营收指引+70%远超预期。AI算力需求持续超预期，GPU供应仍偏紧，产业链传导至CoWoS、HBM、服务器PCB/载板等环节。</p>
+    </div>
+    <div class="chain-card">
+      <h4>💾 存储芯片</h4>
+      <p><span class="up">景气上行 ↑</span> 韩国DRAM出口价格同比+401%，HBM产能挤占常规DRAM供应。高盛预计DRAM缺口今年5.0%、明年5.9%。摩根士丹利预测Q3成熟DRAM再涨50%。存储涨价周期延续。</p>
+    </div>
+    <div class="chain-card">
+      <h4>🏭 晶圆代工</h4>
+      <p><span class="up">偏强运行 ↑</span> 台积电CoWoS产能持续满载，董事会批准294.4亿美元资本预算。中芯国际Q2产能利用率93.7%，考虑在现有厂房增加设备扩产。先进制程和先进封装产能双紧。</p>
+    </div>
+    <div class="chain-card">
+      <h4>🔧 半导体设备&材料</h4>
+      <p><span class="up">景气上行 ↑</span> SEMI预计2026年全球300mm设备支出1420亿美元（+25%）。国产设备刻蚀/薄膜/清洗/CMP进入规模化销售。ASML管制升级利好国产替代逻辑，但MATCH法案构成中期风险。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 五、交易视角风险与催化 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚡</span> 五、交易视角风险与催化提示</div>
+
+  <div class="catalyst-box">
+    <h4 style="color:var(--bull);margin-bottom:8px;">✅ 今日潜在利好催化</h4>
+    <ul style="padding-left:18px;font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      <li><strong>英伟达财报超预期</strong>（产业）：Q2营收+106%，盘后+4.19%，今日A股AI算力链、先进封装、HBM/存储方向有望联动走强</li>
+      <li><strong>存储涨价周期强化</strong>（产业）：DRAM出口价+401%，供给缺口扩大，利好兆易创新、澜起科技等存储链标的</li>
+      <li><strong>国产设备规模化突破</strong>（产业）：刻蚀/薄膜/CMP进入规模化销售，ASML管制升级反向催化国产替代情绪</li>
+      <li><strong>先进封装产能缺口持续</strong>（产业）：CoWoS/先进封装产能紧张至2028年，长电科技/通富微电等封测龙头受益</li>
+    </ul>
+  </div>
+
+  <div class="risk-box">
+    <h4 style="color:var(--bear);margin-bottom:8px;">⚠️ 重点风险预警</h4>
+    <ul style="padding-left:18px;font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      <li><strong>流动性风险：</strong>10年期美债收益率4.66%高位运行，9月加息概率51.2%，杰克逊霍尔年会（8/28）沃什讲话可能释放鹰派信号，压制成长股估值</li>
+      <li><strong>地缘风险：</strong>美国MATCH法案推动全面禁售ASML DUV光刻机及限制售后维修，若落地将对中国半导体扩产形成实质性制约</li>
+      <li><strong>资金面风险：</strong>北向资金8月26日净流出约26-30亿，短期外资流出可能压制A股半导体板块情绪</li>
+      <li><strong>产业周期风险：</strong>科技巨头因存储成本上行对消费电子产品提价，可能压制终端需求</li>
+    </ul>
+  </div>
+
+  <div class="logic-box">
+    <h4 style="color:var(--accent);margin-bottom:8px;">💡 主线逻辑推演</h4>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      今日市场处于<strong style="color:var(--bull);">产业面强劲</strong>与<strong style="color:var(--bear);">宏观面偏紧</strong>的博弈格局。英伟达财报超预期为AI算力链注入强催化剂，存储涨价、先进封装缺口、国产设备突破构成产业面三重支撑。但美债收益率高位、9月加息预期升温、杰克逊霍尔年会不确定性构成估值压制。预计A股半导体板块今日呈现<strong>结构性分化行情</strong>：AI算力链（先进封装、HBM/存储、国产设备）受益于英伟达财报催化有望走强，而消费电子相关半导体可能受宏观流动性压制表现偏弱。重点关注：先进封装、存储芯片、半导体设备三大方向。
+    </p>
+  </div>
+</div>
+
+<!-- ====== 六、每日选股推荐 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 六、每日选股推荐【基于当日资讯逻辑】</div>
+
+  <div class="stock-card">
+    <div class="stock-name">长电科技（600584）</div>
+    <div class="stock-code">沪市主板 | 封测端</div>
+    <div class="stock-section">赛道：先进封装 / CoWoS / Chiplet</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯：英伟达财报超预期（营收+106%，CoWoS订单占台积电产能60%）→ AI算力需求爆发直接拉动先进封装产能需求；先进封装产能缺口至少持续至2028年（芯智云报告）</li>
+      <li>公司Q2营收首破百亿，归母净利润同比+79.41%，管理层表示先进封装产能今年翻倍扩充，明年将有更大规模核心产能释放</li>
+      <li>XDFOI芯粒高密度多维异构集成平台已实现规模量产，支持4nm多芯片集成；光电合封硅光引擎已完成客户样品交付并通过验证</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：今日开盘竞价若高开不超3%可考虑介入，回踩5日均线为较佳低吸位置</li>
+      <li>参考止损：跌破72元（前低支撑位）止损</li>
+      <li>短期目标：80-85元区间（前高附近）</li>
+      <li>仓位建议：轻仓至半仓（英伟达财报催化+先进封装长逻辑共振，但需注意宏观流动性风险）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>8月25日单日跌6.07%，短期波动较大；北向资金净流出可能压制板块情绪；美债收益率高位对成长股估值形成压力</li>
+    </ul>
+  </div>
+
+  <div class="stock-card">
+    <div class="stock-name">兆易创新（603986）</div>
+    <div class="stock-code">沪市主板 | 存储/设计端</div>
+    <div class="stock-section">赛道：存储芯片 / NOR Flash / MCU / DRAM</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯：韩国DRAM出口价格同比暴涨401%（朝鲜日报8/26），高盛预计DRAM供应缺口今年5.0%、明年5.9%，摩根士丹利预测Q3成熟DRAM再涨50%</li>
+      <li>存储涨价周期持续强化，公司作为A股存储龙头直接受益</li>
+      <li>H1营收115.66亿元（+178.67%），净利润同比+1091.5%，业绩弹性极大</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：回踩380-390元区间可关注，DRAM涨价逻辑为中长期趋势</li>
+      <li>参考止损：跌破370元止损</li>
+      <li>短期目标：420-440元区间</li>
+      <li>仓位建议：半仓（存储涨价为中长期产业趋势，业绩确定性较高）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>短期涨幅较大（3日涨幅-4.05%回调中），存储价格波动受全球供需影响；消费电子需求若走弱可能拖累存储价格</li>
+    </ul>
+  </div>
+
+  <div class="stock-card">
+    <div class="stock-name">中微公司（688012）</div>
+    <div class="stock-code">科创板 | 设备端</div>
+    <div class="stock-section">赛道：半导体设备 / 刻蚀 / 国产替代</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯：国产半导体设备刻蚀/薄膜/CMP进入规模化销售（设备芯闻8/25）；美国MATCH法案推动ASML DUV全面禁售（TrendForce 8/25）→ 反向催化国产替代逻辑</li>
+      <li>SEMI预计2026年全球300mm设备支出1420亿美元（+25%），设备资本开支周期上行</li>
+      <li>H1收入66.91亿元（+34.89%），扣非净利润11.23亿元（+108.36%），业绩高增</li>
+      <li>8月26日涨超4%，主力资金净流入5.22亿元，资金关注度提升</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：今日开盘若延续昨日强势，回踩分时均线可关注</li>
+      <li>参考止损：跌破昨日收盘价下方3%止损</li>
+      <li>短期目标：前高附近（约+8%~+10%空间）</li>
+      <li>仓位建议：轻仓至半仓（国产替代长逻辑，但设备股估值较高，需注意回调风险）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>MATCH法案尚未落地，存在不确定性；设备股估值普遍较高，宏观流动性收紧对高估值标的压制更大</li>
+    </ul>
+  </div>
+
+  <div class="stock-card">
+    <div class="stock-name">澜起科技（688008）</div>
+    <div class="stock-code">科创板 | 存储/设计端</div>
+    <div class="stock-section">赛道：内存接口芯片 / DDR5 / 服务器</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯：DRAM价格暴涨+401%，DDR5渗透率持续提升带动内存接口芯片需求增长；英伟达AI服务器需求爆发带动服务器内存升级</li>
+      <li>8月26日涨超3%，科创板半导体板块整体偏强，公司作为DDR5内存接口龙头受益于存储升级周期</li>
+      <li>AI服务器对高速内存接口芯片需求持续增长，DDR5渗透率提升为中长期趋势</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：回踩5日/10日均线附近可关注</li>
+      <li>参考止损：跌破200元整数关口止损</li>
+      <li>短期目标：前高220-230元区间</li>
+      <li>仓位建议：轻仓（DDR5升级为中长期逻辑，短期受存储板块情绪带动）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>主力资金8月26日净流出7.32亿元，短期资金面有分歧；DDR5渗透节奏受服务器出货量影响</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== 免责声明 ====== -->
+<div class="disclaimer">
+  <strong>免责声明：</strong>本内容仅为公开信息整理，所有资讯分析仅作信息参考，不构成任何投资建议。选股推荐中的价位、仓位建议为基于资讯逻辑的分析参考，非实盘操作指令。股市有风险，投资需谨慎，风险自担。
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球半导体每日早报 | 2026-09-02</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fa;
+  --bg-card-alt: #f0f1f3;
+  --text: #1a1a2e;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --border: #e0e0e0;
+  --accent: #2563eb;
+  --bull: #cf222e;
+  --bear: #1a7f37;
+  --neutral: #bf8700;
+  --bull-bg: rgba(207,34,46,0.06);
+  --bear-bg: rgba(26,127,55,0.06);
+  --neutral-bg: rgba(191,135,0,0.06);
+  --tag-bull: #cf222e;
+  --tag-bear: #1a7f37;
+  --tag-neutral: #9a6f00;
+  --highlight: #fff3cd;
+  --nav-bg: #1a1a2e;
+  --nav-text: #e0e0e0;
+  --section-border: #2563eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-alt: #1c2129;
+    --text: #e6edf3;
+    --text-secondary: #b0b8c4;
+    --text-muted: #6e7681;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --bull: #f85149;
+    --bear: #3fb950;
+    --neutral: #d29922;
+    --bull-bg: rgba(248,81,73,0.1);
+    --bear-bg: rgba(63,185,80,0.1);
+    --neutral-bg: rgba(210,153,34,0.1);
+    --tag-bull: #f85149;
+    --tag-bear: #3fb950;
+    --tag-neutral: #d29922;
+    --highlight: rgba(210,153,34,0.15);
+    --nav-bg: #0d1117;
+    --nav-text: #e6edf3;
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+nav {
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  padding: 12px 24px;
+  font-size: 14px;
+  border-bottom: 2px solid var(--section-border);
+  position: sticky; top:0; z-index:100;
+}
+nav a { color: var(--accent); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 24px 20px 60px; }
+
+.header {
+  text-align: center;
+  padding: 32px 0 20px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+.header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.header .date {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.header .subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--section-border);
+  margin-bottom: 16px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon { font-size: 20px; }
+
+.market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.market-item {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+.market-item .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.market-item .value { font-size: 18px; font-weight: 700; }
+.market-item .change { font-size: 13px; margin-left: 6px; }
+
+.up { color: var(--bull); }
+.down { color: var(--bear); }
+.neutral-c { color: var(--neutral); }
+
+.sentiment-box {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sentiment-box p { font-size: 14px; color: var(--text-secondary); }
+
+.news-item {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+}
+.news-item.bullish { border-left-color: var(--bull); background: var(--bull-bg); }
+.news-item.bearish { border-left-color: var(--bear); background: var(--bear-bg); }
+.news-item.neutral { border-left-color: var(--neutral); background: var(--neutral-bg); }
+
+.news-item .summary { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.news-item .detail { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.6; }
+.news-item .logic { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-style: italic; }
+.news-item .source {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+.news-item .source a { color: var(--text-muted); text-decoration: underline; }
+.news-item .source a:hover { color: var(--accent); }
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+.tag-bull { background: var(--bull); color: #fff; }
+.tag-bear { background: var(--bear); color: #fff; }
+.tag-neutral { background: var(--neutral); color: #fff; }
+
+.stock-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+}
+.stock-card .stock-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.stock-card .stock-code { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+.stock-card .stock-section { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+.stock-card h4 { font-size: 14px; margin: 12px 0 4px; color: var(--text); }
+.stock-card p, .stock-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.stock-card ul { padding-left: 18px; margin: 4px 0; }
+.stock-card .risk { color: var(--bear); }
+
+.chain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.chain-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+.chain-card h4 { font-size: 15px; margin-bottom: 6px; }
+.chain-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.catalyst-box {
+  background: var(--bull-bg);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--bull);
+  margin-bottom: 12px;
+}
+.risk-box {
+  background: var(--bear-bg);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--bear);
+  margin-bottom: 12px;
+}
+.logic-box {
+  background: var(--bg-card-alt);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.disclaimer {
+  margin-top: 40px;
+  padding: 16px;
+  background: var(--bg-card-alt);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+@media (max-width: 640px) {
+  .market-grid, .chain-grid { grid-template-columns: 1fr; }
+  .container { padding: 12px 14px 40px; }
+  .header h1 { font-size: 22px; }
+}
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 14px;
+}
+.site-nav a { text-decoration: none; font-weight: 500; }
+.site-nav a:hover { text-decoration: underline; }
+@media (prefers-color-scheme: light) {
+  .site-nav { background: rgba(246,248,250,0.92); border-bottom: 1px solid #d0d7de; }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+@media (prefers-color-scheme: dark) {
+  .site-nav { background: rgba(13,17,23,0.92); border-bottom: 1px solid #30363d; }
+  .site-nav a { color: #58a6ff; }
+  .site-nav .nav-sep { color: #30363d; }
+  .site-nav .nav-current { color: #8b949e; }
+}
+</style>
+<style>
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+  body { background: #f6f8fa !important; color: #1f2328 !important; }
+  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">半导体每日早报</span>
+</nav>
+
+<nav>
+  ← <a href="https://huanghuan0921.github.io/semiconductor-daily/">半导体投研信息中心</a> / 每日早报
+</nav>
+
+<div class="container">
+
+<div class="header">
+  <h1>全球半导体每日早报</h1>
+  <div class="date">2026年9月2日（周二）</div>
+  <div class="subtitle">信息覆盖时段：9月1日 08:00 ~ 9月2日 07:30（北京时间）</div>
+</div>
+
+<!-- ====== 一、隔夜全球核心行情 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> 一、隔夜全球核心行情（外围情绪参考）</div>
+
+  <div class="market-grid">
+    <div class="market-item">
+      <div class="label">费城半导体指数 (SOX)</div>
+      <div class="value">11,288.61 <span class="change down">-2.14%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">英伟达 (NVDA)</div>
+      <div class="value">$217.18 <span class="change down">-2.00%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">AMD</div>
+      <div class="value">$459.61 <span class="change down">-2.36%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">台积电 ADR (TSM)</div>
+      <div class="value">$414.00 <span class="change down">-0.32%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">美光科技 (MU)</div>
+      <div class="value">$933.44 <span class="change down">-2.64%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">英特尔 (INTC)</div>
+      <div class="value">$89.51 <span class="change down">-2.45%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">10年期美债收益率</div>
+      <div class="value">4.78% <span class="change down">↑ 创19个月新高</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">美元指数</div>
+      <div class="value">99.50 <span class="change up">+0.19%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">美元兑日元 (USD/JPY)</div>
+      <div class="value">160.07 <span class="change up">+0.25%</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">北向资金（9/1）</div>
+      <div class="value"><span class="change down">净流出3.00亿</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">A股半导体板块（9/1）</div>
+      <div class="value">-2.69% <span class="change down">主力净流出123亿</span></div>
+    </div>
+    <div class="market-item">
+      <div class="label">日本10年期国债收益率</div>
+      <div class="value">3.00% <span class="change down">↑ 创30年新高</span></div>
+    </div>
+  </div>
+
+  <div class="sentiment-box">
+    <p><strong>情绪解读：</strong>隔夜美股半导体板块集体下挫，主因全球债市遭遇抛售潮——<span class="down">10年期美债收益率飙升至4.78%（19个月新高）</span>，日本10年期国债收益率时隔30年触及3%。美联储主席沃什在杰克逊霍尔年会发表鹰派主旨演讲后，<span class="down">CME加息概率飙升至66%</span>，市场对9月16日FOMC加息25bp的预期大幅重定价。全球利率上行直接压制科技成长股估值，费城半导体指数跌超2%，英伟达、AMD、美光均跌2%以上。A股半导体板块昨日已提前反应，跌2.69%主力净流出123亿。今日A股半导体开盘大概率承压，但产业基本面（HBM紧缺、CoWoS扩产、存储涨价）依然强劲，<span class="up">回调或带来中长期布局窗口</span>。</p>
+  </div>
+  <div class="source" style="font-size:11px;color:var(--text-muted);">行情数据来源：NASDAQ OMX、东方财富、同花顺、证券之星，数据获取时间：2026-09-02 07:30 BJT</div>
+</div>
+
+<!-- ====== 二、全球宏观金融要闻 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🌐</span> 二、全球宏观金融要闻【流动性风向标｜最高优先级】</div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 美联储主席沃什杰克逊霍尔鹰派讲话：9月加息概率飙升至66%</div>
+    <div class="detail">美联储主席沃什8月28日在杰克逊霍尔年会发表主旨演讲，明确表示当前政策利率"还不够高"，对过去量化宽松做法持反对态度。讲话后2年期美债收益率快速上行，CME美联储观察工具显示9月15-16日FOMC加息25bp概率从讲话前约35%飙升至66.1%。当前联邦基金利率3.50%-3.75%。</div>
+    <div class="logic">→ 传导逻辑：加息预期翻倍重定价直接压制高久期成长股估值。半导体板块作为典型高Beta科技板块，折现率上升导致远期现金流估值收缩。若9月FOMC最终加息，AI算力链资本开支融资成本上行预期增强，可能延缓部分扩产节奏。</div>
+    <div class="source">📍 2026-09-02 | Market Daily（引用CME FedWatch）| <a href="https://marketdaily.com/fed-rate-hike-odds-surge-past-66-after-warshs-jackson-hole-speech-resets-market-expectations-for-september/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 全球债市遭抛售：10年期美债收益率飙至4.78%创19个月新高</div>
+    <div class="detail">9月1日，美国10年期国债收益率一度升至4.792%，为2025年1月以来最高水平；30年期收益率升至5.27%。美元指数小幅走高至99.50附近。美伊冲突升级推高油价，通胀预期抬升加剧债市抛压。全球发达经济体长端国债同步遭遇抛售。</div>
+    <div class="logic">→ 传导逻辑：美债收益率飙升→全球无风险利率基准上行→科技成长股估值模型折现率上升→半导体板块估值承压。同时美元走强可能引发外资从A股阶段性流出，压制北向资金对半导体板块的配置意愿。</div>
+    <div class="source">📍 2026-09-01 17:03 BJT | 同花顺/汇通网 | <a href="https://bond.10jqka.com.cn/20260901/c679493004.shtml" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 日本10年期国债收益率时隔30年触及3%，日央行9月加息概率达80%</div>
+    <div class="detail">9月1日，日本10年期国债收益率盘中触及3%，为1996年以来首次，收盘报2.996%；30年期收益率升至4.194%创历史新高。日本下一财年政府预算规模可能创历史新高，加剧财政赤字担忧。掉期市场定价日本央行9月17-18日加息概率达78-85%，较7月按兵不动前的23%大幅飙升。USD/JPY升至160附近。</div>
+    <div class="logic">→ 传导逻辑：日债收益率破3%标志全球套息交易成本根基动摇→日元回流压力上升→全球风险资产面临阶段性去杠杆。日本央行若9月加息，全球流动性进一步收紧，亚太半导体股票（包括A股半导体）面临外资配置再平衡压力。日元走强也可能影响日本半导体企业（东京电子等）盈利预期，间接影响全球设备股估值。</div>
+    <div class="source">📍 2026-09-01 | 证券时报/新浪财经 | <a href="https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqiaua3713151.shtml" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 北向资金9月1日小幅净流出3.00亿，寒武纪仍位列沪股通成交前三</div>
+    <div class="detail">9月1日北向资金合计净流出3.00亿元，其中沪股通净流出18.05亿元，深股通净流入15.05亿元。北向资金成交金额927.99亿元。寒武纪、中国巨石、生益科技位列沪股通成交前三，显示外资对AI算力方向仍有配置意愿。</div>
+    <div class="logic">→ 传导逻辑：北向资金净流出幅度较小（3亿），但半导体板块昨日主力净流出123亿，内资抛压为主。若全球流动性预期企稳，外资对A股AI算力链的中长期配置仍可能回流。短期外资动向需关注9月FOMC前后波动。</div>
+    <div class="source">📍 2026-09-01 | 证券时报e公司 | <a href="http://m.toutiao.com/group/6867659938122957320/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 美光台湾工厂工会威胁罢工，超80%受访成员支持</div>
+    <div class="detail">美光科技台湾工厂工会投票显示超过80%的受访成员支持罢工行动。台湾是美光全球最大制造基地，生产DRAM和HBM芯片。消息导致美光股价9月1日大跌3.32%，加重了存储板块短期不确定性。</div>
+    <div class="logic">→ 传导逻辑：若美光台湾工厂罢工落地→全球DRAM/HBM供给进一步收紧→存储芯片涨价预期强化（利好国内存储设计企业如兆易创新）；但短期市场情绪上可能拖累全球存储板块估值。需关注事态发展。</div>
+    <div class="source">📍 2026-09-01 | TradingKey/ticker.report | <a href="https://ticker.report/news/mu-micron-technology-is-trading-332-down-today-after-taiwan-unions-threatened-2026-09-01" target="_blank">原文链接</a></div>
+  </div>
+</div>
+
+<!-- ====== 三、全球半导体重磅产业资讯 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔬</span> 三、全球半导体重磅产业资讯汇总</div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 台积电CoWoS 2027年月产能目标至少20万片，工厂24小时施工加速</div>
+    <div class="detail">供应链指出，台积电几乎所有新建筑项目正在24小时不间断施工以加速建设。基于台积电发布的信息，CoWoS 2027年月产能目标至少20万片（市场乐观预期可达24-26万片）。2026年CoWoS产能预测上调至12.5万片/月（较2025年底7万片增长79%）。设备供应商订单分配尚未确定。</div>
+    <div class="source">📍 2026-09-01 | gmteight（引用供应链消息）| <a href="https://gmteight.com/flash/detail/1463656" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> HBM3E现货价达LTA合约价4-5倍，三星锁定70%产能至2031年</div>
+    <div class="detail">TrendForce报道，36GB HBM3E产品现货市场价约2,100美元，约为长期协议（LTA）价格的4-5倍。16层HBM4产品准备量产，现货价约3,500美元。三星据报已锁定70%内存产能至2031年。LTA扩展正在重塑存储厂商库存结构，长期协议已占先进产能绝大部分。</div>
+    <div class="source">📍 2026-09-01 | TrendForce | <a href="https://www.trendforce.com/news/2026/09/01/news-hbm3e-spot-prices-said-to-be-4-5x-lta-levels-with-samsung-reportedly-locking-70-of-memory-capacity-through-2031/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> Q3 DRAM合约价涨20-30%、NAND涨35-40%，存储涨价周期延续</div>
+    <div class="detail">威刚董事长陈立白表示，2026年Q3 DRAM合约价将上涨20%-30%，NAND Flash将调涨35%-40%，两大产品线价格均维持上升趋势。AI服务器疯狂虹吸HBM产能，原厂将超70%先进产能转向高带宽内存，消费级DRAM和NAND供给锐减，现货价三个月涨超300%。</div>
+    <div class="source">📍 2026-09-01 | 上海证券报/微博 | <a href="http://www.cnstock.com/commonDetail/741527" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> 英伟达Blackwell出货量2026年降至180万颗，供应紧张持续</div>
+    <div class="detail">英伟达Blackwell系列（B200/GB200/B300）2026年出货量预计约180万颗，低于2025年的约520万颗，主要因产品线向Rubin过渡。Rubin系列目标570万颗但实际可能仅20-30万颗。游戏GPU供应紧张预计持续至2027年Q1，RTX 5090市场价可能涨至4,000-5,000美元。</div>
+    <div class="source">📍 2026-09-01 | presenc.ai | <a href="https://presenc.ai/research/gpu-shipment-tracker-blackwell-rubin-2026" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 三星/SK海力士与美国科技巨头签署数十亿美元长期内存供应协议</div>
+    <div class="detail">三星电子和SK海力士正在与美国科技巨头敲定数十亿美元的长期内存供应协议。AI数据中心预计到2026年底将消耗全球70%的内存产量，造成严重供应短缺。DRAM合约价Q1暴涨90%、Q2涨60%。韩国总统政策首席透露此消息。</div>
+    <div class="source">📍 2026-08 | techgolly.com | <a href="https://techgolly.com/news/samsung-sk-hynix-us-chip-supply-deals-set-to-secure-ai-memory-for-big-tech" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> SEMI：2026年300mm晶圆厂设备支出增长18%至1330亿美元，存储设备投资首超500亿</div>
+    <div class="detail">SEMI最新报告指出，全球300mm晶圆厂设备支出2026年预计增长18%至1330亿美元，2027年再增14%至1510亿美元。其中存储领域设备投资2026年将首次突破500亿美元（增长29%至520亿），2027年再增11%至570亿。增长反映AI对存储芯片需求的持续推动。</div>
+    <div class="source">📍 2026-06-29 | SEMI（官方报告）| <a href="https://www.aap.com.au/aapreleases/cision20260629ae92613/" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item neutral">
+    <div class="summary"><span class="tag tag-neutral">中性</span> 大基金二季报持仓浮出水面：7只半导体股被重仓超百亿，19只遭减持</div>
+    <div class="detail">截至8月31日A股2026年二季报披露完毕，大基金持仓浮出水面。7只半导体股被重仓超百亿元，但同时19只遭减持。芯原股份公告大基金8月31日减持49.47万股，持股比例降至5.0000%，不再是5%以上股东。大基金三期持续通过国投集新平台加码EDA等赛道（概伦电子获投资）。</div>
+    <div class="source">📍 2026-09-01 12:53 BJT | 21财经/排排网 | <a href="https://m.21jingji.com/article/20260901/herald/1765d3064f77570db253b69e9d891553.html" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bearish">
+    <div class="summary"><span class="tag tag-bear">利空</span> A股半导体板块9月1日跌2.69%，主力资金净流出123.25亿元</div>
+    <div class="detail">9月1日A股半导体板块下跌2.69%，中船特气领跌。上证指数收报3979.89。主力资金净流出123.25亿元。北方华创盘中临时停牌，收跌4.59%至667.70元；中微公司跌3.17%至350.52元；中芯国际跌2.01%至126.11元。板块整体跟随全球科技股回调。</div>
+    <div class="source">📍 2026-09-01 16:47 BJT | 证券之星 | <a href="https://wap.stockstar.com/detail/RB2026090100028976" target="_blank">原文链接</a></div>
+  </div>
+
+  <div class="news-item bullish">
+    <div class="summary"><span class="tag tag-bull">利好</span> 美国BIS实体清单持续扩容：MEMS传感器代工厂被新增管控</div>
+    <div class="detail">美国商务部BIS持续更新实体清单，近期新增西安MEMS晶圆代工厂、苏州封测企业等中国半导体企业。被列入实体清单后，出口、再出口或国内转移管制物项需事前许可，且许可申请推定拒绝。覆盖特定沉积/刻蚀设备、设计软件和工艺技术文件。</div>
+    <div class="source">📍 2026-08 | BIS联邦公报/shcsensor.com | <a href="https://www.shcsensor.com/news/xingyexinwen/meiguoshangwubukuodashitiqingdan_3jiazhongguoMEMSchuanganqidaigongchangbeixinzeng.html" target="_blank">原文链接</a></div>
+  </div>
+</div>
+
+<!-- ====== 四、产业链景气变化梳理 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📈</span> 四、产业链景气变化梳理</div>
+
+  <div class="chain-grid">
+    <div class="chain-card">
+      <h4>🖥️ 算力芯片</h4>
+      <p><span class="up">供需偏紧 ↑</span> 英伟达Blackwell 2026年出货180万颗（低于2025年520万颗），Rubin实际出货可能仅20-30万颗，供应紧张持续至2027年Q1。英伟达占台积电CoWoS产能60%分配。游戏GPU短缺推动RTX 5090市价涨至$4,000+。短期出货量下降但供需缺口扩大。</p>
+    </div>
+    <div class="chain-card">
+      <h4>💾 存储芯片</h4>
+      <p><span class="up">景气上行 ↑</span> HBM3E现货价达LTA 4-5倍（36GB约$2,100），16层HBM4现货约$3,500。Q3 DRAM合约价涨20-30%、NAND涨35-40%。AI服务器吸走70%先进产能，消费级存储供给锐减。三星锁定70%产能至2031年。美光台湾罢工威胁或进一步收紧供给。</p>
+    </div>
+    <div class="chain-card">
+      <h4>🏭 晶圆代工</h4>
+      <p><span class="up">偏强运行 ↑</span> 台积电CoWoS 2027年月产能目标至少20万片，24小时不间断施工加速扩产。2026年CoWoS产能预测上调至12.5万片/月（+79% YoY）。中芯国际9月1日跌2.01%至126.11元，业绩创新高但股价承压。先进制程和先进封装产能双紧。</p>
+    </div>
+    <div class="chain-card">
+      <h4>🔧 半导体设备&材料</h4>
+      <p><span class="up">景气上行 ↑</span> SEMI预计2026年全球300mm设备支出增长18%至1330亿美元，存储设备投资首超500亿。BIS实体清单持续扩容（新增MEMS传感器代工厂），出口管制反向催化国产替代逻辑。大基金二期持仓调整（减持19只但7只重仓超百亿），结构调整不改变长期支持方向。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 五、交易视角风险与催化 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚡</span> 五、交易视角风险与催化提示</div>
+
+  <div class="catalyst-box">
+    <h4 style="color:var(--bull);margin-bottom:8px;">✅ 今日潜在利好催化（产业+宏观双维度）</h4>
+    <ul style="padding-left:18px;font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      <li><strong>存储涨价周期持续强化</strong>（产业）：Q3 DRAM合约价涨20-30%、NAND涨35-40%，HBM3E现货价达LTA 4-5倍，利好兆易创新等存储链标的</li>
+      <li><strong>台积电CoWoS加速扩产</strong>（产业）：2027年月产能目标20万片，24小时施工，先进封装外包订单增量预期利好长电科技等封测龙头</li>
+      <li><strong>美光台湾罢工威胁</strong>（产业）：若落地将进一步收紧全球DRAM/HBM供给，反向利好国内存储设计企业定价权</li>
+      <li><strong>板块超跌反弹机会</strong>（交易）：A股半导体昨日跌2.69%主力净流出123亿，短期超跌后部分基本面强劲标的可能出现低吸机会</li>
+    </ul>
+  </div>
+
+  <div class="risk-box">
+    <h4 style="color:var(--bear);margin-bottom:8px;">⚠️ 重点风险预警</h4>
+    <ul style="padding-left:18px;font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      <li><strong>流动性风险（核心风险）：</strong>沃什鹰派讲话后9月加息概率飙至66%，10年期美债收益率4.78%创19个月新高，全球债市同步抛售。9月16日FOMC前，科技成长股估值持续承压，半导体板块高Beta特征将放大波动</li>
+      <li><strong>日本流动性风险：</strong>日债10年期破3%（30年首次），日央行9月加息概率80%，全球套息交易面临平仓风险，可能引发亚太股市阶段性外资流出</li>
+      <li><strong>地缘风险：</strong>BIS实体清单持续扩容，MATCH法案推进限制ASML DUV销售及售后维修，若落地将对中国半导体扩产形成实质制约</li>
+      <li><strong>资金面风险：</strong>半导体板块昨日主力净流出123亿，内资抛压较大；北向资金净流出3亿，短期资金面偏弱</li>
+    </ul>
+  </div>
+
+  <div class="logic-box">
+    <h4 style="color:var(--accent);margin-bottom:8px;">💡 主线逻辑推演</h4>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+      今日市场处于<strong style="color:var(--bear);">宏观流动性逆风</strong>与<strong style="color:var(--bull);">产业景气上行</strong>的显著背离期。沃什鹰派讲话+全球债市抛售+日央行加息预期三重叠加，短期流动性环境对半导体板块构成<strong style="color:var(--bear);">明确利空</strong>。但产业面HBM紧缺加剧（现货价4-5倍LTA）、CoWoS加速扩产（2027年20万片/月）、存储涨价周期持续强化（Q3 DRAM涨20-30%），中长期基本面依然强劲。预计今日A股半导体板块开盘大概率继续承压，但<strong style="color:var(--bull);">超跌后的基本面强劲标的可能形成中长期布局窗口</strong>。操作上建议：控制仓位，关注存储涨价链和先进封装链在回调中的低吸机会，回避高估值无催化逻辑标的。9月16日FOMC为短期最大不确定性事件。
+    </p>
+  </div>
+</div>
+
+<!-- ====== 六、每日选股推荐 ====== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> 六、每日选股推荐【基于当日资讯逻辑】</div>
+
+  <div class="stock-card">
+    <div class="stock-name">兆易创新（603986）</div>
+    <div class="stock-code">沪市主板 | 存储/设计端</div>
+    <div class="stock-section">赛道：存储芯片 / NOR Flash / MCU / DRAM</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯③：Q3 DRAM合约价涨20-30%、NAND涨35-40%（上海证券报9/1）；关联资讯②：HBM3E现货价达LTA 4-5倍，三星锁定70%产能至2031年（TrendForce 9/1）；关联资讯⑤：美光台湾工厂罢工威胁或进一步收紧DRAM供给</li>
+      <li>存储涨价周期持续强化是中长期确定性最高的产业趋势，AI吸走70%先进产能导致消费级存储供给锐减，公司作为A股存储设计龙头直接受益</li>
+      <li>板块昨日跌2.69%带动回调，若今日继续下杀可能提供较好的中长期低吸时点</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：若今日开盘继续下杀至380-390元区间可分批关注，回踩5日/10日均线为较佳介入位</li>
+      <li>参考止损：跌破370元（前期平台支撑）止损</li>
+      <li>短期目标：420-440元区间（前高附近）</li>
+      <li>仓位建议：<strong>轻仓</strong>（存储涨价逻辑强劲但宏观流动性逆风明显，需控制仓位应对9月FOMC不确定性）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>宏观流动性风险：10年期美债4.78%+9月加息概率66%，高估值成长股估值承压；板块联动风险：半导体板块主力资金连续流出可能拖累个股；消费电子需求若走弱可能影响存储涨价持续性</li>
+    </ul>
+  </div>
+
+  <div class="stock-card">
+    <div class="stock-name">长电科技（600584）</div>
+    <div class="stock-code">沪市主板 | 封测端</div>
+    <div class="stock-section">赛道：先进封装 / CoWoS / Chiplet</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯①：台积电CoWoS 2027年月产能目标至少20万片，24小时施工加速扩产（gmteight 9/1）→ CoWoS产能外包需求扩大，国内封测龙头受益于先进封装订单溢出</li>
+      <li>台积电设备供应商订单分配尚未确定，先进封装产业链整体处于扩产红利期</li>
+      <li>公司XDFOI芯粒平台已规模量产，先进封装产能今年翻倍扩充，中长期订单可见度高</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：板块回调中若回踩前低支撑位可关注，开盘竞价若低开2%以上不追，等盘中企稳信号</li>
+      <li>参考止损：跌破前低支撑位止损</li>
+      <li>短期目标：反弹至5日均线上方企稳后看前高</li>
+      <li>仓位建议：<strong>轻仓</strong>（CoWoS扩产为中长期逻辑，但短期板块情绪偏弱需等待企稳信号）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>宏观流动性风险：加息预期升温压制成长股估值；板块联动风险：昨日半导体板块跌2.69%主力净流出123亿，短期资金面偏弱；先进封装订单兑现节奏存在不确定性</li>
+    </ul>
+  </div>
+
+  <div class="stock-card">
+    <div class="stock-name">中微公司（688012）</div>
+    <div class="stock-code">科创板 | 设备端</div>
+    <div class="stock-section">赛道：半导体设备 / 刻蚀 / 国产替代</div>
+    <h4>选股原因：</h4>
+    <ul>
+      <li>关联资讯⑥：SEMI预计2026年300mm设备支出增长18%至1330亿美元，设备资本开支周期上行；关联资讯⑨：BIS实体清单持续扩容→反向催化国产替代加速</li>
+      <li>关联资讯⑦：大基金持仓结构调整但不改变长期支持方向，三期持续加码EDA等国产替代赛道</li>
+      <li>昨日跌3.17%至350.52元，回调提供中长期低吸机会；H1收入+34.89%，扣非净利润+108.36%，业绩高增长</li>
+    </ul>
+    <h4>操作逻辑：</h4>
+    <ul>
+      <li>关注区间：若今日继续回调至340-350元区间可分批关注</li>
+      <li>参考止损：跌破330元（近期低点）止损</li>
+      <li>短期目标：反弹至370-380元区间</li>
+      <li>仓位建议：<strong>轻仓</strong>（国产替代长逻辑不变，但设备股估值较高+宏观逆风，需严格控制仓位）</li>
+    </ul>
+    <h4 class="risk">风险提示：</h4>
+    <ul class="risk">
+      <li>估值风险：设备股PE普遍较高（公司TTM PE约85x），宏观流动性收紧对高估值标的压制更大；MATCH法案不确定性；大基金减持动向可能引发市场对设备股持仓的担忧</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====== 免责声明 ====== -->
+<div class="disclaimer">
+  <strong>免责声明：</strong>本内容仅为公开信息整理，所有资讯分析仅作信息参考，不构成任何投资建议。选股推荐中的价位、仓位建议为基于资讯逻辑的分析参考，非实盘操作指令。股市有风险，投资需谨慎，风险自担。
+</div>
+
+</div>
+</body>
+</html>

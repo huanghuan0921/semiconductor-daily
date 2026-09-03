@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股市场情绪与题材复盘报告 | 2026-09-03</title>
+<style>
+:root {
+  --bg: #0a0e17;
+  --card-bg: #111722;
+  --card-border: #1e2a3a;
+  --text-primary: #e4e9f0;
+  --text-secondary: #8b95a7;
+  --text-muted: #5a6577;
+  --accent-blue: #4a9eff;
+  --accent-cyan: #00d4ff;
+  --bull: #ff3d57;
+  --bear: #00c853;
+  --neutral: #ffa726;
+  --gold: #ffd54f;
+  --fear: #00c853;
+  --greed: #ff3d57;
+  --tag-bg: #1a2332;
+  --header-gradient: linear-gradient(135deg, #0d1320 0%, #162035 100%);
+  --bull-bg: rgba(255,61,87,0.08);
+  --bull-border: rgba(255,61,87,0.2);
+  --bear-bg: rgba(0,200,83,0.08);
+  --bear-border: rgba(0,200,83,0.2);
+  --accent-blue-bg: rgba(74,158,255,0.08);
+  --accent-blue-border: rgba(74,158,255,0.2);
+  --gold-bg: rgba(255,213,79,0.1);
+  --fear-bg: rgba(0,200,83,0.12);
+  --fear-border: rgba(0,200,83,0.3);
+  --greed-bg: rgba(255,61,87,0.12);
+  --greed-border: rgba(255,61,87,0.3);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fa;
+    --card-bg: #ffffff;
+    --card-border: #d0d7de;
+    --text-primary: #1f2328;
+    --text-secondary: #656d76;
+    --text-muted: #8c959f;
+    --accent-blue: #0969da;
+    --accent-cyan: #0598c8;
+    --bull: #cf222e;
+    --bear: #1a7f37;
+    --neutral: #9a6700;
+    --gold: #7d5e00;
+    --tag-bg: #eaeef2;
+    --header-gradient: linear-gradient(135deg, #ffffff 0%, #e8edf2 100%);
+    --bull-bg: rgba(207,34,46,0.06);
+    --bull-border: rgba(207,34,46,0.2);
+    --bear-bg: rgba(26,127,55,0.06);
+    --bear-border: rgba(26,127,55,0.2);
+    --accent-blue-bg: rgba(9,105,218,0.06);
+    --accent-blue-border: rgba(9,105,218,0.2);
+    --gold-bg: rgba(125,94,0,0.08);
+    --fear-bg: rgba(26,127,55,0.08);
+    --fear-border: rgba(26,127,55,0.2);
+    --greed-bg: rgba(207,34,46,0.08);
+    --greed-border: rgba(207,34,46,0.2);
+  }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.7;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.header {
+  background: var(--header-gradient);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--gold));
+}
+.header h1 { font-size: 24px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+.header .date { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.header .date span { color: var(--accent-cyan); }
+.sentiment-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+.sentiment-score {
+  background: var(--fear-bg);
+  border: 1px solid var(--fear-border);
+  border-radius: 10px;
+  padding: 16px 24px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+.sentiment-score .score-num { font-size: 36px; font-weight: 800; color: var(--fear); line-height: 1.2; }
+.sentiment-score .score-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+.sentiment-core {
+  background: var(--accent-blue-bg);
+  border: 1px solid var(--accent-blue-border);
+  border-radius: 10px;
+  padding: 16px 24px;
+  flex: 1;
+  min-width: 250px;
+}
+.sentiment-core .core-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.sentiment-core .core-text { font-size: 15px; font-weight: 500; line-height: 1.5; }
+.sentiment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.sentiment-meta .meta-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.sentiment-meta .meta-item span { color: var(--accent-cyan); font-weight: 500; }
+.section {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.section h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section h2 .icon { font-size: 20px; }
+.section h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--accent-blue);
+}
+.core-conclusion {
+  background: var(--accent-blue-bg);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+.indicators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.indicator-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+.indicator-card .ind-name { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+.indicator-card .ind-value { font-size: 22px; font-weight: 700; }
+.indicator-card .ind-change { font-size: 13px; margin-top: 4px; }
+.indicator-card .ind-change.red { color: var(--bear); }
+.indicator-card .ind-change.green { color: var(--bull); }
+.indicator-card .ind-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.chart-container {
+  margin: 16px 0;
+  position: relative;
+}
+.chart-container svg { width: 100%; height: auto; }
+.theme-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.theme-card.defensive { border-left: 3px solid var(--bull); }
+.theme-card.tech { border-left: 3px solid var(--bear); }
+.theme-card.consume { border-left: 3px solid var(--gold); }
+.theme-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.theme-header .theme-title { font-size: 15px; font-weight: 600; }
+.theme-header .theme-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.theme-tag.high { background: var(--greed-bg); border: 1px solid var(--greed-border); color: var(--bull); }
+.theme-tag.warn { background: var(--fear-bg); border: 1px solid var(--fear-border); color: var(--bear); }
+.theme-tag.medium { background: var(--gold-bg); color: var(--gold); border: 1px solid rgba(255,213,79,0.3); }
+.theme-chain {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 8px 0;
+}
+.theme-chain .arrow { color: var(--accent-cyan); margin: 0 4px; }
+.theme-evidence {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--accent-blue-bg);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  line-height: 1.7;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.data-table th {
+  background: var(--tag-bg);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text-primary);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .up { color: var(--bull); font-weight: 500; }
+.data-table .down { color: var(--bear); font-weight: 500; }
+.checkpoint-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.checkpoint-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.checkpoint-card .cp-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+.checkpoint-card .cp-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.strategy-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.strategy-card .str-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.strategy-card.attack .str-label { color: var(--bull); }
+.strategy-card.balanced .str-label { color: var(--accent-blue); }
+.strategy-card.defend .str-label { color: var(--bear); }
+.strategy-card .str-body { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.strategy-summary {
+  background: var(--accent-blue-bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.8;
+}
+.risk-list { list-style: none; }
+.risk-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--card-border);
+  position: relative;
+  padding-left: 20px;
+}
+.risk-list li:last-child { border-bottom: none; }
+.risk-list li::before {
+  content: '⚠';
+  position: absolute;
+  left: 0;
+  color: var(--neutral);
+}
+.cycle-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.cycle-table th {
+  background: var(--tag-bg);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--card-border);
+}
+.cycle-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--card-border);
+  text-align: center;
+}
+.cycle-table .score-fear { color: var(--bear); font-weight: 600; }
+.cycle-table .score-greed { color: var(--bull); font-weight: 600; }
+.cycle-table .score-neutral { color: var(--neutral); font-weight: 600; }
+.cycle-table .sub-score { color: var(--text-muted); font-size: 12px; }
+.cycle-table .today { background: var(--fear-bg); }
+.footer {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  border-top: 1px solid var(--card-border);
+  margin-top: 24px;
+}
+.src-link {
+  display: inline-block;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  background: var(--accent-blue-bg);
+  border: 1px solid var(--accent-blue-border);
+  color: var(--accent-blue);
+}
+.src-link:hover { opacity: 0.7; text-decoration: none; }
+.src-link.tdx { background: rgba(255,213,79,0.1); border-color: rgba(255,213,79,0.3); color: var(--gold); }
+.src-link.eastmoney { background: rgba(0,200,83,0.08); border-color: rgba(0,200,83,0.25); color: var(--bear); }
+.src-link.jin10 { background: rgba(255,167,38,0.1); border-color: rgba(255,167,38,0.3); color: var(--neutral); }
+.src-link.ifind { background: rgba(74,158,255,0.08); border-color: rgba(74,158,255,0.25); color: var(--accent-blue); }
+.src-link.wind { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.25); color: var(--accent-cyan); }
+.src-link.sohu { background: rgba(255,61,87,0.08); border-color: rgba(255,61,87,0.25); color: var(--bull); }
+.src-link.cls { background: rgba(255,167,38,0.1); border-color: rgba(255,167,38,0.3); color: var(--neutral); }
+.src-link.stcn { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.25); color: var(--accent-cyan); }
+.source-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.source-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+.source-card .src-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.source-card .src-url {
+  font-size: 12px;
+  color: var(--accent-blue);
+  word-break: break-all;
+  margin-bottom: 6px;
+}
+.source-card .src-url a { color: var(--accent-blue); text-decoration: none; }
+.source-card .src-url a:hover { text-decoration: underline; }
+.source-card .src-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.source-card .src-pages {
+  margin-top: 6px;
+}
+.source-card .src-pages a {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 2px 4px 2px 0;
+  text-decoration: none;
+  background: var(--accent-blue-bg);
+  border: 1px solid var(--accent-blue-border);
+  color: var(--accent-blue);
+}
+.source-card .src-pages a:hover { opacity: 0.7; }
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 14px;
+}
+.site-nav a { text-decoration: none; font-weight: 500; }
+.site-nav a:hover { text-decoration: underline; }
+@media (prefers-color-scheme: light) {
+  .site-nav { background: rgba(246,248,250,0.92); border-bottom: 1px solid #d0d7de; }
+  .site-nav a { color: #0969da; }
+  .site-nav .nav-sep { color: #d0d7de; }
+  .site-nav .nav-current { color: #656d76; }
+}
+@media (prefers-color-scheme: dark) {
+  .site-nav { background: rgba(13,17,23,0.92); border-bottom: 1px solid #30363d; }
+  .site-nav a { color: #58a6ff; }
+  .site-nav .nav-sep { color: #30363d; }
+  .site-nav .nav-current { color: #8b949e; }
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">A股市场情绪与题材复盘报告</span>
+</nav>
+
+<div class="header">
+  <h1>A股市场情绪与题材复盘报告</h1>
+  <div class="date">报告时间：<span>2026-09-03 16:30</span> ｜ 数据截至：2026-09-03 收盘 ｜ 数据源：<a href="https://www.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a><a href="https://q.stock.sohu.com/zs/000001/lshq.shtml" target="_blank" class="src-link sohu">搜狐证券</a><a href="https://www.cls.cn/" target="_blank" class="src-link cls">财联社</a><a href="https://stcn.com/" target="_blank" class="src-link stcn">证券时报</a></div>
+  <div class="sentiment-banner">
+    <div class="sentiment-score">
+      <div class="score-num">40.4</div>
+      <div class="score-label">恐惧</div>
+    </div>
+    <div class="sentiment-core">
+      <div class="core-label">核心主线</div>
+      <div class="core-text">指数虚稳 · 个股实跌<br>航运/液冷领涨，TMT资金大幅流出，成交创5月新低</div>
+    </div>
+  </div>
+  <div class="sentiment-meta">
+    <div class="meta-item">情绪周期：极度恐惧→恐惧（28.9→40.4，单日 <span>+11.5</span> 分）</div>
+    <div class="meta-item">市场广度：<span>33.3%</span>（1846涨 / 3570跌 / 133平）</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">📋</span>核心结论</h2>
+  <div class="core-conclusion">
+    今日三大指数微幅收涨：上证 3942.09（+0.02%）、深证成指 13625.12（+0.10%）、创业板指 3312.54（+0.01%），两市成交 1.76 万亿（缩量约323亿，连续两日低于2万亿，创4月8日以来新低）。市场情绪 40.4 分处于恐惧区——从昨日 28.9 极度恐惧反弹 11.5 分。全A广度仅 33.3%（1846涨/3570跌/133平），涨停 46 家 vs 跌停 16 家，炸板 18 只封板率 71.8%。指数红盘但超3500只个股下跌，典型"指数虚稳·个股实跌"格局。资金高低切换明显：TMT板块净流出 146 亿、电子净流出 50 亿、中际旭创净卖出超 11 亿；航运港口领涨（海通发展涨停）、液冷/IDC活跃（金帝股份2连板）、培育钻石+贵金属避险走强。连板高度竞业达5板（AI应用）维持市场人气，但赚钱效应极差。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">📊</span>最近10个交易日 市场情绪折线图</h2>
+  <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">情绪分0-100 ｜ 50为中性 ｜ 绿色区间=恐惧 ｜ 红色区间=贪婪</div>
+  <div class="chart-container">
+    <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background zones -->
+      <rect x="60" y="20" width="780" height="120" fill="rgba(255,61,87,0.05)" rx="4"/>
+      <rect x="60" y="140" width="780" height="40" fill="rgba(255,167,38,0.05)" rx="4"/>
+      <rect x="60" y="180" width="780" height="120" fill="rgba(0,200,83,0.05)" rx="4"/>
+
+      <!-- Y axis labels -->
+      <text x="45" y="24" fill="var(--text-muted)" font-size="11" text-anchor="end">100</text>
+      <text x="45" y="144" fill="var(--text-muted)" font-size="11" text-anchor="end">50</text>
+      <text x="45" y="184" fill="var(--text-muted)" font-size="11" text-anchor="end">30</text>
+      <text x="45" y="304" fill="var(--text-muted)" font-size="11" text-anchor="end">0</text>
+
+      <!-- Horizontal lines -->
+      <line x1="60" y1="20" x2="840" y2="20" stroke="var(--card-border)" stroke-width="0.5" stroke-dasharray="4,4"/>
+      <line x1="60" y1="140" x2="840" y2="140" stroke="var(--neutral)" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.4"/>
+      <line x1="60" y1="180" x2="840" y2="180" stroke="var(--card-border)" stroke-width="0.5" stroke-dasharray="4,4"/>
+      <line x1="60" y1="300" x2="840" y2="300" stroke="var(--card-border)" stroke-width="0.5"/>
+
+      <!-- Zone labels -->
+      <text x="70" y="38" fill="var(--bull)" font-size="10" opacity="0.6">贪婪区</text>
+      <text x="70" y="178" fill="var(--bear)" font-size="10" opacity="0.6">恐惧区</text>
+
+      <!-- Data points: 08/21:47.7, 08/24:20.8, 08/25:55.8, 08/26:58.0, 08/27:72.5, 08/28:41.0, 08/31:57.5, 09/01:41.2, 09/02:28.9, 09/03:40.4 -->
+      <!-- y = 300 - (score * 2.8) -->
+      <!-- 47.7->166, 20.8->242, 55.8->144, 58.0->138, 72.5->97, 41.0->185, 57.5->139, 41.2->185, 28.9->219, 40.4->187 -->
+
+      <!-- Polyline -->
+      <polyline points="95,166 180,242 265,144 350,138 435,97 520,185 605,139 690,185 775,219 825,187"
+        fill="none" stroke="var(--accent-blue)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+      <!-- Data points -->
+      <circle cx="95" cy="166" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="95" y="157" fill="var(--text-secondary)" font-size="11" text-anchor="middle">47.7</text>
+      <text x="95" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/21</text>
+
+      <circle cx="180" cy="242" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="180" y="262" fill="var(--text-secondary)" font-size="11" text-anchor="middle">20.8</text>
+      <text x="180" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/24</text>
+
+      <circle cx="265" cy="144" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="265" y="135" fill="var(--text-secondary)" font-size="11" text-anchor="middle">55.8</text>
+      <text x="265" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/25</text>
+
+      <circle cx="350" cy="138" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="350" y="129" fill="var(--text-secondary)" font-size="11" text-anchor="middle">58.0</text>
+      <text x="350" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/26</text>
+
+      <circle cx="435" cy="97" r="5" fill="var(--bull)" opacity="0.8"/>
+      <text x="435" y="88" fill="var(--text-secondary)" font-size="11" text-anchor="middle">72.5</text>
+      <text x="435" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/27</text>
+
+      <circle cx="520" cy="185" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="520" y="205" fill="var(--text-secondary)" font-size="11" text-anchor="middle">41.0</text>
+      <text x="520" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/28</text>
+
+      <circle cx="605" cy="139" r="5" fill="var(--neutral)" opacity="0.8"/>
+      <text x="605" y="130" fill="var(--text-secondary)" font-size="11" text-anchor="middle">57.5</text>
+      <text x="605" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">08/31</text>
+
+      <circle cx="690" cy="185" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="690" y="205" fill="var(--text-secondary)" font-size="11" text-anchor="middle">41.2</text>
+      <text x="690" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">09/01</text>
+
+      <circle cx="775" cy="219" r="5" fill="var(--bear)" opacity="0.8"/>
+      <text x="775" y="239" fill="var(--text-secondary)" font-size="11" text-anchor="middle">28.9</text>
+      <text x="775" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">09/02</text>
+
+      <!-- Today - highlighted -->
+      <circle cx="825" cy="187" r="7" fill="var(--bear)" stroke="var(--bg)" stroke-width="2"/>
+      <text x="825" y="207" fill="var(--bear)" font-size="12" text-anchor="middle" font-weight="bold">★40.4</text>
+      <text x="825" y="294" fill="var(--text-muted)" font-size="10" text-anchor="middle">09/03</text>
+    </svg>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">📈</span>市场关键指标（2026-09-03 收盘）</h2>
+  <div class="indicators-grid">
+    <div class="indicator-card">
+      <div class="ind-name">上证指数 <a href="https://q.stock.sohu.com/zs/000001/lshq.shtml" target="_blank" class="src-link sohu">搜狐历史行情</a></div>
+      <div class="ind-value">3942.09</div>
+      <div class="ind-change red">+0.02%</div>
+      <div class="ind-sub">沪市成交约8795亿</div>
+    </div>
+    <div class="indicator-card">
+      <div class="ind-name">深证成指 <a href="https://www.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a></div>
+      <div class="ind-value">13625.12</div>
+      <div class="ind-change red">+0.10%</div>
+    </div>
+    <div class="indicator-card">
+      <div class="ind-name">创业板指 <a href="https://www.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a></div>
+      <div class="ind-value">3312.54</div>
+      <div class="ind-change red">+0.01%</div>
+    </div>
+    <div class="indicator-card">
+      <div class="ind-name">两市成交额 <a href="https://www.cls.cn/" target="_blank" class="src-link cls">财联社</a></div>
+      <div class="ind-value">1.76万亿</div>
+      <div class="ind-change green">缩量323亿</div>
+      <div class="ind-sub">连续2日低于2万亿，创4月新低</div>
+    </div>
+  </div>
+  <h3>主力资金流向</h3>
+  <div class="indicators-grid">
+    <div class="indicator-card" style="border-color:var(--bull-border);">
+      <div class="ind-name">净流入TOP <a href="https://www.cls.cn/detail/2473011" target="_blank" class="src-link cls">财联社资金监控</a></div>
+      <div style="font-size:14px;font-weight:600;line-height:1.8;">
+        有色金属概念 <span style="color:var(--bull);">+29.53亿</span><br>
+        非银金融 <span style="color:var(--bull);">净流入</span><br>
+        机械设备 <span style="color:var(--bull);">净流入</span><br>
+        通用设备 <span style="color:var(--bull);">净流入</span>
+      </div>
+    </div>
+    <div class="indicator-card" style="border-color:var(--bear-border);">
+      <div class="ind-name">净流出TOP <a href="https://finance.sina.com.cn/roll/2026-09-03/doc-iniqpeke2309567.shtml" target="_blank" class="src-link eastmoney">新浪财经</a></div>
+      <div style="font-size:14px;font-weight:600;line-height:1.8;">
+        TMT板块 <span style="color:var(--bear);">-146.11亿</span><br>
+        电子 <span style="color:var(--bear);">-50.17亿</span><br>
+        通信 <span style="color:var(--bear);">净流出</span><br>
+        半导体 <span style="color:var(--bear);">净流出</span>
+      </div>
+    </div>
+    <div class="indicator-card" style="border-color:var(--bull-border);">
+      <div class="ind-name">个股资金 <a href="https://www.cls.cn/detail/2473011" target="_blank" class="src-link cls">财联社</a></div>
+      <div style="font-size:14px;font-weight:600;line-height:1.8;">
+        黄河旋风 <span style="color:var(--bull);">净买入11.5亿</span><br>
+        中际旭创 <span style="color:var(--bear);">净卖出超11亿</span><br>
+        涨停46/跌停16<br>
+        炸板18 封板率71.8%
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">🔄</span>最近10个交易日 情绪周期复盘</h2>
+  <table class="cycle-table">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>情绪分</th>
+        <th>状态</th>
+        <th>广度</th>
+        <th>强度</th>
+        <th>量能</th>
+        <th>资金</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>08/21</td>
+        <td class="score-neutral">47.7</td>
+        <td>中性</td>
+        <td class="sub-score">48</td>
+        <td class="sub-score">71</td>
+        <td class="sub-score">25</td>
+        <td class="sub-score">38</td>
+      </tr>
+      <tr>
+        <td>08/24</td>
+        <td class="score-fear">20.8</td>
+        <td>极度恐惧</td>
+        <td class="sub-score">18</td>
+        <td class="sub-score">19</td>
+        <td class="sub-score">28</td>
+        <td class="sub-score">22</td>
+      </tr>
+      <tr>
+        <td>08/25</td>
+        <td class="score-neutral">55.8</td>
+        <td>中性</td>
+        <td class="sub-score">70</td>
+        <td class="sub-score">46</td>
+        <td class="sub-score">44</td>
+        <td class="sub-score">50</td>
+      </tr>
+      <tr>
+        <td>08/26</td>
+        <td class="score-neutral">58.0</td>
+        <td>中性</td>
+        <td class="sub-score">65</td>
+        <td class="sub-score">56</td>
+        <td class="sub-score">45</td>
+        <td class="sub-score">60</td>
+      </tr>
+      <tr>
+        <td>08/27</td>
+        <td class="score-greed">72.5</td>
+        <td>贪婪</td>
+        <td class="sub-score">85</td>
+        <td class="sub-score">64</td>
+        <td class="sub-score">56</td>
+        <td class="sub-score">75</td>
+      </tr>
+      <tr>
+        <td>08/28</td>
+        <td class="score-fear">41.0</td>
+        <td>恐惧</td>
+        <td class="sub-score">35</td>
+        <td class="sub-score">43</td>
+        <td class="sub-score">55</td>
+        <td class="sub-score">35</td>
+      </tr>
+      <tr>
+        <td>08/31</td>
+        <td class="score-neutral">57.5</td>
+        <td>中性</td>
+        <td class="sub-score">60</td>
+        <td class="sub-score">56</td>
+        <td class="sub-score">56</td>
+        <td class="sub-score">55</td>
+      </tr>
+      <tr>
+        <td>09/01</td>
+        <td class="score-fear">41.2</td>
+        <td>恐惧</td>
+        <td class="sub-score">38</td>
+        <td class="sub-score">42</td>
+        <td class="sub-score">51</td>
+        <td class="sub-score">35</td>
+      </tr>
+      <tr>
+        <td>09/02</td>
+        <td class="score-fear">28.9</td>
+        <td>极度恐惧</td>
+        <td class="sub-score">22</td>
+        <td class="sub-score">33</td>
+        <td class="sub-score">44</td>
+        <td class="sub-score">20</td>
+      </tr>
+      <tr class="today">
+        <td><strong>09/03</strong></td>
+        <td class="score-fear"><strong>40.4</strong></td>
+        <td>恐惧 ★</td>
+        <td class="sub-score">33</td>
+        <td class="sub-score">52</td>
+        <td class="sub-score">44</td>
+        <td class="sub-score">35</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="icon">🎯</span>题材发酵逻辑 · 市场在发生什么</h2>
+  <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">通过<a href="https://www.cls.cn/" target="_blank" class="src-link cls">财联社</a> + <a href="https://www.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a> + <a href="https://stcn.com/" target="_blank" class="src-link stcn">证券时报</a>交叉验证 ✓ 多源确认</div>
+  <div class="core-conclusion">
+    <strong>一句话逻辑：</strong>09-02 大跌（上证-0.97%、创业板-2.39%）后今日指数微幅收红，但"指数虚稳·个股实跌"——1846涨/3570跌，广度仅33.3%。成交1.76万亿创5个月新低，连续两日低于2万亿，反映市场参与意愿极度低迷。资金高低切换加剧：TMT净流出146亿、中际旭创净卖出11亿，而航运港口（海通发展涨停）、液冷IDC（金帝股份2连板）、培育钻石+贵金属（避险资金回流）逆势走强。连板梯队竞业达5板（AI应用）维持市场高度，但炸板18只、封板率仅71.8%显示分歧严重。银行股批量新高后出现派发信号，"易中天"低迷掣肘创业板。整体看，今日反弹力度极弱，缩量格局下防御+题材轮动为主，尚不具备趋势反转条件。
+  </div>
+
+  <div class="theme-card defensive">
+    <div class="theme-header">
+      <span class="theme-title">最强主线：航运港口</span>
+      <span class="theme-tag high">张力度 ★★★</span>
+      <span class="theme-tag medium">运价催化</span>
+    </div>
+    <div class="theme-chain">
+      海通发展涨停<span class="arrow">→</span>国航远洋、凤凰航运、中远海能走强<span class="arrow">→</span>海运运价催化+全球航运指数走强<span class="arrow">→</span>板块全天强势，资金高低切换首选方向
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://www.nfnews.com/content/J3WYMYRpoz.html" target="_blank" class="src-link eastmoney">南方+收评</a>（航运港口涨幅居前）；<a href="https://caifuhao.eastmoney.com/news/20260903151542945018650" target="_blank" class="src-link eastmoney">东方财富涨停统计</a>（航运港口列为今日最强主线，海通发展涨停居前）。海运运价催化+低位补涨逻辑，资金从高位TMT切换至低位航运。
+    </div>
+  </div>
+
+  <div class="theme-card tech">
+    <div class="theme-header">
+      <span class="theme-title">活跃主线：液冷/IDC服务器</span>
+      <span class="theme-tag high">张力度 ★★☆</span>
+      <span class="theme-tag medium">算力配套</span>
+    </div>
+    <div class="theme-chain">
+      金帝股份2连板（液冷+机器人）<span class="arrow">→</span>思泉新材、艾华集团走强<span class="arrow">→</span>算力配套液冷板块再度活跃<span class="arrow">→</span>金刚石散热概念全天领涨，恒盛能源封板，三安光电等多股涨停
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://caifuhao.eastmoney.com/news/20260903151542945018650" target="_blank" class="src-link eastmoney">东方财富涨停统计</a>（液冷/IDC列为第二主线，金帝股份2连板）；<a href="https://finance.sina.com.cn/roll/2026-09-03/doc-iniqpeke2309567.shtml" target="_blank" class="src-link eastmoney">新浪财经</a>（液冷服务器涨幅居前，开盘半小时即活跃）。算力硬件散热作为科技核心分支，资金反复抱团。
+    </div>
+  </div>
+
+  <div class="theme-card consume">
+    <div class="theme-header">
+      <span class="theme-title">防御方向：培育钻石/贵金属</span>
+      <span class="theme-tag high">张力度 ★★</span>
+      <span class="theme-tag medium">避险+涨价</span>
+    </div>
+    <div class="theme-chain">
+      培育钻石板块多只个股封板<span class="arrow">→</span>贵金属逆势走强<span class="arrow">→</span>避险资金在缩量格局下回流防御方向<span class="arrow">→</span>与航运、液冷构成今日三大防守方向
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://www.nfnews.com/content/J3WYMYRpoz.html" target="_blank" class="src-link eastmoney">南方+收评</a>（培育钻石、贵金属列入涨幅居前板块）；<a href="https://www.cls.cn/detail/2473011" target="_blank" class="src-link cls">财联社资金监控</a>（有色金属概念净流入29.53亿，为今日最强净流入方向）。
+    </div>
+  </div>
+
+  <div class="theme-card tech">
+    <div class="theme-header">
+      <span class="theme-title">资金流出：TMT/半导体/通信</span>
+      <span class="theme-tag warn">张力度 ★☆</span>
+      <span class="theme-tag warn">资金流出</span>
+    </div>
+    <div class="theme-chain">
+      TMT板块净流出146亿、电子净流出50亿<span class="arrow">→</span>中际旭创净卖出超11亿<span class="arrow">→</span>银行股批量新高后出现派发信号<span class="arrow">→</span>"易中天"低迷掣肘创业板，高位科技持续承压
+    </div>
+    <div class="theme-evidence">
+      <strong>佐证：</strong><a href="https://finance.sina.com.cn/roll/2026-09-03/doc-iniqpeke2309567.shtml" target="_blank" class="src-link eastmoney">新浪财经</a>（TMT板块净流出超146亿，芯片概念大幅流出）；<a href="https://www.cls.cn/detail/2473011" target="_blank" class="src-link cls">财联社</a>（中际旭创净卖出超11亿，电子板块净流出50.17亿）；<a href="https://m.thepaper.cn/newsDetail_forward_34000395" target="_blank" class="src-link eastmoney">澎湃新闻</a>（银行股批量新高后出现派发，"易中天"低迷掣肘创业板）。
+    </div>
+  </div>
+
+  <h3>发酵持续性分级</h3>
+  <div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">
+    <strong>① 高置信（运价催化+低位补涨）：</strong>航运港口——今日最强主线，海通发展涨停+海运运价催化，资金高低切换首选<br>
+    <strong>② 中高置信（算力配套+反复活跃）：</strong>液冷/IDC——金帝股份2连板+金刚石散热全天领涨，科技核心分支资金反复抱团<br>
+    <strong>③ 中置信（避险+资金回流）：</strong>培育钻石/贵金属——有色金属净流入29.53亿，避险逻辑在缩量格局下延续<br>
+    <strong>④ 回避（资金大幅流出）：</strong>TMT/半导体/通信——TMT净流出146亿、电子净流出50亿，高位科技持续承压，反弹即减仓
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">🔗</span>产业链上下游梳理</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>方向</th>
+        <th>代表个股/板块（9/3）</th>
+        <th>涨跌</th>
+        <th>阶段</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>航运港口</td>
+        <td>海通发展涨停｜国航远洋｜凤凰航运｜中远海能</td>
+        <td class="up">涨停</td>
+        <td>运价催化主升</td>
+      </tr>
+      <tr>
+        <td>液冷/IDC</td>
+        <td>金帝股份2连板｜思泉新材｜艾华集团｜恒盛能源封板</td>
+        <td class="up">2连板</td>
+        <td>反复活跃</td>
+      </tr>
+      <tr>
+        <td>培育钻石/贵金属</td>
+        <td>多只个股封板｜有色金属概念+29.53亿净流入</td>
+        <td class="up">板块涨幅居前</td>
+        <td>避险回流</td>
+      </tr>
+      <tr>
+        <td>保险</td>
+        <td>保险板块+2.00%｜非银金融净流入</td>
+        <td class="up">+2.00%</td>
+        <td>护盘</td>
+      </tr>
+      <tr>
+        <td>TMT/半导体</td>
+        <td>TMT净流出146亿｜电子-50.17亿｜中际旭创净卖出11亿</td>
+        <td class="down">-146亿</td>
+        <td>资金流出加速</td>
+      </tr>
+      <tr>
+        <td>农林牧渔</td>
+        <td>新赛股份跌停｜林业/供销社系跌幅居前</td>
+        <td class="down">跌幅居前</td>
+        <td>持续回调</td>
+      </tr>
+      <tr>
+        <td>全市场</td>
+        <td>1846涨/3570跌/133平（33.3%）｜成交1.76万亿缩量｜涨停46/跌停16/炸板18</td>
+        <td class="down">净流出~150亿</td>
+        <td>指数虚稳·个股实跌</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="icon">🚦</span>五大操作关口</h2>
+  <div class="checkpoint-grid">
+    <div class="checkpoint-card">
+      <div class="cp-title">① 情绪关口</div>
+      <div class="cp-body">情绪 40.4 恐惧区，从昨日 28.9 极度恐惧反弹 11.5 分。但反弹力度弱——指数仅微涨而个股普跌（33.3%广度）。若明日广度修复至45%+且指数收实体阳线，则情绪企稳确认；若再度跌破30则重回极度恐惧。</div>
+    </div>
+    <div class="checkpoint-card">
+      <div class="cp-title">② 量能关口</div>
+      <div class="cp-body">两市 1.76 万亿，连续两日低于2万亿，创4月8日以来新低。缩量反弹可靠性存疑——若无放量配合，反弹空间有限。若明日放量至2万亿+且收阳，则反弹有效；若继续缩量阴跌，则探底延续。</div>
+    </div>
+    <div class="checkpoint-card">
+      <div class="cp-title">③ 风格切换关口</div>
+      <div class="cp-body">TMT净流出146亿 vs 有色金属+航运净流入，资金高低切换明确。银行股批量新高后出现派发信号——若银行回落+科技反弹则风格切换确认；若银行继续强势则题材股流动性继续被抽离。</div>
+    </div>
+    <div class="checkpoint-card">
+      <div class="cp-title">④ 宏观关口</div>
+      <div class="cp-body">9月美联储议息会议临近，降息预期变化影响全球风险偏好。国内8月经济数据陆续公布，PMI/CPI等数据将影响政策预期。中报披露尾声，业绩暴雷风险仍需关注。</div>
+    </div>
+    <div class="checkpoint-card">
+      <div class="cp-title">⑤ 结构关口</div>
+      <div class="cp-body">连板梯队：竞业达5板（AI应用）、国芳集团4板（零售），高度维持但炸板18只封板率仅71.8%，分歧严重。涨停46家集中在航运/液冷/钻石，赚钱效应收窄至少数方向。</div>
+    </div>
+    <div class="checkpoint-card">
+      <div class="cp-title">⑥ 资金结构关口</div>
+      <div class="cp-body">主力净流出约150亿+（TMT-146亿、电子-50亿、中际旭创-11亿），连续净流出格局。有色金属+29.53亿为唯一亮点。若明日流出收窄且防御方向持续获流入，情绪或企稳；若继续大额流出则下探前低。</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">💡</span>策略建议</h2>
+  <div class="strategy-grid">
+    <div class="strategy-card attack">
+      <div class="str-label">⚔️ 进攻（主线持有者）</div>
+      <div class="str-body">恐惧区轻仓试探（40分附近），优先航运港口（运价催化+低位补涨）与液冷/IDC（算力配套反复活跃）。TMT/半导体反弹坚决减仓，回避资金流出方向。竞业达5板维持市场高度但分歧大，追高需极度谨慎。</div>
+    </div>
+    <div class="strategy-card balanced">
+      <div class="str-label">⚖️ 均衡（空仓/轻仓者）</div>
+      <div class="str-body">仓位3-4成防御为主：航运+贵金属构成避险组合；液冷/IDC可小仓位参与但严设止损。等待情绪站回45+且放量至2万亿+确认企稳信号。缩量格局下不宜重仓，以题材轮动快进快出为主。</div>
+    </div>
+    <div class="strategy-card defend">
+      <div class="str-label">🛡️ 防御（风险偏好低）</div>
+      <div class="str-body">连续两日低于2万亿+广度33%+主力净流出，短线不宜追高。防御方向（航运/贵金属/保险）已连续走强，追高风险上升。等待情绪在40分附近企稳或跌破30后出现恐慌量再分批布局。</div>
+    </div>
+  </div>
+  <div class="strategy-summary">
+    <strong>关键时点：</strong>情绪 40.4（恐惧）对应仓位建议防御偏均衡（3成）。<strong>操作节奏：</strong>①航运港口为今日最强主线，回踩低吸不追高；②液冷/IDC反复活跃但分歧大，快进快出；③TMT/半导体反弹减仓，资金流出趋势未改；④若明日放量至2万亿+且广度修复至45%+，确认企稳可加仓至5成；⑤若跌破30重回极度恐惧，观察恐慌量再布局。中报披露尾期业绩确定性优先。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">⚠️</span>风险提示与数据校验</h2>
+  <ul class="risk-list">
+    <li><strong>缩量反弹不可靠风险：</strong>两市1.76万亿连续两日低于2万亿创5个月新低，缩量反弹通常可靠性低。若无放量配合，反弹空间有限，随时可能再度回落。</li>
+    <li><strong>指数与个股背离风险：</strong>三大指数微幅收涨但3370只个股下跌（33.3%广度），"指数虚稳·个股实跌"格局下赚钱效应极差，投资者实际亏损面远大于指数表现。</li>
+    <li><strong>资金流出加速风险：</strong>TMT净流出146亿、电子净流出50亿、中际旭创净卖出11亿，高位科技资金流出趋势明确。若明日继续大额流出，可能引发科技板块二次杀跌。</li>
+    <li><strong>银行派发风险：</strong>银行股批量新高后出现派发信号，若银行板块回落将拖累指数；"易中天"低迷掣肘创业板，权重股走弱加剧指数失真。</li>
+    <li><strong>外部扰动风险：</strong>9月美联储议息会议临近，降息预期反复将冲击全球风险资产。中报披露尾期业绩暴雷个股拖累板块情绪。午后日韩港股A股集体跳水显示全球情绪联动风险。</li>
+  </ul>
+  <div style="font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.7;">
+    <strong>数据校验与置信度：</strong><a href="https://www.eastmoney.com/" target="_blank" class="src-link eastmoney">东方财富</a>（收盘行情/涨跌停统计）✓、<a href="https://q.stock.sohu.com/zs/000001/lshq.shtml" target="_blank" class="src-link sohu">搜狐证券</a>（上证指数10日历史行情）✓、<a href="https://www.cls.cn/" target="_blank" class="src-link cls">财联社</a>（主力资金监控）✓、<a href="https://stcn.com/" target="_blank" class="src-link stcn">证券时报</a>（涨跌家数统计）✓、<a href="https://www.nfnews.com/content/J3WYMYRpoz.html" target="_blank" class="src-link eastmoney">南方+</a>（板块收评）✓——多源交叉整体置信度中高；部分历史情绪子分为量化模型估算，仅供参考。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="icon">📡</span>数据来源索引</h2>
+  <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">点击以下链接可跳转到原始数据源页面，验证报告中的数据。</div>
+  <div class="source-index">
+    <div class="source-card">
+      <div class="src-name">💰 东方财富 (EastMoney)</div>
+      <div class="src-url">数据中心：<a href="https://www.eastmoney.com/" target="_blank">https://www.eastmoney.com/</a></div>
+      <div class="src-desc">提供收盘行情、涨停跌停统计、板块资金流向、个股主力净流入等数据。</div>
+      <div class="src-pages">
+        <a href="https://caifuhao.eastmoney.com/news/20260903151542945018650" target="_blank">9/3涨停统计</a>
+        <a href="https://www.nfnews.com/content/J3WYMYRpoz.html" target="_blank">南方+收评</a>
+      </div>
+    </div>
+    <div class="source-card">
+      <div class="src-name">📊 搜狐证券 (Sohu)</div>
+      <div class="src-url">历史行情：<a href="https://q.stock.sohu.com/zs/000001/lshq.shtml" target="_blank">https://q.stock.sohu.com/zs/000001/lshq.shtml</a></div>
+      <div class="src-desc">提供上证指数历史日K线数据，包含日期、开收盘、涨跌幅、成交量、成交金额等。</div>
+      <div class="src-pages">
+        <a href="https://q.stock.sohu.com/zs/000001/lshq.shtml" target="_blank">上证历史行情</a>
+      </div>
+    </div>
+    <div class="source-card">
+      <div class="src-name">⚡ 财联社 (CLS)</div>
+      <div class="src-url">官网：<a href="https://www.cls.cn/" target="_blank">https://www.cls.cn/</a></div>
+      <div class="src-desc">提供实时主力资金监控、板块资金流向、个股大单买卖数据。</div>
+      <div class="src-pages">
+        <a href="https://www.cls.cn/detail/2473011" target="_blank">9/3主力资金监控</a>
+      </div>
+    </div>
+    <div class="source-card">
+      <div class="src-name">📰 证券时报 (STCN)</div>
+      <div class="src-url">官网：<a href="https://stcn.com/" target="_blank">https://stcn.com/</a></div>
+      <div class="src-desc">提供全市场涨跌家数统计、涨停个股行业分布、封单资金等数据。</div>
+      <div class="src-pages">
+        <a href="https://stcn.com/article/detail/4170725.html" target="_blank">涨停统计</a>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--card-border);">
+    <strong>情绪评分模型：</strong>市场广度40% + 指数强度25% + 量能动能20% + 资金确认15%，区间映射：&gt;75极度贪婪 / 60-75贪婪 / 45-60中性 / 30-45恐惧 / &lt;30极度恐惧。报告生成时间：2026-09-03 16:30。
+  </div>
+  <div style="font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;line-height:1.7;">
+    本报告基于公开数据与量化模型的自动分析，仅供研究参考，不构成任何投资建议。<br>
+    市场有风险，投资需谨慎。过往表现不代表未来收益。<br>
+    © 2026 市场情绪温度计 · 生成于 2026-09-03
+  </div>
+</div>
+
+<div class="footer">
+  <p>由 TRAE 自动生成与部署</p>
+</div>
+
+</body>
+</html>

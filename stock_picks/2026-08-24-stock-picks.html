@@ -275,20 +275,7 @@ body {
 </style>
 
 <style>
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-page: #0d1117; --bg-card: #161b22; --bg-card-alt: #1c2128;
-    --border: #30363d; --border-light: #21262d;
-    --text-primary: #e6edf3; --text-secondary: #8b949e; --text-muted: #6e7681;
-    --red: #f85149; --red-bg: rgba(248,81,73,0.06); --red-border: rgba(248,81,73,0.2);
-    --green: #3fb950; --green-bg: rgba(63,185,80,0.06); --green-border: rgba(63,185,80,0.2);
-    --orange: #db6d28; --orange-bg: rgba(219,109,40,0.06);
-    --blue: #58a6ff; --blue-bg: rgba(88,166,255,0.06); --blue-border: rgba(88,166,255,0.2);
-    --yellow: #d29922; --yellow-bg: rgba(210,153,34,0.06);
-    --purple: #bc8cff;
-    --score-high: #f85149; --score-mid: #d29922; --score-low: #3fb950;
-  }
-}
+
 .site-nav {
   position: sticky; top: 0; z-index: 9999;
   display: flex; align-items: center; gap: 12px;
@@ -303,12 +290,7 @@ body {
 .site-nav a:hover { text-decoration: underline; }
 .site-nav .nav-sep { color: #d0d7de; }
 .site-nav .nav-current { color: #656d76; }
-@media (prefers-color-scheme: dark) {
-  .site-nav { background: rgba(13,17,23,0.92); border-bottom-color: #30363d; }
-  .site-nav a { color: #58a6ff; }
-  .site-nav .nav-sep { color: #30363d; }
-  .site-nav .nav-current { color: #8b949e; }
-}
+
 </style>
 
 <style>
@@ -316,6 +298,13 @@ body {
   :root { color-scheme: light; }
   body { background: #f6f8fa !important; color: #1f2328 !important; }
   .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+}
+</style>
+
+<style>
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+  body { background: #0d1117 !important; color: #e6edf3 !important; }
 }
 </style>
 </head>

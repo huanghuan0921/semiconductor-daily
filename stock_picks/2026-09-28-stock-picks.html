@@ -29,6 +29,8 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
+
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -80,11 +82,12 @@ body {
   margin-top: 12px;
 }
 .meta-tag {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border-light);
+  display: inline-block;
+  padding: 2px 10px;
   border-radius: 4px;
-  padding: 4px 10px;
   font-size: 12px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
   color: var(--text-secondary);
 }
 
@@ -97,74 +100,59 @@ body {
   box-shadow: var(--shadow);
 }
 .section h2 {
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 700;
   margin-bottom: 12px;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
-.section h3 { font-size: 15px; margin: 14px 0 8px; color: var(--text-primary); }
+.section h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 14px 0 8px;
+  color: var(--text-primary);
+}
 
-/* Market overview grid */
 .market-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin: 12px 0;
 }
 .market-card {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 8px;
   background: var(--bg-card-alt);
   border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 12px;
-  text-align: center;
 }
-.market-card .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+.market-card .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
 .market-card .value { font-size: 20px; font-weight: 700; }
-.market-card .change { font-size: 13px; margin-top: 2px; }
-.up { color: var(--red); }
-.down { color: var(--green); }
-.flat { color: var(--yellow); }
+.market-card .change { font-size: 13px; font-weight: 600; margin-top: 2px; }
+.change.up { color: var(--red); }
+.change.down { color: var(--green); }
+.change.flat { color: var(--yellow); }
 
-/* Stock pick card */
 .stock-card {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px;
-  margin: 12px 0;
+  margin-bottom: 16px;
   background: var(--bg-card-alt);
 }
-.stock-card .stock-header {
+.stock-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
 }
-.stock-card .stock-name { font-size: 16px; font-weight: 700; }
-.stock-card .stock-code { font-size: 13px; color: var(--text-secondary); }
-.stock-card .stock-sector {
-  font-size: 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 2px 8px;
-  color: var(--text-secondary);
-  margin-left: 8px;
-}
-.stock-card .stock-price {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin: 8px 0;
-  padding: 8px 0;
-  border-bottom: 1px dashed var(--border-light);
-}
-.stock-card .price-item .label { font-size: 11px; color: var(--text-muted); }
-.stock-card .price-item .value { font-size: 14px; font-weight: 600; }
+.stock-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.stock-code { font-size: 13px; color: var(--text-muted); }
+.stock-sector { font-size: 12px; color: var(--blue); background: rgba(9,105,218,0.08); padding: 2px 8px; border-radius: 4px; }
+.stock-price { font-size: 16px; font-weight: 700; color: var(--red); margin-left: auto; }
 
 .dimension-grid {
   display: grid;
@@ -173,32 +161,18 @@ body {
   margin: 10px 0;
 }
 .dimension-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
   font-size: 13px;
-  line-height: 1.5;
 }
-.dimension-item .icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.dimension-item .icon.bull { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-.dimension-item .icon.bear { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.dimension-item .icon.neutral { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow); }
-.dimension-item .text { flex: 1; }
-.dimension-item .text strong { color: var(--text-primary); }
+.dimension-item .dim-label { font-weight: 600; font-size: 12px; color: var(--text-secondary); margin-bottom: 2px; }
+.dimension-item .dim-value { color: var(--text-primary); }
+.dimension-item.bullish { background: var(--red-bg); border-color: var(--red-border); }
+.dimension-item.bullish .dim-label { color: var(--red); }
 
 .reason-box {
-  background: var(--bg-card);
+  background: rgba(9,105,218,0.05);
   border-left: 3px solid var(--blue);
   padding: 10px 12px;
   border-radius: 0 6px 6px 0;
@@ -236,7 +210,6 @@ body {
 .risk-medium { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow); }
 .risk-low { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
 
-/* Sector table */
 .sector-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
 .sector-table th {
   background: var(--bg-card-alt);
@@ -263,9 +236,8 @@ body {
 .tag-ferment { background: var(--red-bg); color: var(--red); }
 .tag-climax { background: var(--yellow-bg); color: var(--yellow); }
 .tag-ebbing { background: var(--green-bg); color: var(--green); }
-.tag-defense { background: var(--blue); color: #fff; }
+.tag-defense { background: rgba(9,105,218,0.08); color: var(--blue); }
 
-/* Disclaimer */
 .disclaimer {
   background: var(--bg-card-alt);
   border: 1px solid var(--border);
@@ -316,14 +288,7 @@ body {
   .dimension-grid { grid-template-columns: 1fr; }
   .trade-box { grid-template-columns: 1fr; }
   .stock-card { padding: 12px; }
-}
-</style>
-
-<style>
-@media (prefers-color-scheme: light) {
-  :root { color-scheme: light; }
-  body { background: #f6f8fa !important; color: #1f2328 !important; }
-  .header { background: linear-gradient(135deg, #ffffff 0%, #eaeef2 100%) !important; }
+  .market-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -340,75 +305,75 @@ body {
   <h1>每日多维选股分析报告 | 2026-09-28</h1>
   <div class="subtitle">A股多维共振选股 · 缠论结构 + 520均线 + 游资动向 + 市场情绪</div>
   <div class="meta">
-    <span class="meta-tag">分析时间：10:30（盘中实时）</span>
-    <span class="meta-tag">数据基准：2026-09-28盘中实时行情</span>
-    <span class="meta-tag">推荐数量：3只（防御性精选）</span>
+    <span class="meta-tag">分析时间：14:22（盘中实时）</span>
+    <span class="meta-tag">数据基准：通达信实时行情</span>
+    <span class="meta-tag">推荐数量：4只</span>
     <span class="meta-tag">策略类型：尾盘买入 → 次日卖出</span>
   </div>
 </div>
 
 <!-- 重要警示 -->
 <div class="alert-box">
-  <strong>⚠️ 重要警示：当前市场处于恐慌性下跌，建议以观望为主！</strong><br><br>
-  截至今日10:30，三大指数全线大跌：上证指数跌1.14%，深证成指跌2.32%，创业板指暴跌3.09%。全市场上涨仅约830家，下跌超4280家，涨跌比约1:5。涨停18家，跌停21家（跌停家数超过涨停），市场恐慌情绪蔓延。<br><br>
-  <strong>操作建议：</strong>总仓位控制在<strong>2成以下</strong>，优选防御性板块和逆势强势股，严格执行止损纪律。非高手不建议参与。
+  <strong>⚠️ 重要警示：市场处于恐慌性下跌，控制仓位！</strong><br><br>
+  截至14:22，三大指数全线大跌：上证指数跌1.50%，深证成指跌3.15%，创业板指暴跌4.19%。全市场涨停仅27只，跌停61只，跌停数远超涨停数。逾4800只个股下跌，市场恐慌情绪蔓延。连板成功率仅31%（13只昨日连板仅4只成功），3只连板股跌停。<br><br>
+  <strong>操作建议：</strong>总仓位控制在<strong>2-3成</strong>，优选逆势强势股和防御性标的，严格执行止损纪律。国庆长假前最后交易日，需防范假期不确定性风险。
 </div>
 
 <!-- 一、市场概况 -->
 <div class="section">
-  <h2>一、市场概况（截至10:30）</h2>
-  
+  <h2>一、市场概况（截至14:22）</h2>
+
   <div class="market-grid">
     <div class="market-card">
       <div class="label">上证指数</div>
-      <div class="value">3843.87</div>
-      <div class="change down">-1.14%</div>
+      <div class="value">3830.08</div>
+      <div class="change down">-1.50%</div>
     </div>
     <div class="market-card">
       <div class="label">深证成指</div>
-      <div class="value">13007.98</div>
-      <div class="change down">-2.32%</div>
+      <div class="value">12897.53</div>
+      <div class="change down">-3.15%</div>
     </div>
     <div class="market-card">
       <div class="label">创业板指</div>
-      <div class="value">3187.26</div>
-      <div class="change down">-3.09%</div>
+      <div class="value">3151.03</div>
+      <div class="change down">-4.19%</div>
     </div>
     <div class="market-card">
-      <div class="label">科创50</div>
-      <div class="value">1576.67</div>
-      <div class="change down">-2.79%</div>
+      <div class="label">两市成交额</div>
+      <div class="value">1.49万亿</div>
+      <div class="change down">放量下跌</div>
     </div>
   </div>
 
-  <h3>涨跌停数据（实时）</h3>
+  <h3>涨跌停数据（截至14:00）</h3>
   <div class="market-grid">
     <div class="market-card">
-      <div class="label">上涨家数</div>
-      <div class="value up">约830家</div>
-      <div class="change" style="font-size:12px;color:var(--text-secondary)">占比约16%</div>
-    </div>
-    <div class="market-card">
-      <div class="label">下跌家数</div>
-      <div class="value down">约4280家</div>
-      <div class="change" style="font-size:12px;color:var(--text-secondary)">占比约84%</div>
-    </div>
-    <div class="market-card">
       <div class="label">涨停家数</div>
-      <div class="value up">18家</div>
-      <div class="change" style="font-size:12px;color:var(--text-secondary)">非ST约15只</div>
+      <div class="value up">27只</div>
+      <div class="change" style="font-size:12px;color:var(--text-secondary)">含1只20cm</div>
     </div>
     <div class="market-card">
       <div class="label">跌停家数</div>
-      <div class="value down">21家</div>
-      <div class="change" style="font-size:12px;color:var(--text-secondary)">跌停超涨停</div>
+      <div class="value down">61只</div>
+      <div class="change" style="font-size:12px;color:var(--text-secondary)">跌停远超涨停</div>
+    </div>
+    <div class="market-card">
+      <div class="label">连板高度</div>
+      <div class="value" style="color:var(--yellow)">2板</div>
+      <div class="change" style="font-size:12px;color:var(--text-secondary)">新华传媒5连板(重组)</div>
+    </div>
+    <div class="market-card">
+      <div class="label">连板成功率</div>
+      <div class="value down">31%</div>
+      <div class="change" style="font-size:12px;color:var(--text-secondary)">4成/13只, 3只跌停</div>
     </div>
   </div>
 
   <h3>市场情绪阶段判断</h3>
   <div class="warning-box">
     <strong>市场处于恐慌性下跌阶段（退潮期加速），情绪极度低迷。</strong><br>
-    创业板指暴跌超3%，深成指跌超2%，全市场超84%个股下跌，跌停家数（21家）超过涨停家数（18家），为典型的恐慌性抛售特征。两市成交额截至午盘约6700亿，较前几日有所放量（放量下跌）。市场无明显主线，资金避险情绪浓厚，银行、煤炭等防御性板块逆势微涨。连板高度预计降至2-3板，高位股补跌风险巨大。
+    创业板指暴跌4.19%，深成指跌3.15%，全市场超4800只个股下跌，涨停27只vs跌停61只，跌停数远超涨停，为典型的恐慌性抛售特征。连板成功率仅31%，3只昨日连板股跌停，高位股补跌风险巨大。两市成交1.49万亿，放量下跌显示恐慌性抛盘涌出。主力资金净流出上证-374亿、深证-415亿、创业板-236亿，全线大幅流出。国庆长假前最后交易日，资金避险离场意愿强烈。
   </div>
 
   <h3>主线题材概览</h3>
@@ -424,360 +389,348 @@ body {
     </thead>
     <tbody>
       <tr>
+        <td><strong>黄酒/消费</strong></td>
+        <td>会稽山、古越龙山</td>
+        <td class="up">逆势大涨</td>
+        <td><span class="tag tag-ferment">发酵期</span></td>
+        <td>华泰研报看好量价重构+白酒大商拥抱黄酒+全国化扩张+估值洼地</td>
+      </tr>
+      <tr>
+        <td><strong>OLED/玻璃基板</strong></td>
+        <td>彩虹股份、雷曼光电</td>
+        <td class="up">个股强势</td>
+        <td><span class="tag tag-ferment">发酵期</span></td>
+        <td>英伟达加码玻璃基板+AI新题材催化+消费电子反弹预期</td>
+      </tr>
+      <tr>
+        <td><strong>汽车整车</strong></td>
+        <td>江淮汽车、众泰汽车</td>
+        <td class="up">多股涨停</td>
+        <td><span class="tag tag-climax">高潮期</span></td>
+        <td>问界/鸿蒙智行合作模式调整+华为汽车产业链预期</td>
+      </tr>
+      <tr>
+        <td><strong>半导体新材料</strong></td>
+        <td>有研新材</td>
+        <td class="up">逆势涨</td>
+        <td><span class="tag tag-ferment">异动期</span></td>
+        <td>半导体国产替代+新材料需求增长+年内涨幅156%趋势强</td>
+      </tr>
+      <tr>
+        <td><strong>基建/高铁</strong></td>
+        <td>中国中车、京沪高铁</td>
+        <td class="up">逆势微涨</td>
+        <td><span class="tag tag-defense">防御期</span></td>
+        <td>低估值+高股息+避险资金流入+大盘蓝筹防御属性</td>
+      </tr>
+      <tr>
         <td><strong>银行/高股息</strong></td>
-        <td>南京银行、招商银行、宁波银行</td>
-        <td class="up">+0.31%（逆势）</td>
+        <td>南京银行、招商银行</td>
+        <td class="flat">基本持平</td>
         <td><span class="tag tag-defense">防御期</span></td>
         <td>市场恐慌情绪下资金避险，高股息低估值防御属性凸显</td>
       </tr>
       <tr>
-        <td><strong>煤炭/能源</strong></td>
-        <td>中国神华、陕西煤业</td>
-        <td class="up">+0.63%（逆势）</td>
-        <td><span class="tag tag-defense">防御期</span></td>
-        <td>冬季取暖季预期+高股息+避险资金流入，板块20只上涨仅11只下跌</td>
-      </tr>
-      <tr>
-        <td><strong>电力/公用事业</strong></td>
-        <td>长江电力、明星电力</td>
-        <td class="flat">基本持平</td>
-        <td><span class="tag tag-defense">防御期</span></td>
-        <td>公用事业防御属性+算电协同概念残余热度，27只上涨74只下跌</td>
-      </tr>
-      <tr>
-        <td><strong>OLED/面板</strong></td>
-        <td>彩虹股份、雷曼光电、五方光电</td>
-        <td class="up">个股强势</td>
-        <td><span class="tag tag-ferment">异动期</span></td>
-        <td>玻璃基板涨价预期+人民币贬值受益+消费电子反弹预期</td>
-      </tr>
-      <tr>
-        <td><strong>新能源汽车</strong></td>
-        <td>江淮汽车、众泰汽车</td>
-        <td class="up">个股活跃</td>
-        <td><span class="tag tag-ferment">消息驱动</span></td>
-        <td>长安汽车深蓝/阿维塔整合催化+华为汽车产业链预期</td>
-      </tr>
-      <tr>
-        <td><strong>医药/创新药</strong></td>
-        <td>百利天恒、中红医疗</td>
-        <td class="down">-1.53%</td>
-        <td><span class="tag tag-ebbing">普跌</span></td>
-        <td>百利天恒创新药利好但板块整体普跌，248只下跌仅44只上涨</td>
-      </tr>
-      <tr>
-        <td><strong>半导体/科技</strong></td>
-        <td>深南电路、寒武纪</td>
+        <td><strong>科技/半导体</strong></td>
+        <td>寒武纪、光模块龙头</td>
         <td class="down">大跌</td>
         <td><span class="tag tag-ebbing">重灾区</span></td>
-        <td>创业板暴跌拖累科技成长股，估值承压，资金避险出逃</td>
+        <td>创业板暴跌拖累科技成长股，光模块龙头跌超8%，估值承压</td>
+      </tr>
+      <tr>
+        <td><strong>高位人气股</strong></td>
+        <td>泰慕士、天威视讯等</td>
+        <td class="down">大面积跌停</td>
+        <td><span class="tag tag-ebbing">退潮期</span></td>
+        <td>前期连板股集体补跌，3只连板股跌停，高位股风险释放中</td>
       </tr>
     </tbody>
   </table>
 
   <div class="note-box">
-    <strong>数据说明：</strong>本报告行情数据基于2026年9月28日盘中实时行情（截至约10:30）。市场仍在交易中，数据可能发生变化。今日重要消息：长安汽车深蓝/阿维塔品牌整合进入实质阶段、百利天恒3款创新药纳入突破性治疗品种、汇绿生态拟扩产光模块、竞业达实控人解除留置。
+    <strong>数据说明：</strong>本报告行情数据基于通达信实时行情（截至14:22），涨停/跌停数据截至14:00（来源：金融界涨跌停温度计）。市场仍在交易中，数据可能变化。今日为国庆长假前最后交易日，需特别关注假期不确定性风险。今日重要消息：新华传媒5连板（重大资产重组）、问界/鸿蒙智行合作模式调整、英伟达加码玻璃基板、华泰研报看好黄酒行业量价重构。
   </div>
 </div>
 
 <!-- 二、选股结果 -->
 <div class="section">
-  <h2>二、选股结果（3只 · 防御性精选）</h2>
+  <h2>二、选股结果（4只 · 多维共振精选）</h2>
   <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
-    筛选标准：至少<strong>3个维度</strong>（缠论结构/520均线/游资动向/市场情绪）同时出现看多信号。<strong style="color:var(--green)">当前市场恐慌下跌，严格控制数量，仅精选3只逆势标的，建议总仓位不超过2成。</strong>
+    筛选标准：至少<strong>3个维度</strong>（缠论结构/520均线/游资动向/市场情绪）同时出现看多信号。当前市场恐慌下跌，严格控制数量，建议总仓位不超过2-3成。
   </p>
 
   <div class="warning-box">
-    <strong>重要提示：</strong>当前市场处于<strong style="color:var(--green)">恐慌性下跌阶段</strong>，跌停家数超过涨停，超84%个股下跌。任何逆势股都有补跌风险。建议<strong>极小仓位试探（单票不超过1成）</strong>，严格执行止损纪律，一旦大盘继续恶化立即离场。
+    <strong>操作纪律：</strong>当前市场处于<strong style="color:var(--green)">恐慌性下跌阶段</strong>，跌停数（61只）远超涨停（27只）。任何逆势股都有补跌风险。建议<strong>单票仓位不超过1成</strong>，严格执行止损纪律，一旦大盘继续恶化立即离场。国庆假期前最后交易日，需评估假期持仓风险。
   </div>
 
   <!-- Stock 1: 彩虹股份 -->
   <div class="stock-card">
     <div class="stock-header">
-      <div>
-        <span class="stock-name">彩虹股份</span>
-        <span class="stock-code">600707.SH</span>
-        <span class="stock-sector">OLED · 玻璃基板 · 面板</span>
-      </div>
-      <span class="risk-badge risk-high">风险等级：高</span>
-    </div>
-    
-    <div class="stock-price">
-      <div class="price-item"><div class="label">最新价</div><div class="value up">约9.55元</div></div>
-      <div class="price-item"><div class="label">今日涨幅</div><div class="value up">+约8.0%</div></div>
-      <div class="price-item"><div class="label">换手率</div><div class="value">7.35%</div></div>
-      <div class="price-item"><div class="label">主力净流入</div><div class="value up">+2.71亿</div></div>
-      <div class="price-item"><div class="label">量比</div><div class="value up">8.75</div></div>
-      <div class="price-item"><div class="label">流通市值</div><div class="value">约260亿</div></div>
+      <span class="stock-name">彩虹股份</span>
+      <span class="stock-code">600707.SH</span>
+      <span class="stock-sector">OLED · 玻璃基板 · 面板</span>
+      <span class="stock-price">10.36 (+9.17%)</span>
     </div>
 
     <div class="dimension-grid">
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>缠论结构：</strong>前期长期下跌后底部盘整，今日放量大涨突破底部平台，形成<strong style="color:var(--red)">一类买点确认</strong>结构。MACD由负转正（0.18），金叉确认，动能增强。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">缠论结构 ✓</div>
+        <div class="dim-value">60日跌31%后底背驰反弹，10日涨21.74%，底部长阳放量突破下降趋势线，疑似一类买点确立</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>520均线：</strong>今日放量大涨后站上5日线（约9.59），短期均线拐头向上，<strong style="color:var(--red)">5日线即将金叉20日线</strong>。底部特征明显，均线由粘合转向发散。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">520均线 ✓</div>
+        <div class="dim-value">5日涨12.13%、10日涨21.74%，5日线上穿20日线形成多头排列，股价向60日线靠拢中</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>游资动向：</strong>主力资金净流入2.71亿元（<strong style="color:var(--red)">大幅流入</strong>），量比高达8.75（巨量突破），换手率7.35%，量价齐升。外盘远大于内盘，买盘强劲。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">游资动向 ✓</div>
+        <div class="dim-value">主力净流入7.38亿（全市场第一），量比2.08，换手率9.40%，资金大幅介入</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon neutral">~</div>
-        <div class="text"><strong>市场情绪：</strong>OLED/面板概念异动，玻璃基板涨价预期，人民币贬值受益。但<strong style="color:var(--yellow)">板块效应不明显</strong>，更多是个股行情，持续性待验证。大盘整体弱势。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">市场情绪 ✓</div>
+        <div class="dim-value">OLED/玻璃基板题材发酵期，英伟达加码玻璃基板催化，板块内个股集体异动</div>
       </div>
     </div>
 
     <div class="reason-box">
-      <div class="reason-title">入选理由（三维共振）</div>
-      <strong>底部放量突破 + 均线拐头金叉 + 主力巨量流入</strong>三维度共振。彩虹股份作为OLED玻璃基板核心标的，受益于面板行业周期复苏预期和人民币贬值。今日在大盘暴跌背景下逆势放量大涨，资金关注度高，股性活跃。但需注意：大盘弱势环境下逆势股存在补跌风险，快进快出为主。
+      <div class="reason-title">入选理由 · 4维度共振</div>
+      底背驰反弹+均线多头排列+主力资金全市场第一+题材催化发酵。今日触及涨停价10.44（MaxP=10.44）后小幅回落至10.36，封板意愿强但未完全封死。英伟达加码玻璃基板为新增催化，OLED面板行业景气度回升预期。
     </div>
 
     <div class="trade-box">
       <div class="trade-item buy">
         <div class="label">尾盘买入区间</div>
-        <div class="value up">9.2-9.6元</div>
-      </div>
-      <div class="trade-item target">
-        <div class="label">止盈位（次日）</div>
-        <div class="value">10.0-10.3元</div>
+        <div class="value" style="color:var(--red)">10.15 - 10.35</div>
       </div>
       <div class="trade-item stop">
         <div class="label">止损位</div>
-        <div class="value down">8.8元</div>
+        <div class="value" style="color:var(--green)">9.80</div>
+      </div>
+      <div class="trade-item target">
+        <div class="label">次日止盈位</div>
+        <div class="value" style="color:var(--yellow)">10.44 / 11.00</div>
       </div>
     </div>
 
-    <h3>次日关注点</h3>
-    <p style="font-size:13px;">
-      <strong>关键价位：</strong>上方压力位10.0元（整数关口+前期平台），突破则看高一线；下方支撑位9.0元（今日开盘价附近），跌破则止损。<br>
-      <strong>时间节点：</strong>关注开盘后15分钟量能，若能维持放量上攻可持有；若低开低走且跌破9元应果断止损。<br>
-      <strong>量能要求：</strong>换手率需维持5%以上，缩量冲高即为卖点。
-    </p>
-
-    <h3>风险等级说明</h3>
-    <p style="font-size:13px;">
-      <span class="risk-badge risk-high">高风险</span>
-      当前市场恐慌下跌，逆势股随时可能补跌。彩虹股份处于底部突破初期，持续性待验证。若大盘继续下跌，该股难以独善其身。仅适合风险偏好极高的投资者小仓位参与，严格止损。
+    <p style="font-size:12px;color:var(--text-secondary);margin:6px 0;">
+      <strong>量能要求：</strong>换手率维持8%以上，量比>1.5。<strong>次日关注点：</strong>能否封板涨停10.44为关键，突破则看11.00整数关口；若低开跌破10.00则弱势，9.80止损离场。PE(TTM)极高(1647)，属题材博弈而非价值投资。<strong>风险等级：</strong><span class="risk-medium">中</span> — 题材催化强但PE极高，市场系统性风险下补跌概率存在。
     </p>
   </div>
 
-  <!-- Stock 2: 江淮汽车 -->
+  <!-- Stock 2: 有研新材 -->
   <div class="stock-card">
     <div class="stock-header">
-      <div>
-        <span class="stock-name">江淮汽车</span>
-        <span class="stock-code">600418.SH</span>
-        <span class="stock-sector">新能源汽车 · 华为汽车 · 无人驾驶</span>
-      </div>
-      <span class="risk-badge risk-high">风险等级：高</span>
-    </div>
-    
-    <div class="stock-price">
-      <div class="price-item"><div class="label">最新价</div><div class="value up">约24.6元</div></div>
-      <div class="price-item"><div class="label">今日涨幅</div><div class="value up">+约7.3%</div></div>
-      <div class="price-item"><div class="label">换手率</div><div class="value">4.41%</div></div>
-      <div class="price-item"><div class="label">主力净流入</div><div class="value up">+1.59亿</div></div>
-      <div class="price-item"><div class="label">量比</div><div class="value up">4.69</div></div>
-      <div class="price-item"><div class="label">流通市值</div><div class="value">约550亿</div></div>
+      <span class="stock-name">有研新材</span>
+      <span class="stock-code">600206.SH</span>
+      <span class="stock-sector">半导体 · 新材料 · 国产替代</span>
+      <span class="stock-price">51.83 (+4.06%)</span>
     </div>
 
     <div class="dimension-grid">
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>缠论结构：</strong>前期回调后企稳反弹，今日放量突破近期高点，形成<strong style="color:var(--red)">二类买点+突破确认</strong>结构。MACD为正（0.84）且持续放大，趋势动能强劲。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">缠论结构 ✓</div>
+        <div class="dim-value">20日横盘整理（涨0.35%）后10日放量突破涨13.78%，中枢突破形态，疑似三类买点</div>
+      </div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">520均线 ✓</div>
+        <div class="dim-value">5日线与20日线粘合后开始向上发散，60日线上行（60日涨16.79%），均线支撑明确</div>
+      </div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">游资动向 ✓</div>
+        <div class="dim-value">主力净流入4.28亿，换手率11.23%，量比1.43，资金持续介入</div>
       </div>
       <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>520均线：</strong>股价沿5日线强势上行（5日线约21.3元），5日线&gt;20日线&gt;60日线，<strong style="color:var(--red)">多头排列确认</strong>。均线发散向上，趋势完好。</div>
-      </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>游资动向：</strong>主力资金净流入1.59亿元，量比4.69（<strong style="color:var(--red)">明显放量</strong>），换手率4.41%。成交额超23亿，资金关注度高，买盘积极。</div>
-      </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>市场情绪：</strong>长安汽车深蓝/阿维塔品牌整合消息催化汽车板块，<strong style="color:var(--red)">华为汽车产业链</strong>预期升温。江淮汽车与华为合作紧密，直接受益。众泰汽车同步大涨，板块有一定联动效应。</div>
+        <div class="dim-label">市场情绪 ○</div>
+        <div class="dim-value">半导体新材料题材异动期，年初至今涨156%长期趋势强，但半导体板块整体大跌拖累</div>
       </div>
     </div>
 
     <div class="reason-box">
-      <div class="reason-title">入选理由（四维共振）</div>
-      <strong>缠论突破确认 + 均线多头排列 + 主力放量流入 + 华为汽车消息催化</strong>四维度共振。江淮汽车是华为汽车产业链核心标的，与华为深度合作（智选车模式）。长安汽车品牌整合消息刺激汽车板块情绪，市场预期行业整合加速。今日在大盘暴跌背景下逆势走强，显示资金认可度高。但需注意大盘系统性风险。
+      <div class="reason-title">入选理由 · 3维度共振 + 1维度中性</div>
+      中枢突破+均线粘合发散+主力大幅流入。半导体新材料国产替代主线明确，年内涨幅156%长期趋势强。今日逆势涨4.06%，在大盘暴跌中展现极强抗跌性。需注意半导体板块整体被创业板拖累，若次日板块继续调整则可能补跌。
     </div>
 
     <div class="trade-box">
       <div class="trade-item buy">
         <div class="label">尾盘买入区间</div>
-        <div class="value up">23.5-24.5元</div>
-      </div>
-      <div class="trade-item target">
-        <div class="label">止盈位（次日）</div>
-        <div class="value">26.0-26.5元</div>
+        <div class="value" style="color:var(--red)">50.80 - 51.80</div>
       </div>
       <div class="trade-item stop">
         <div class="label">止损位</div>
-        <div class="value down">22.5元</div>
+        <div class="value" style="color:var(--green)">49.50</div>
+      </div>
+      <div class="trade-item target">
+        <div class="label">次日止盈位</div>
+        <div class="value" style="color:var(--yellow)">53.00 / 54.79</div>
       </div>
     </div>
 
-    <h3>次日关注点</h3>
-    <p style="font-size:13px;">
-      <strong>关键价位：</strong>上方压力位25.2元（前期高点附近），突破则打开上行空间；下方支撑位23元（5日线附近），跌破则止损。<br>
-      <strong>时间节点：</strong>关注9:30-10:00开盘半小时汽车板块联动情况，若板块整体走强可持有；若板块分化走弱则减仓。<br>
-      <strong>量能要求：</strong>需维持3%以上换手率，缩量上涨需警惕。
-    </p>
-
-    <h3>风险等级说明</h3>
-    <p style="font-size:13px;">
-      <span class="risk-badge risk-high">高风险</span>
-      大盘恐慌下跌环境下，任何板块都难以独善其身。汽车板块虽有消息催化，但持续性存疑。江淮汽车市值较大（550亿），拉升需要更多资金。若大盘继续下跌，该股存在补跌风险。仅适合短线高手小仓位参与。
+    <p style="font-size:12px;color:var(--text-secondary);margin:6px 0;">
+      <strong>量能要求：</strong>换手率维持10%以上，量比>1.2。<strong>次日关注点：</strong>突破52.64（今日最高）则看54.79涨停价；若跌破50.60（今日最低）则弱势，49.50止损。PE(TTM) 138偏高，经营现金流为负，属成长博弈标的。<strong>风险等级：</strong><span class="risk-medium">中</span> — 个股抗跌性强但板块整体弱势，PE高且现金流为负。
     </p>
   </div>
 
-  <!-- Stock 3: 南京银行 -->
+  <!-- Stock 3: 中国中车 -->
   <div class="stock-card">
     <div class="stock-header">
-      <div>
-        <span class="stock-name">南京银行</span>
-        <span class="stock-code">601009.SH</span>
-        <span class="stock-sector">银行 · 高股息 · 防御</span>
-      </div>
-      <span class="risk-badge risk-low">风险等级：低</span>
-    </div>
-    
-    <div class="stock-price">
-      <div class="price-item"><div class="label">最新价</div><div class="value up">约12.04元</div></div>
-      <div class="price-item"><div class="label">今日涨幅</div><div class="value up">+约0.75%</div></div>
-      <div class="price-item"><div class="label">换手率</div><div class="value">0.15%</div></div>
-      <div class="price-item"><div class="label">PE(TTM)</div><div class="value up">6.52倍</div></div>
-      <div class="price-item"><div class="label">量比</div><div class="value up">2.77</div></div>
-      <div class="price-item"><div class="label">流通市值</div><div class="value">约1490亿</div></div>
+      <span class="stock-name">中国中车</span>
+      <span class="stock-code">601766.SH</span>
+      <span class="stock-sector">基建 · 高铁 · 低估值防御</span>
+      <span class="stock-price">6.12 (+2.51%)</span>
     </div>
 
     <div class="dimension-grid">
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>缠论结构：</strong>长期稳健上行趋势，回调幅度小，<strong style="color:var(--red)">趋势完好</strong>。今日逆势上涨创新高，属于强势整理后的突破。MACD虽略负但接近零轴，趋势稳定。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">缠论结构 ✓</div>
+        <div class="dim-value">60日涨16.79%稳步上行，5日涨2.00%维持上升通道，中枢上沿运行，趋势完整</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>520均线：</strong>5日线（11.99）&gt;20日线&gt;60日线，<strong style="color:var(--red)">完全多头排列</strong>。股价沿5日线稳健上行，均线系统发散向上，趋势性强。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">520均线 ✓</div>
+        <div class="dim-value">5日线>20日线（5日涨2%、20日跌1.29%），60日线上行支撑，均线多头排列中</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>游资动向：</strong>量比2.77（<strong style="color:var(--red)">温和放量</strong>），主力资金持续流入。银行板块整体逆势上涨，25只上涨仅14只下跌，资金避险流入明显。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">游资动向 ✓</div>
+        <div class="dim-value">主力净流入2.02亿，量比1.59，外盘>内盘（买盘主动），资金净流入2.60亿</div>
       </div>
-      <div class="dimension-item">
-        <div class="icon bull">✓</div>
-        <div class="text"><strong>市场情绪：</strong>市场恐慌下跌，资金<strong style="color:var(--red)">避险需求强烈</strong>。银行板块低估值、高股息、稳增长，是典型的防御性配置选择。中证银行指数逆势上涨0.31%，板块效应明确。</div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">市场情绪 ✓</div>
+        <div class="dim-value">市场恐慌下避险资金流入低估值蓝筹，PE 12.6、PB约1.0、股息率3.85%，防御属性突出</div>
       </div>
     </div>
 
     <div class="reason-box">
-      <div class="reason-title">入选理由（四维共振 · 防御首选）</div>
-      <strong>趋势完好 + 均线多头排列 + 资金避险流入 + 防御板块效应</strong>四维度共振。南京银行是城商行龙头，资产质量优异，估值极低（PE 6.5），股息率高。在市场恐慌下跌环境下，银行板块是最佳防御选择。今日逆势上涨，显示资金避险意愿强烈。适合风险偏好低的投资者作为防御配置，下跌空间有限。
+      <div class="reason-title">入选理由 · 4维度共振</div>
+      稳步上行趋势+均线多头排列+主力流入+低估值高股息防御。在创业板暴跌4.19%的极端行情中逆势涨2.51%，展现极强防御性。PE仅12.6、PB约1.0（股价6.12/每股净资产6.15）、股息率3.85%，安全边际充足。大盘蓝筹在恐慌行情中为资金避风港，次日溢价预期较高。
     </div>
 
     <div class="trade-box">
       <div class="trade-item buy">
         <div class="label">尾盘买入区间</div>
-        <div class="value up">11.9-12.1元</div>
-      </div>
-      <div class="trade-item target">
-        <div class="label">止盈位（次日）</div>
-        <div class="value">12.3-12.5元</div>
+        <div class="value" style="color:var(--red)">6.00 - 6.12</div>
       </div>
       <div class="trade-item stop">
         <div class="label">止损位</div>
-        <div class="value down">11.7元</div>
+        <div class="value" style="color:var(--green)">5.90</div>
+      </div>
+      <div class="trade-item target">
+        <div class="label">次日止盈位</div>
+        <div class="value" style="color:var(--yellow)">6.30 / 6.57</div>
       </div>
     </div>
 
-    <h3>次日关注点</h3>
-    <p style="font-size:13px;">
-      <strong>关键价位：</strong>上方压力位12.2元（前期高点），突破则继续上行；下方支撑位11.8元（5日线），跌破则减仓。<br>
-      <strong>时间节点：</strong>关注大盘走势，若大盘继续下跌则银行股防御价值凸显，可持有；若大盘反弹则资金可能从银行流出转向成长股。<br>
-      <strong>策略说明：</strong>银行股弹性小，适合作为防御性配置，不适合追求高收益的短线投资者。
-    </p>
-
-    <h3>风险等级说明</h3>
-    <p style="font-size:13px;">
-      <span class="risk-badge risk-low">低风险</span>
-      估值极低（PE 6.5），下跌空间有限。银行板块在市场下跌时通常表现出较强的防御性。南京银行作为优质城商行，资产质量稳定，股息率高。唯一风险是若大盘持续暴跌，银行股也可能被拖累，但跌幅会远小于大盘。
+    <p style="font-size:12px;color:var(--text-secondary);margin:6px 0;">
+      <strong>量能要求：</strong>量比>1.5，成交额维持10亿以上。<strong>次日关注点：</strong>站稳6.12则看6.30，突破6.30看涨停价6.57；若低开跌破6.00则弱势，5.90止损。低PE高股息为核心安全边际，属防御性配置首选。<strong>风险等级：</strong><span class="risk-low">低</span> — 低估值+高股息+蓝筹防御，系统性风险下相对抗跌。
     </p>
   </div>
 
+  <!-- Stock 4: 古越龙山 -->
+  <div class="stock-card">
+    <div class="stock-header">
+      <span class="stock-name">古越龙山</span>
+      <span class="stock-code">600059.SH</span>
+      <span class="stock-sector">黄酒 · 消费 · 全国化扩张</span>
+      <span class="stock-price">11.78 (+7.09%)</span>
+    </div>
+
+    <div class="dimension-grid">
+      <div class="dimension-item bullish">
+        <div class="dim-label">缠论结构 ✓</div>
+        <div class="dim-value">今日MaxP 12.10突破历史新高11.87，趋势加速阶段，突破前期高点中枢上沿，三类买点</div>
+      </div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">520均线 ✓</div>
+        <div class="dim-value">完美多头排列：5日涨10%、10日涨36%、20日涨43%、60日涨55%，均线全面多头向上发散</div>
+      </div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">游资动向 ✓</div>
+        <div class="dim-value">主力净流入1.78亿，换手率12.69%，量比1.24，资金积极介入</div>
+      </div>
+      <div class="dimension-item bullish">
+        <div class="dim-label">市场情绪 ✓</div>
+        <div class="dim-value">黄酒板块集体爆发（会稽山涨8.57%），华泰研报看好量价重构，白酒大商拥抱黄酒，题材发酵期</div>
+      </div>
+    </div>
+
+    <div class="reason-box">
+      <div class="reason-title">入选理由 · 4维度共振</div>
+      突破历史新高+均线完美多头排列+主力流入+板块集体爆发催化。黄酒行业迎来量价重构：1）消费场景升级，江浙沪渗透率提升后全国扩张；2）茅台、五粮液等白酒大商密集拥抱黄酒，会稽山签约四川盛世群运（茅台特约经销商）等头部渠道；3）白酒深度调整期资金寻找低位滞涨板块，黄酒估值洼地属性凸显。板块处于题材发酵期，多只个股涨停。
+    </div>
+
+    <div class="trade-box">
+      <div class="trade-item buy">
+        <div class="label">尾盘买入区间</div>
+        <div class="value" style="color:var(--red)">11.50 - 11.78</div>
+      </div>
+      <div class="trade-item stop">
+        <div class="label">止损位</div>
+        <div class="value" style="color:var(--green)">11.00</div>
+      </div>
+      <div class="trade-item target">
+        <div class="label">次日止盈位</div>
+        <div class="value" style="color:var(--yellow)">12.10 / 12.50</div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-secondary);margin:6px 0;">
+      <strong>量能要求：</strong>换手率维持10%以上，量比>1.0。<strong>次日关注点：</strong>封板涨停12.10为最强信号，突破则看12.50；若高开回落跌破11.50则短期承压，11.00（昨收价）止损。20日涨43%、60日涨55%，涨幅过大需警惕追高风险。PE(TTM) 48偏高但行业重构逻辑下估值有重估空间。<strong>风险等级：</strong><span class="risk-high">高</span> — 突破历史新高后涨幅过大（60日涨55%），追高风险大，若板块退潮则补跌风险高。
+    </p>
+  </div>
 </div>
 
 <!-- 三、板块机会梳理 -->
 <div class="section">
   <h2>三、板块机会梳理</h2>
-  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
-    恐慌下跌市中，<strong style="color:var(--green)">优先考虑防御性板块</strong>，回避高位题材股。逆势上涨板块的次日延续性需谨慎判断，防止补跌。
-  </p>
-
   <table class="sector-table">
     <thead>
       <tr>
-        <th style="width:18%">板块</th>
-        <th style="width:12%">今日表现</th>
-        <th style="width:15%">阶段</th>
-        <th style="width:15%">次日延续性</th>
-        <th>核心逻辑与操作建议</th>
+        <th>板块</th>
+        <th>龙头</th>
+        <th>今日强度</th>
+        <th>发酵阶段</th>
+        <th>次日延续性判断</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>银行/高股息</strong></td>
-        <td class="up">+0.31%</td>
-        <td><span class="tag tag-defense">防御期</span></td>
-        <td class="up">较高</td>
-        <td>市场恐慌下避险资金首选，低估值高股息防御属性强。<strong style="color:var(--red)">建议作为防御配置</strong>，南京银行、宁波银行等优质城商行优先。但若大盘反弹，银行股可能跑输。</td>
+        <td><strong>黄酒</strong></td>
+        <td>会稽山、古越龙山</td>
+        <td class="up">★★★★★</td>
+        <td><span class="tag tag-ferment">发酵期</span></td>
+        <td><strong>高</strong> — 研报催化+渠道变革+板块集体爆发，9月以来持续异动，会稽山月内涨近70%。次日延续概率较高但涨幅过大需警惕高潮退潮</td>
       </tr>
       <tr>
-        <td><strong>煤炭/能源</strong></td>
-        <td class="up">+0.63%</td>
-        <td><span class="tag tag-defense">防御期</span></td>
-        <td class="up">较高</td>
-        <td>冬季取暖季需求预期+高股息+避险资金流入，板块上涨家数多于下跌家数。<strong style="color:var(--red)">防御价值突出</strong>，中国神华、陕西煤业等龙头稳健。</td>
+        <td><strong>OLED/玻璃基板</strong></td>
+        <td>彩虹股份</td>
+        <td class="up">★★★★</td>
+        <td><span class="tag tag-ferment">发酵期</span></td>
+        <td><strong>中高</strong> — 英伟达加码玻璃基板为新催化，OLED行业景气度回升。彩虹股份主力流入全市场第一，次日有溢价预期</td>
       </tr>
       <tr>
-        <td><strong>电力/公用事业</strong></td>
-        <td class="flat">持平</td>
-        <td><span class="tag tag-defense">防御期</span></td>
-        <td class="flat">中等</td>
-        <td>公用事业防御属性+算电协同概念残余热度。长江电力等龙头稳健。<strong style="color:var(--yellow)">可关注低位水电标的</strong>，但板块整体弹性有限。</td>
-      </tr>
-      <tr>
-        <td><strong>OLED/面板</strong></td>
-        <td class="up">个股异动</td>
+        <td><strong>半导体新材料</strong></td>
+        <td>有研新材</td>
+        <td class="up">★★★</td>
         <td><span class="tag tag-ferment">异动期</span></td>
-        <td class="flat">待观察</td>
-        <td>彩虹股份、雷曼光电等逆势大涨，玻璃基板涨价预期+人民币贬值受益。<strong style="color:var(--yellow)">持续性存疑</strong>，缺乏板块效应，更多是个股行情，谨慎追高。</td>
+        <td><strong>中</strong> — 国产替代主线长期趋势不变，但半导体板块整体大跌拖累，需等板块企稳后才有延续性行情</td>
       </tr>
       <tr>
-        <td><strong>新能源汽车</strong></td>
-        <td class="up">个股活跃</td>
-        <td><span class="tag tag-ferment">消息驱动</span></td>
-        <td class="flat">待观察</td>
-        <td>长安汽车品牌整合消息催化，江淮汽车、众泰汽车逆势上涨。<strong style="color:var(--yellow)">消息驱动行情</strong>，持续性取决于消息发酵程度，快进快出为主。</td>
+        <td><strong>汽车整车</strong></td>
+        <td>江淮汽车、众泰汽车</td>
+        <td class="up">★★★★</td>
+        <td><span class="tag tag-climax">高潮期</span></td>
+        <td><strong>中低</strong> — 江淮汽车4天3板，板块已至高潮期。问界/鸿蒙智行合作调整催化已部分消化，次日分歧加大概率高</td>
       </tr>
       <tr>
-        <td><strong>半导体/科技</strong></td>
-        <td class="down">大跌</td>
-        <td><span class="tag tag-ebbing">重灾区</span></td>
-        <td class="down">低</td>
-        <td>创业板暴跌3%+，科技成长股估值承压，资金避险出逃。<strong style="color:var(--green)">坚决回避</strong>，等待市场企稳后的抄底机会。</td>
+        <td><strong>基建/高铁</strong></td>
+        <td>中国中车、京沪高铁</td>
+        <td class="up">★★</td>
+        <td><span class="tag tag-defense">防御期</span></td>
+        <td><strong>中</strong> — 纯防御性配置，恐慌行情中资金避风港。大盘企稳后可能跑输，但下行风险极小</td>
       </tr>
       <tr>
-        <td><strong>医药/创新药</strong></td>
-        <td class="down">-1.53%</td>
-        <td><span class="tag tag-ebbing">普跌</span></td>
-        <td class="down">较低</td>
-        <td>百利天恒等个别标的有利好但板块整体普跌，248只下跌仅44只上涨。<strong style="color:var(--green)">暂不参与</strong>，等待情绪回暖。</td>
+        <td><strong>高位人气股</strong></td>
+        <td>泰慕士、天威视讯等</td>
+        <td class="down">★</td>
+        <td><span class="tag tag-ebbing">退潮期</span></td>
+        <td><strong>低</strong> — 连板股大面积跌停，高位股补跌风险释放中。严禁追高连板股</td>
       </tr>
     </tbody>
   </table>
@@ -787,49 +740,38 @@ body {
 <div class="section">
   <h2>四、风险提示</h2>
 
-  <h3>1. 市场风险偏好变化</h3>
-  <ul style="padding-left:20px;font-size:13px;line-height:2;">
-    <li><strong style="color:var(--green)">当前市场处于恐慌性下跌阶段</strong>，跌停家数超过涨停家数，超84%个股下跌，系统性风险极高</li>
-    <li>创业板指暴跌超3%，深成指跌超2%，<strong>成长股估值承压严重</strong></li>
-    <li>两市成交额放量下跌，说明有资金恐慌性出逃，而非缩量调整</li>
-    <li>国庆假期临近，存在日历效应，资金避险意愿可能进一步增强</li>
-    <li>外部不确定性因素（美联储政策、地缘政治等）仍在，影响风险偏好</li>
-  </ul>
-
-  <h3>2. 个股特殊风险</h3>
-  <ul style="padding-left:20px;font-size:13px;line-height:2;">
-    <li><strong>彩虹股份：</strong>底部突破初期，持续性待验证。大盘弱势下逆势股随时可能补跌。OLED板块效应不明显，个股行情持续性差。</li>
-    <li><strong>江淮汽车：</strong>消息驱动行情，若消息面无进一步发酵可能快速回落。汽车板块整体仍处于调整趋势中，单靠个股消息难以持续。</li>
-    <li><strong>南京银行：</strong>防御性品种弹性小，不适合追求高收益的投资者。若大盘反弹，银行股可能跑输市场。</li>
-    <li>今日重要风险提示：中科飞测实控人一致行动人拟减持0.28%股份，高位股需警惕减持风险。</li>
-  </ul>
-
-  <h3>3. 策略失效情景（以下情况应放弃介入）</h3>
-  <ul style="padding-left:20px;font-size:13px;line-height:2;">
-    <li><strong style="color:var(--green)">大盘继续暴跌：</strong>若上证指数跌幅超过2%或创业板指跌幅超过4%，放弃介入，空仓观望</li>
-    <li><strong style="color:var(--green)">跌停潮蔓延：</strong>若跌停家数超过50家或全市场超3000股跌幅超5%，说明恐慌加剧，坚决观望</li>
-    <li><strong style="color:var(--green)">逆势股补跌：</strong>若推荐标的尾盘由涨转跌且放量，说明资金出逃，放弃介入</li>
-    <li><strong style="color:var(--green)">板块走弱：</strong>若银行、煤炭等防御性板块也开始下跌，说明恐慌扩散，所有板块都难幸免</li>
-    <li><strong style="color:var(--green)">量能不足：</strong>若标的尾盘缩量明显（量比&lt;0.8），说明资金参与度低，放弃介入</li>
-  </ul>
-
-  <h3>4. 极端行情应对策略</h3>
   <div class="warning-box">
-    <strong>今日特殊建议：</strong>鉴于当前市场恐慌下跌，建议<strong>优先选择观望</strong>。如确实要参与，请遵循以下原则：<br>
-    ① 总仓位不超过<strong>2成</strong>，单票仓位不超过<strong>1成</strong><br>
-    ② 优选<strong>防御性板块</strong>（银行、煤炭、电力），回避高位题材股<br>
-    ③ <strong>严格止损</strong>，单笔亏损控制在3%以内，绝不扛单<br>
-    ④ 尾盘最后5分钟再决定是否买入，观察全天走势稳定性<br>
-    ⑤ 次日开盘不及预期立即离场，不抱有幻想
+    <strong>1. 市场系统性风险（高）</strong><br>
+    创业板暴跌4.19%，跌停61只远超涨停27只，连板成功率仅31%。市场处于恐慌性抛售阶段，任何个股都有补跌风险。国庆长假前最后交易日，假期不确定性（外围市场、政策变化）加大，持仓过节需谨慎。
+  </div>
+
+  <div class="warning-box">
+    <strong>2. 个股特殊风险</strong><br>
+    <strong>彩虹股份：</strong>PE(TTM) 1647极高，属纯题材博弈；主力资金净流入7.38亿但总资金净流出8538万，散户分歧大；触及涨停未封板，次日开板风险存在。<br>
+    <strong>有研新材：</strong>PE(TTM) 138偏高，经营现金流-9.5亿为负，半导体板块整体暴跌拖累，次日补跌概率存在。<br>
+    <strong>中国中车：</strong>低PE高股息防御性强，但涨幅有限（+2.51%），大盘企稳后可能跑输。系统性风险下蓝筹也可能被拖累。<br>
+    <strong>古越龙山：</strong>20日涨43%、60日涨55%，涨幅过大追高风险极高。PE 48偏高，突破历史新高后可能面临获利盘抛压。
+  </div>
+
+  <div class="warning-box">
+    <strong>3. 策略失效情景</strong><br>
+    以下情况应<strong>放弃介入或立即离场</strong>：<br>
+    • 大盘继续恶化，创业板指跌幅扩大至5%以上 → 全部放弃<br>
+    • 推荐标的尾盘跳水跌破买入区间下沿 → 放弃该标的<br>
+    • 次日大幅低开跌破止损位 → 无条件止损离场<br>
+    • 国庆假期期间外围市场出现重大利空 → 节后首日评估，不急于补仓<br>
+    • 板块龙头股（会稽山、新华传媒等）出现跌停 → 板块退潮信号，相关标的离场
+  </div>
+
+  <div class="note-box">
+    <strong>仓位建议：</strong>当前恐慌行情下，总仓位建议2-3成。单票不超过1成。优先选择低风险防御性标的（中国中车），高风险标的（古越龙山）仅极小仓位试探。留足现金应对假期不确定性和节后可能的机会。
   </div>
 </div>
 
 <!-- 重要声明 -->
 <div class="disclaimer">
   <strong>重要声明</strong><br><br>
-  本报告仅为基于公开数据的多维技术分析，任何分析方法都无法保证"必涨"。股市有风险，投资需谨慎。所有内容不构成投资建议，投资者应自主决策并承担投资风险。<br><br>
-  <strong>数据来源：</strong>同花顺iFinD实时行情数据、公开新闻资讯。报告基于2026年9月28日盘中实时行情（截至约10:30），市场仍在交易中，数据可能发生变化。不保证数据的绝对准确性和完整性。<br><br>
-  <strong>策略说明：</strong>本策略为超短线（T+1）尾盘买入策略，持仓时间不超过1个交易日。严格执行止损纪律，单笔亏损控制在3-5%以内。<strong style="color:var(--green)">当前市场恐慌下跌，建议以观望为主，极小仓位试探，严格控制风险。</strong>
+  本报告仅为基于公开数据的多维技术分析（缠论结构+520均线+游资动向+市场情绪），任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎，所有内容不构成投资建议。本报告所引用行情数据来自通达信实时行情（截至2026年9月28日14:22），涨停/跌停数据来自金融界涨跌停温度计（截至14:00），市场新闻来自证券时报、中国证券报等公开媒体。数据可能随市场交易变化，请以实际行情为准。投资者应独立判断、自主决策，并自行承担投资风险。
 </div>
 
 </div>

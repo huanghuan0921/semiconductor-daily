@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日多维选股分析报告 | 2026-10-09</title>
+<style>
+:root {
+  --bg: #f6f8fa;
+  --card-bg: #ffffff;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+  --accent-yellow: #d29922;
+  --bg-red: rgba(207, 34, 46,0.1);
+  --bg-green: rgba(26, 127, 55,0.1);
+  --bg-yellow: rgba(154, 103, 0,0.1);
+  --score-high: #f85149;
+  --score-low: #3fb950;
+  --score-mid: #d29922;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --card-bg: #f6f8fa;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --accent-red: #cf222e;
+    --accent-green: #1a7f37;
+    --accent-yellow: #9a6700;
+    --bg-red: rgba(207,34,46,0.08);
+    --bg-green: rgba(26,127,55,0.08);
+    --bg-yellow: rgba(154,103,0,0.08);
+    --score-high: #cf222e;
+    --score-low: #1a7f37;
+    --score-mid: #9a6700;
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.7;
+  font-size: 15px;
+}
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.nav-bar a { color: var(--text-muted); text-decoration: none; }
+.nav-bar a:hover { color: var(--accent-red); }
+.nav-bar .sep { color: var(--text-muted); }
+.nav-bar .current { color: var(--text); font-weight: 600; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin: 16px 0 8px;
+  font-weight: 700;
+}
+.subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+h2 {
+  font-size: 18px;
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+h3 {
+  font-size: 16px;
+  margin: 20px 0 10px;
+  font-weight: 600;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.stock-card {
+  border-left: 3px solid var(--accent-red);
+}
+.stock-card.risk-mid { border-left-color: var(--accent-yellow); }
+.stock-card.risk-high { border-left-color: var(--accent-green); }
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.stock-name { font-size: 17px; font-weight: 700; }
+.stock-code { color: var(--text-muted); font-size: 13px; }
+.stock-sector {
+  background: var(--bg-yellow);
+  color: var(--accent-yellow);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 2px;
+}
+.tag-red { background: var(--bg-red); color: var(--accent-red); }
+.tag-green { background: var(--bg-green); color: var(--accent-green); }
+.tag-yellow { background: var(--bg-yellow); color: var(--accent-yellow); }
+.price-up { color: var(--accent-red); font-weight: 600; }
+.price-down { color: var(--accent-green); font-weight: 600; }
+.price-flat { color: var(--accent-yellow); font-weight: 600; }
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+.metric {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: center;
+}
+.metric-label { font-size: 11px; color: var(--text-muted); }
+.metric-value { font-size: 16px; font-weight: 600; margin-top: 2px; }
+.dimension-section { margin: 10px 0; padding: 8px 0; }
+.dimension-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 6px 0;
+}
+.dimension-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+.dimension-text { font-size: 14px; }
+.dimension-text strong { color: var(--text); }
+.buy-zone {
+  background: var(--bg-red);
+  border: 1px solid var(--accent-red);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+}
+.stop-loss {
+  background: var(--bg-green);
+  border: 1px solid var(--accent-green);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+}
+.risk-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.risk-low { background: var(--bg-red); color: var(--accent-red); }
+.risk-mid { background: var(--bg-yellow); color: var(--accent-yellow); }
+.risk-high { background: var(--bg-green); color: var(--accent-green); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: center;
+}
+th { background: var(--card-bg); font-weight: 600; }
+.sentiment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.sentiment-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  text-align: center;
+}
+.sentiment-label { font-size: 12px; color: var(--text-muted); }
+.sentiment-value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.warning-box {
+  background: var(--bg-green);
+  border: 1px solid var(--accent-green);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+.disclaimer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin: 24px 0;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: var(--accent-red);
+}
+.detail-row { display: flex; gap: 6px; margin: 4px 0; font-size: 14px; }
+.detail-label { color: var(--text-muted); min-width: 80px; }
+.detail-value { flex: 1; }
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  h1 { font-size: 20px; }
+  h2 { font-size: 16px; }
+  .stock-name { font-size: 15px; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+<style>
+.site-nav {
+  position: sticky; top: 0; z-index: 9999;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 14px;
+  background: rgba(246,248,250,0.92);
+  border-bottom: 1px solid #d0d7de;
+}
+.site-nav a { text-decoration: none; font-weight: 500; color: #0969da; }
+.site-nav a:hover { text-decoration: underline; }
+.site-nav .nav-sep { color: #d0d7de; }
+.site-nav .nav-current { color: #656d76; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">次日必涨股票分析</span>
+</nav>
+
+<div class="nav-bar">
+  <a href="../index.html">← 半导体投研信息中心</a>
+  <span class="sep">/</span>
+  <span class="current">次日选股</span>
+</div>
+
+<div class="container">
+
+<h1>每日多维选股分析报告</h1>
+<p class="subtitle">2026-10-09（周四） | 数据截至收盘 | 多维共振筛选系统</p>
+
+<!-- 一、市场概况 -->
+<h2>一、市场概况</h2>
+<div class="card">
+<div class="metric-grid">
+  <div class="metric">
+    <div class="metric-label">上证指数</div>
+    <div class="metric-value price-up">3813.79 <span style="font-size:13px">+0.05%</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">深证成指</div>
+    <div class="metric-value price-up">12641.86 <span style="font-size:13px">+0.17%</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">创业板指</div>
+    <div class="metric-value price-up">3043.33 <span style="font-size:13px">+0.22%</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">科创50</div>
+    <div class="metric-value price-up">1457.27 <span style="font-size:13px">+0.07%</span></div>
+  </div>
+</div>
+
+<div class="sentiment-grid">
+  <div class="sentiment-card">
+    <div class="sentiment-label">涨停家数</div>
+    <div class="sentiment-value price-up">72</div>
+  </div>
+  <div class="sentiment-card">
+    <div class="sentiment-label">跌停家数</div>
+    <div class="sentiment-value price-down">10</div>
+  </div>
+  <div class="sentiment-card">
+    <div class="sentiment-label">上涨/下跌</div>
+    <div class="sentiment-value" style="font-size:15px"><span class="price-up">3039</span> / <span class="price-down">2121</span></div>
+  </div>
+  <div class="sentiment-card">
+    <div class="sentiment-label">连板高度</div>
+    <div class="sentiment-value price-up">9板</div>
+  </div>
+  <div class="sentiment-card">
+    <div class="metric-label">两市成交额</div>
+    <div class="sentiment-value" style="font-size:15px">1.90万亿</div>
+  </div>
+  <div class="sentiment-card">
+    <div class="sentiment-label">炸板率(估)</div>
+    <div class="sentiment-value price-flat">约25%</div>
+  </div>
+</div>
+
+<div style="margin-top:12px;">
+  <p><strong>市场情绪阶段：</strong><span class="tag tag-red">发酵期</span> 涨多跌少，涨停72家远超跌停10家，连板高度9板（新华传媒），市场赚钱效应尚可，但主线分散，题材轮动较快。</p>
+  <p><strong>主线题材：</strong>① <span class="price-up">有机硅板块</span>（+7.64%）— 东岳硅材业绩利好20CM涨停带动板块爆发；② <span class="price-up">AI算力/信创</span>（+2.28%）— 天阳科技采购2万张NVIDIA GPU催化；③ 医疗康复 — 政策利好；④ 汽车分化 — 江淮跌停/小米大涨。</p>
+</div>
+</div>
+
+<!-- 二、选股结果 -->
+<h2>二、选股结果（4只）</h2>
+
+<!-- Stock 1: 深信服 -->
+<div class="card stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">深信服</span>
+      <span class="stock-code">（300454.SZ）</span>
+      <span class="stock-sector">AI算力 / 网络安全 / 信创</span>
+    </div>
+    <div>
+      <span class="price-up" style="font-size:20px;font-weight:700">138.96</span>
+      <span class="price-up" style="font-size:14px">+8.65%</span>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">换手率</div><div class="metric-value price-up">6.75%</div></div>
+    <div class="metric"><div class="metric-label">成交额</div><div class="metric-value" style="font-size:14px">25.47亿</div></div>
+    <div class="metric"><div class="metric-label">MA5</div><div class="metric-value" style="font-size:14px">136.87</div></div>
+    <div class="metric"><div class="metric-label">MA20</div><div class="metric-value" style="font-size:14px">136.86</div></div>
+    <div class="metric"><div class="metric-label">MA60</div><div class="metric-value" style="font-size:14px">123.90</div></div>
+  </div>
+
+  <div class="dimension-section">
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">缠</span>
+      <span class="dimension-text"><strong>缠论结构：</strong>9/22高点151.13下跌至9/11-13的127.91形成完整下跌线段，随后在128-132区间构建<strong>盘整中枢</strong>。9/17起放量反弹突破中枢上沿，今日继续放量上攻至138.96，形成<strong>二类买点确认</strong>，走势终完美方向向上。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">均</span>
+      <span class="dimension-text"><strong>520均线：</strong>Price(138.96) > MA5(136.87) ≈ MA20(136.86) > MA60(123.90) → <strong>多头排列确立</strong>，MA5与MA20粘合金叉，价格站上所有均线，均线发散在即。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">游</span>
+      <span class="dimension-text"><strong>游资动向：</strong>换手率6.75%放量明显，成交额25.47亿为近期最大量。近5日量能逐步放大，主力资金净流入迹象明显，网络安全+信创双重题材吸引资金关注。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">情</span>
+      <span class="dimension-text"><strong>市场情绪：</strong>AI算力板块+2.28%，DeepSeek/AI智能体题材持续发酵，信创概念政策预期升温，板块处于<strong>发酵期</strong>，资金扩散中。</span>
+    </div>
+  </div>
+
+  <div class="section-title">入选理由</div>
+  <p style="font-size:14px;">四维共振：① 均线多头排列 ② 缠论二买确认 ③ 放量突破量能配合 ④ AI算力+信创板块发酵。核心催化：网络安全信创政策预期+AI智能体概念扩散。</p>
+
+  <div class="buy-zone">
+    <strong style="color:var(--accent-red)">尾盘买入区间：</strong>138.00 - 139.50元，要求量能维持在日均量以上，分批介入（首批50%）。
+  </div>
+  <div class="stop-loss">
+    <strong style="color:var(--accent-green)">止损位：</strong>134.50元（跌破MA5且中枢上沿失效）。<strong style="color:var(--accent-green)">止盈位：</strong>145.00 - 150.00元（前期高点压力区）。
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">次日关注：</span>
+    <span class="detail-value">关注能否站稳140元整数关口；若高开回踩138不破可加仓；跌破137注意减仓。</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">风险等级：</span>
+    <span class="detail-value"><span class="risk-badge risk-low">低风险</span> 均线多头+放量+板块发酵，技术面较优，但需关注大盘系统性风险。</span>
+  </div>
+</div>
+
+<!-- Stock 2: 天阳科技 -->
+<div class="card stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">天阳科技</span>
+      <span class="stock-code">（300872.SZ）</span>
+      <span class="stock-sector">AI算力 / GPU采购</span>
+    </div>
+    <div>
+      <span class="price-up" style="font-size:20px;font-weight:700">16.16</span>
+      <span class="price-up" style="font-size:14px">+12.38%</span>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">换手率</div><div class="metric-value price-up">8.48%</div></div>
+    <div class="metric"><div class="metric-label">成交额</div><div class="metric-value" style="font-size:14px">5.42亿</div></div>
+    <div class="metric"><div class="metric-label">MA5</div><div class="metric-value" style="font-size:14px">15.08</div></div>
+    <div class="metric"><div class="metric-label">MA60</div><div class="metric-value" style="font-size:14px">15.30</div></div>
+    <div class="metric"><div class="metric-label">总市值</div><div class="metric-value" style="font-size:14px">78.88亿</div></div>
+  </div>
+
+  <div class="dimension-section">
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">缠</span>
+      <span class="dimension-text"><strong>缠论结构：</strong>前期在14-15区间长时间盘整形成<strong>大级别中枢</strong>，今日受重磅利好刺激放量突破中枢上沿15.30，形成<strong>三类买点</strong>（中枢突破买点），若次日确认有效则上涨空间打开。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">均</span>
+      <span class="dimension-text"><strong>520均线：</strong>Price(16.16) > MA5(15.08) ≈ MA60(15.30)，MA5即将金叉MA60。价格大幅站上所有短中期均线，均线有望由粘合转向<strong>多头发散</strong>。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">游</span>
+      <span class="dimension-text"><strong>游资动向：</strong>换手率8.48%放量暴涨，成交额5.42亿创近期天量。<strong>重大利好催化</strong>：公司与X公司签署GPU采购协议，采购20,000张NVIDIA RTX PRO 5500 Blackwell，AI算力基础设施大规模扩张。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">情</span>
+      <span class="dimension-text"><strong>市场情绪：</strong>AI算力/GPU题材热度高，NVIDIA产业链概念持续受到资金追捧，市场对AI基础设施投资保持高关注度。</span>
+    </div>
+  </div>
+
+  <div class="section-title">入选理由</div>
+  <p style="font-size:14px;">四维共振：① 缠论三类买点（中枢突破）② 均线粘合后突破 ③ 重大利好+放量暴涨 ④ AI算力题材高热度。核心催化：2万张NVIDIA GPU采购协议，算力基础设施大幅扩张。</p>
+
+  <div class="buy-zone">
+    <strong style="color:var(--accent-red)">尾盘买入区间：</strong>15.80 - 16.10元，注意若已涨停则放弃追入，等待次日回调机会。分批介入（首批40%）。
+  </div>
+  <div class="stop-loss">
+    <strong style="color:var(--accent-green)">止损位：</strong>14.90元（跌破MA5及中枢上沿）。<strong style="color:var(--accent-green)">止盈位：</strong>17.50 - 18.50元（前期压力位+情绪溢价）。
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">次日关注：</span>
+    <span class="detail-value">关注开盘能否高开不破16元；若高开冲高回落跌破16元需警惕；量能需持续放大才能确认突破有效。</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">风险等级：</span>
+    <span class="detail-value"><span class="risk-badge risk-mid">中风险</span> 涨幅已达12%+，次日可能冲高回落；利好兑现后需观察资金持续度。</span>
+  </div>
+</div>
+
+<!-- Stock 3: 硅宝科技 -->
+<div class="card stock-card">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">硅宝科技</span>
+      <span class="stock-code">（300019.SZ）</span>
+      <span class="stock-sector">有机硅</span>
+    </div>
+    <div>
+      <span class="price-up" style="font-size:20px;font-weight:700">15.60</span>
+      <span class="price-up" style="font-size:14px">+13.62%</span>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">换手率</div><div class="metric-value price-up">8.94%</div></div>
+    <div class="metric"><div class="metric-label">成交额</div><div class="metric-value" style="font-size:14px">5.08亿</div></div>
+    <div class="metric"><div class="metric-label">MA5</div><div class="metric-value" style="font-size:14px">14.10</div></div>
+    <div class="metric"><div class="metric-label">MA20</div><div class="metric-value" style="font-size:14px">14.15</div></div>
+    <div class="metric"><div class="metric-label">MA60</div><div class="metric-value" style="font-size:14px">14.57</div></div>
+  </div>
+
+  <div class="dimension-section">
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">缠</span>
+      <span class="dimension-text"><strong>缠论结构：</strong>长期下跌后在13.5-14.5区间形成<strong>底部盘整中枢</strong>，今日放量大涨13.62%突破中枢上沿，形成<strong>一类买点后的中枢突破确认</strong>，底部结构确立。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">均</span>
+      <span class="dimension-text"><strong>520均线：</strong>Price(15.60) > MA60(14.57) > MA20(14.15) > MA5(14.10)。今日大涨带动价格<strong>突破所有均线</strong>，MA5即将金叉MA20/MA60，均线有望转向多头排列。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">游</span>
+      <span class="dimension-text"><strong>游资动向：</strong>换手率8.94%放量明显，成交额5.08亿创近期大量。有机硅板块集体爆发，东岳硅材业绩利好20CM涨停形成<strong>板块涨停潮</strong>带动效应。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-yellow">情</span>
+      <span class="dimension-text"><strong>市场情绪：</strong>有机硅板块+7.64%集体爆发，处于<strong>发酵期向高潮期过渡</strong>。东岳硅材前三季度净利润从285万增长至5.47-5.67亿，行业供需改善+原材料成本下降逻辑得到验证，板块逻辑较硬。</span>
+    </div>
+  </div>
+
+  <div class="section-title">入选理由</div>
+  <p style="font-size:14px;">四维共振：① 缠论底部中枢突破 ② 均线全面突破 ③ 板块涨停潮+放量 ④ 业绩预期改善逻辑。核心催化：东岳硅材业绩暴增验证行业景气反转，有机硅涨价逻辑持续。</p>
+
+  <div class="buy-zone">
+    <strong style="color:var(--accent-red)">尾盘买入区间：</strong>15.20 - 15.60元，若已涨停则等次日回调至15.00附近再介入。分批介入（首批40%）。
+  </div>
+  <div class="stop-loss">
+    <strong style="color:var(--accent-green)">止损位：</strong>14.40元（跌破MA60及中枢上沿）。<strong style="color:var(--accent-green)">止盈位：</strong>17.00 - 18.00元。
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">次日关注：</span>
+    <span class="detail-value">关注能否站稳15.5元上方；板块龙头东岳硅材走势是风向标；若板块继续发酵则持有，退潮则及时止盈。</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">风险等级：</span>
+    <span class="detail-value"><span class="risk-badge risk-mid">中风险</span> 涨幅已达13%+，板块高潮期后可能有分歧；需关注龙头走势判断板块持续性。</span>
+  </div>
+</div>
+
+<!-- Stock 4: 道氏技术 -->
+<div class="card stock-card risk-mid">
+  <div class="stock-header">
+    <div>
+      <span class="stock-name">道氏技术</span>
+      <span class="stock-code">（300409.SZ）</span>
+      <span class="stock-sector">AI算力 / 新能源材料 / 锂电池</span>
+    </div>
+    <div>
+      <span class="price-up" style="font-size:20px;font-weight:700">18.23</span>
+      <span class="price-up" style="font-size:14px">+4.95%</span>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-label">换手率</div><div class="metric-value price-up">7.13%</div></div>
+    <div class="metric"><div class="metric-label">成交额</div><div class="metric-value" style="font-size:14px">8.96亿</div></div>
+    <div class="metric"><div class="metric-label">MA5</div><div class="metric-value" style="font-size:14px">17.12</div></div>
+    <div class="metric"><div class="metric-label">MA20</div><div class="metric-value" style="font-size:14px">17.13</div></div>
+    <div class="metric"><div class="metric-label">MA60</div><div class="metric-value" style="font-size:14px">17.73</div></div>
+  </div>
+
+  <div class="dimension-section">
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">缠</span>
+      <span class="dimension-text"><strong>缠论结构：</strong>在16.3-17.7区间长时间盘整形成<strong>中枢结构</strong>，今日放量站上中枢上沿17.73（MA60），形成<strong>三类买点雏形</strong>，需次日确认突破有效。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-yellow">均</span>
+      <span class="dimension-text"><strong>520均线：</strong>Price(18.23) > MA5(17.12) ≈ MA20(17.13)，但MA5/MA20 < MA60(17.73)。价格已站上短期均线，<strong>均线粘合后向上发散</strong>，今日突破MA60确认中，若次日维持则均线将转多。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">游</span>
+      <span class="dimension-text"><strong>游资动向：</strong>换手率7.13%放量，成交额8.96亿。AI算力+新能源+人形机器人+脑机接口等多概念叠加，题材覆盖面广，容易吸引不同风格资金。</span>
+    </div>
+    <div class="dimension-row">
+      <span class="dimension-icon tag tag-red">情</span>
+      <span class="dimension-text"><strong>市场情绪：</strong>AI算力板块+2.28%，新能源/锂电板块回暖，人形机器人概念持续，多题材共振处于<strong>发酵期</strong>。</span>
+    </div>
+  </div>
+
+  <div class="section-title">入选理由</div>
+  <p style="font-size:14px;">四维共振：① 缠论中枢突破确认中 ② 均线粘合发散 ③ 多概念叠加+放量 ④ 多板块发酵共振。核心催化：AI算力+新能源+人形机器人多题材叠加，资金覆盖面广。</p>
+
+  <div class="buy-zone">
+    <strong style="color:var(--accent-red)">尾盘买入区间：</strong>17.90 - 18.20元，要求站稳MA60(17.73)上方。分批介入（首批50%）。
+  </div>
+  <div class="stop-loss">
+    <strong style="color:var(--accent-green)">止损位：</strong>17.50元（跌破MA60及中枢上沿）。<strong style="color:var(--accent-green)">止盈位：</strong>19.50 - 20.50元。
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">次日关注：</span>
+    <span class="detail-value">关键看能否站稳18元上方（MA60之上）；若回踩17.73不破可加仓；跌破17.50注意止损。</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">风险等级：</span>
+    <span class="detail-value"><span class="risk-badge risk-mid">中风险</span> 均线尚未完全多头排列，MA60仍在上方需确认突破有效；多概念叠加但无单一重磅催化。</span>
+  </div>
+</div>
+
+<!-- 三、板块机会梳理 -->
+<h2>三、板块机会梳理</h2>
+<div class="card">
+<table>
+  <tr>
+    <th>板块</th>
+    <th>今日涨幅</th>
+    <th>龙头</th>
+    <th>发酵阶段</th>
+    <th>次日延续性判断</th>
+  </tr>
+  <tr>
+    <td>有机硅</td>
+    <td class="price-up">+7.64%</td>
+    <td>东岳硅材(20CM涨停)</td>
+    <td><span class="tag tag-red">发酵→高潮</span></td>
+    <td>较强：业绩利好+行业供需改善逻辑硬，但高潮后次日可能分歧，关注龙头能否继续封板</td>
+  </tr>
+  <tr>
+    <td>AI算力/信创</td>
+    <td class="price-up">+2.28%</td>
+    <td>绿盟科技(20CM)/天阳科技(+12%)</td>
+    <td><span class="tag tag-red">发酵期</span></td>
+    <td>中等：GPU采购利好催化，题材持续性强但涨停股多已封板，次日关注溢价比</td>
+  </tr>
+  <tr>
+    <td>AI应用/AIGC</td>
+    <td class="price-up">—</td>
+    <td>昆仑万维(+7.27%)/浙文互联(+5.91%)</td>
+    <td><span class="tag tag-yellow">发酵期</span></td>
+    <td>中等：DeepSeek/AI智能体概念持续发酵，但无单一重磅催化，以轮动为主</td>
+  </tr>
+  <tr>
+    <td>医疗康复</td>
+    <td class="price-flat">—</td>
+    <td>新光药业</td>
+    <td><span class="tag tag-yellow">启动期</span></td>
+    <td>待观察：政策利好但市场关注度尚不高，需后续催化验证</td>
+  </tr>
+  <tr>
+    <td>汽车(分化)</td>
+    <td>分化</td>
+    <td>江淮汽车(跌停)/小米(大涨9%)</td>
+    <td><span class="tag tag-green">退潮/分化</span></td>
+    <td>低：尊界刹车事件利空江淮，利好小米/理想/蔚来，事件驱动为主</td>
+  </tr>
+  <tr>
+    <td>传媒/M&A</td>
+    <td class="price-up">—</td>
+    <td>新华传媒(9连板)</td>
+    <td><span class="tag tag-red">高潮期</span></td>
+    <td>低：9连板已达高度极限，追高风险极大，公司已发风险提示</td>
+  </tr>
+</table>
+</div>
+
+<!-- 四、风险提示 -->
+<h2>四、风险提示</h2>
+<div class="card">
+  <div class="warning-box">
+    <strong>市场风险偏好变化：</strong>当前市场涨停72家但主线分散，题材轮动较快，若次日市场情绪转向退潮，涨停股溢价将大幅降低。关注连板高度能否维持及炸板率变化。
+  </div>
+  <div class="warning-box" style="background:var(--bg-yellow);border-color:var(--accent-yellow)">
+    <strong style="color:var(--accent-yellow)">个股特殊风险：</strong>
+    <ul style="margin-left:16px;margin-top:6px;">
+      <li><strong>天阳科技</strong>：涨幅已达12%+，PE为负(null)，基本面待验证，GPU采购协议执行进度不确定</li>
+      <li><strong>硅宝科技</strong>：PE 28.43，有机硅涨价持续性待验证，板块高潮后分歧风险</li>
+      <li><strong>道氏技术</strong>：MA60仍在价格上方附近，突破尚未完全确认，多概念无单一重磅催化</li>
+      <li><strong>新华传媒(非推荐)</strong>：9连板已达极限，公司明确提示风险，可能申请停牌核查</li>
+      <li><strong>波长光电</strong>：董事长被提起公诉，需回避</li>
+    </ul>
+  </div>
+  <div class="warning-box">
+    <strong>策略失效情景：</strong>
+    <ul style="margin-left:16px;margin-top:6px;">
+      <li>若大盘跳空低开且跌停家数超过30家，应放弃全部介入计划</li>
+      <li>若推荐标的次日开盘即跌破买入区间下沿且无法快速收回，应放弃介入</li>
+      <li>若板块龙头(东岳硅材/绿盟科技)次日跌停，则相关板块标的应立即止损</li>
+      <li>若市场出现突发重大利空(政策/外围)，所有计划作废，转为观望</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 重要声明 -->
+<div class="disclaimer">
+  <p><strong>重要声明</strong></p>
+  <p>本报告仅为基于公开数据的多维技术分析，任何分析方法都无法保证"必涨"，股市有风险，投资需谨慎，所有内容不构成投资建议。</p>
+  <p>数据来源：同花顺iFinD金融数据终端 | 报告生成时间：2026-10-09</p>
+</div>
+
+</div>
+</body>
+</html>
